@@ -8,6 +8,7 @@ import (
 	"image/draw"
 	"image/png"
 	"log"
+	"math"
 	"os"
 )
 
@@ -26,11 +27,11 @@ func main() {
 	colors := []string{
 		"",
 		"#3297a8",
-		"#0b6878",
+		"#373dfa",
 		"",
 		"",
 		"",
-		"",
+		"#3297a8",
 		"",
 		"",
 	}
@@ -46,7 +47,6 @@ func main() {
 	}
 	png.Encode(savePNG, newPNG)
 	defer savePNG.Close()
-
 }
 
 func decodePNG(filepath string) image.Image {
@@ -91,20 +91,41 @@ func swapColor(img image.Image, hexColor string) image.Image {
 			imageColor := img.At(x, y)
 			rr, gg, bb, aa := imageColor.RGBA()
 			if rr != 0 || gg != 0 || bb != 0 || aa != 0 {
-				// TODO: how do we do overlays? soft light? etc?
-				fmt.Println(x, y, imageColor)
-				// grayscale below
-				// r := math.Pow(float64(rr), 2.2)
-				// g := math.Pow(float64(gg), 2.2)
-				// b := math.Pow(float64(bb), 2.2)
-				// m := math.Pow(0.2125*r+0.7154*g+0.0721*b, 1/2.2)
-				// Y := uint16(m + 0.5)
-				// grayColor := color.Gray{uint8(Y >> 8)}
-				newImg.Set(x, y, newColor)
+				c := overlay(imageColor, newColor)
+				newImg.Set(x, y, c)
 			}
 		}
 	}
 	return newImg
+}
+
+// hexColor returns an HTML hex-representation of c. The alpha channel is dropped
+// and precision is truncated to 8 bits per channel
+func hexColor(c color.Color) string {
+	rgba := color.RGBAModel.Convert(c).(color.RGBA)
+	return fmt.Sprintf("#%.2x%.2x%.2x", rgba.R, rgba.G, rgba.B)
+}
+
+func overlay(base color.Color, top color.Color) color.Color {
+	baseR, baseG, baseB, baseA := base.RGBA()
+	topR, topG, topB, topA := top.RGBA()
+	newColor := color.RGBA{
+		R: overlayValue(baseR, topR, baseA, topA),
+		G: overlayValue(baseG, topG, baseA, topA),
+		B: overlayValue(baseB, topB, baseA, topA),
+		A: overlayValue(baseA, topA, baseA, topA),
+	}
+	// fmt.Println("color1:", base, "color2:", top, "new", newColor)
+	return newColor
+}
+
+func overlayValue(baseValue, topValue, baseOpacity, topOpacity uint32) uint8 {
+	b := float64(baseValue) / float64(baseOpacity)
+	t := float64(topValue) / float64(topOpacity)
+	if b <= 0.5 {
+		return uint8((int)(math.Min((2*b*t)*255, 255)))
+	}
+	return uint8((int)(math.Min(((1 - 2*(1-b)*(1-t)) * 255), 255)))
 }
 
 // below stolen from https://stackoverflow.com/a/54200713
