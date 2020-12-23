@@ -1,5 +1,4 @@
-# avi-maker
-avatar creator
+# avatar-creator
 
 # todos
 - [ ] front end to create avatars by selecting features

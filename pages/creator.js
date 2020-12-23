@@ -13,8 +13,8 @@ const StyledFooter = styled(Heading)`
   font-weight: 400;
   text-align: center;
   margin: auto;
-  font-size: 15px;
-`
+  font-size: 14px;
+`;
  
 const drawImage = (context, imgSrc) => {
   const img = new Image();
@@ -74,9 +74,6 @@ const Canvas = (props) => {
     canvas.height = parent.clientHeight;
     const context = canvas.getContext('2d');
     context.imageSmoothingEnabled = true;
-    //Our first draw
-    context.fillStyle = '#000000';
-    console.log(context.canvas.width, context.canvas.height);
     drawImage(context, 'assets/result.png');
   }, []);
 
@@ -106,11 +103,10 @@ const Creator = (props) => {
               fontWeight: 400,
               border: '2px dashed white',
               padding: '15px',
-              borderRadius: '10px',
               fontSize: '30px',
             }}
           >
-                avatar creator
+            avatar creator
           </Heading>
         </Box>
         <Box
@@ -118,9 +114,8 @@ const Creator = (props) => {
           style={{
             color: '#ffffff',
             fontWeight: 400,
-            border: '3px dashed #84c1c4',
             padding: '15px',
-            borderRadius: '10px',
+            backgroundColor: 'white',
           }}
         >
           <Grid
