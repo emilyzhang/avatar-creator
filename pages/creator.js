@@ -1,4 +1,4 @@
-import { Grommet, Box, Grid } from 'grommet';
+import { Grommet, Box, Grid, Heading } from 'grommet';
 import React, { useRef, useEffect } from 'react';
 
 import styled from 'styled-components';
@@ -55,8 +55,12 @@ const Creator = (props) => {
         ]}
         align="stretch"
       >
-        <Box gridArea="header" background="black">
-          "hello world"
+        <Box gridArea="header" background="#84c1c4">
+          <Heading
+            style={{ color: '#ffffff', margin: 'auto', fontWeight: 400 }}
+          >
+            avi-maker
+          </Heading>
         </Box>
         <Box gridArea="main" background="white">
           <Grid
