@@ -105,11 +105,12 @@ const Creator = (props) => {
               margin: 'auto',
               fontWeight: 400,
               border: '2px dashed white',
-              padding: '25px',
+              padding: '15px',
               borderRadius: '10px',
+              fontSize: '30px',
             }}
           >
-                  ✣ avatar creator ✣
+                avatar creator
           </Heading>
         </Box>
         <Box
@@ -117,7 +118,7 @@ const Creator = (props) => {
           style={{
             color: '#ffffff',
             fontWeight: 400,
-            border: '4px dashed #84c1c4',
+            border: '3px dashed #84c1c4',
             padding: '15px',
             borderRadius: '10px',
           }}
@@ -146,10 +147,10 @@ const Creator = (props) => {
         <Box
           gridArea="footer"
           style={{
-            fontWeight: 400
+            fontWeight: 400,
           }}
         >
-        <StyledFooter>made with ♥ in san francisco</StyledFooter>
+          <StyledFooter>made with ♥ in san francisco</StyledFooter>
         </Box>
       </Grid>
     </Grommet>
