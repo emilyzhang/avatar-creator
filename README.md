@@ -1,4 +1,4 @@
-# avi-me
+# avi-maker
 avatar creator
 
 # todos
