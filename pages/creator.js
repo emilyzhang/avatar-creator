@@ -8,30 +8,59 @@ const StyledCanvas = styled.canvas`
   width: 100%;
 `;
 
+const StyledFooter = styled(Heading)`
+  color: #ffffff;
+  font-weight: 400;
+  text-align: center;
+  margin: auto;
+  font-size: 15px;
+`
+ 
 const drawImage = (context, imgSrc) => {
   const img = new Image();
-
-  img.src = imgSrc;
   img.onload = () => {
+    const imgWidth = img.naturalWidth;
+    const imgHeight = img.naturalHeight;
+    const canvasWidth = context.canvas.width;
+    const canvasHeight = context.canvas.height;
+    // scale based on the limiting factor
+    let newWidth = imgWidth;
+    let newHeight = imgHeight;
+    if (canvasWidth < imgWidth && canvasHeight < imgHeight) {
+      if (canvasWidth < canvasHeight) {
+        newWidth = canvasWidth;
+        newHeight = imgHeight * (canvasWidth / imgWidth);
+      } else {
+        newWidth = imgWidth * (canvasHeight / imgHeight);
+        newHeight = canvasHeight;
+      }
+    } else if (canvasWidth < imgWidth) {
+      newWidth = canvasWidth;
+      newHeight = imgHeight * (canvasWidth / imgWidth);
+    } else if (canvasHeight < imgHeight) {
+      newWidth = imgWidth * (canvasHeight / imgHeight);;
+      newHeight = canvasHeight;;
+    }
     context.drawImage(
       img,
-      0.5,
-      0.5,
-      context.canvas.width * 0.9,
-      img.height * (context.canvas.width / img.width) * 0.9
+      (canvasWidth - newWidth) / 2,
+      (canvasHeight - newHeight) / 2,
+      newWidth,
+      newHeight
     );
   };
+  img.src = imgSrc;
 };
 
 const Canvas = (props) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    const con = document.getElementById('canvasBox');
+    const parent = document.getElementById('canvasBox');
     const canvas = canvasRef.current;
-    console.log(canvas.width, canvas.height, con.clientWidth, con.clientHeight);
-    canvas.width = con.clientWidth;
-    canvas.height = con.clientHeight;
+    console.log(canvas.width, canvas.height, parent.clientWidth, parent.clientHeight);
+    canvas.width = parent.clientWidth;
+    canvas.height = parent.clientHeight;
     const context = canvas.getContext('2d');
     context.imageSmoothingEnabled = true;
     //Our first draw
@@ -47,23 +76,41 @@ const Creator = (props) => {
   return (
     <Grommet full>
       <Grid
-        rows={['175px', '1fr']}
+        rows={['150px', '1fr', '20px']}
         columns={['1fr', '80%', '1fr']}
         areas={[
           ['lside', 'header', 'rside'],
           ['lside', 'main', 'rside'],
           ['lside', 'main', 'rside'],
+          ['footer', 'footer', 'footer'],
         ]}
         align="stretch"
+        gap="small"
       >
-        <Box gridArea="header" background="#84c1c4">
+        <Box gridArea="header">
           <Heading
-            style={{ color: '#ffffff', margin: 'auto', fontWeight: 400 }}
+            style={{
+              color: '#ffffff',
+              margin: 'auto',
+              fontWeight: 400,
+              border: '2px dashed white',
+              padding: '25px',
+              borderRadius: '10px',
+            }}
           >
-            avi-maker
+                  ✣ avatar creator ✣
           </Heading>
         </Box>
-        <Box gridArea="main" background="white">
+        <Box
+          gridArea="main"
+          style={{
+            color: '#ffffff',
+            fontWeight: 400,
+            border: '4px dashed #84c1c4',
+            padding: '15px',
+            borderRadius: '10px',
+          }}
+        >
           <Grid
             columns={['1fr', '1fr']}
             rows={['100%']}
@@ -71,13 +118,27 @@ const Creator = (props) => {
             align="stretch"
             style={{ height: '75vh' }}
           >
-            <Box id="canvasBox" gridArea="avatar" background="white">
+            <Box
+              id="canvasBox"
+              gridArea="avatar"
+              background="white"
+              style={{
+                color: '#ffffff',
+                fontWeight: 400,
+                borderRadius: '10px',
+              }}
+            >
               <Canvas />
             </Box>
           </Grid>
         </Box>
-        <Box gridArea="footer" background="white">
-          b
+        <Box
+          gridArea="footer"
+          style={{
+            fontWeight: 400
+          }}
+        >
+        <StyledFooter>made with ♥ in san francisco</StyledFooter>
         </Box>
       </Grid>
     </Grommet>
