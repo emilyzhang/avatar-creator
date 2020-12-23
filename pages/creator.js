@@ -10,6 +10,7 @@ const StyledCanvas = styled.canvas`
 
 const drawImage = (context, imgSrc) => {
   const img = new Image();
+
   img.src = imgSrc;
   img.onload = () => {
     context.drawImage(
