@@ -41,6 +41,17 @@ const drawImage = (context, imgSrc) => {
       newWidth = imgWidth * (canvasHeight / imgHeight);;
       newHeight = canvasHeight;;
     }
+    console.log(
+      'image width and height:',
+      imgWidth,
+      imgHeight,
+      'canvas width and height:',
+      canvasWidth,
+      canvasHeight,
+      'new width and height:',
+      newWidth,
+      newHeight
+    );
     context.drawImage(
       img,
       (canvasWidth - newWidth) / 2,
