@@ -1544,6 +1544,318 @@
   dependencies:
     mkdirp "^1.0.4"
 
+"@pixi/accessibility@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/accessibility/-/accessibility-5.3.6.tgz#c9e6814448ce3184f78097552d6776a32ff29930"
+  integrity sha512-0f+L9lUQwLJDienSwT8E0t1bkL7vzWgD85mesC6jfHu/Jb8YJhh853ZcusAtMKQ2X2wYp9PLDH/L5+3pCJoLUA==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/display" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/app@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/app/-/app-5.3.6.tgz#29a8ccc5a6e7b7a9f683543c05f885a71dcdbadb"
+  integrity sha512-ZzCMJDcmdxMBMNvJgupV3blnYw9XH5QAVWZHRdTPjiFAaB3JHqLa34eCkX9tdxCv5AqcF/avUk7luQcMqj6/zg==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/display" "5.3.6"
+
+"@pixi/constants@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/constants/-/constants-5.3.6.tgz#b3b61b5d5047d022df3b8bed82eeb2b052457ded"
+  integrity sha512-4FF6GIj88/rddqMJeVlbxKUDgSpb6vSX9yWR1S17Urn4B3RCZErlfSEcTIuSOpLbs0F1h9K7UdIrzbJp2aefzw==
+
+"@pixi/core@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/core/-/core-5.3.6.tgz#85559a71fd35c459c094ff30899f85cbcf8d2f81"
+  integrity sha512-Q5myUdcaJH5dtWbxerLn6YSFR3AjIgk58o7x7CzymJ7U5kdBjNB0yNdMVSbDQpf+lK4edtWYpuelot7SAthk+g==
+  dependencies:
+    "@pixi/constants" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/runner" "5.3.6"
+    "@pixi/settings" "5.3.6"
+    "@pixi/ticker" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/display@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/display/-/display-5.3.6.tgz#90a629c4d9b7a118b7b8cc0ea4b843d1b93026f3"
+  integrity sha512-cbUaWz2R2vNO5BD9Ic6hYyazQQV8ndQfPonbBcehQQhNC+aZjuYgarHqiUb4Z7/GKkRQzB9WyoT8P5V5LppufQ==
+  dependencies:
+    "@pixi/math" "5.3.6"
+    "@pixi/settings" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/extract@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/extract/-/extract-5.3.6.tgz#9e3e39a6687abfed144e88aa76b6a71ac671f14a"
+  integrity sha512-G8YpL84m1t8XgEtViD0IPT4yQHZ56+ifCWV8eOvMrM/T+BVLeGiIMFCY1HvmGhKE17mo0KGeDLNKNNnX+pISQQ==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/filter-alpha@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-alpha/-/filter-alpha-5.3.6.tgz#c12232817c974714865b625957e82a3299f72d38"
+  integrity sha512-3JP+KnqZk6j1p6eaTPaYd4eF++SDkn45ERj7c/c8rKSFk6riBNqAnK/K1wQhYsGefRw0K7SBBKO3Du0I+NmnLg==
+  dependencies:
+    "@pixi/core" "5.3.6"
+
+"@pixi/filter-blur@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-blur/-/filter-blur-5.3.6.tgz#805090b701b55fb5c2be218704fb7e3f1476d7a3"
+  integrity sha512-BSreTr0miiQwa2SNeuVLRsfOrdFDTEc7Yi+/yX/JOhgOSpAv8mxSReb2Qz11gWOg1VTkd1b//qgiICwmUjVmAw==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/settings" "5.3.6"
+
+"@pixi/filter-color-matrix@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-color-matrix/-/filter-color-matrix-5.3.6.tgz#466f563e20721900b202a87c8d47a5ea8e31c741"
+  integrity sha512-u/OZEPhdMT2rzCNZZXBsIwVyp79X4rM029JMioJdYrFEPDnAuDIBKrY5//gOHFdQlYsjRIaW0IcykCPqUvBs3A==
+  dependencies:
+    "@pixi/core" "5.3.6"
+
+"@pixi/filter-displacement@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-displacement/-/filter-displacement-5.3.6.tgz#9ef5c615cb643fdaaed38d18e4538819aed587b8"
+  integrity sha512-wQyuxfOZoRgnGz8CzoglziF5fKiL4PSHy8oqb2vjr/FFPn0V+MO3DrT/20t7VWqP5y0gygv7anIMZiqZCaQNgg==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/math" "5.3.6"
+
+"@pixi/filter-fxaa@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-fxaa/-/filter-fxaa-5.3.6.tgz#859b9021afcdf98c9062a01360de6ac596eb5f59"
+  integrity sha512-6zPD6Qnzx2fRjPjqJIDMqK8ippTYHAr3yP/Ri/XPbJgQl2ttBJrxLuoAQ4tuXcWc4nDA3jj2N1eKKfJRzNGAkg==
+  dependencies:
+    "@pixi/core" "5.3.6"
+
+"@pixi/filter-noise@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-noise/-/filter-noise-5.3.6.tgz#a63a5a4390a872316dc30158b79ddeb7bc79e8fc"
+  integrity sha512-YSSujt1fUdEygPFGwPtWK3ByAtOZtmnlCnHytKnK+4SnPLdsyK6WcGw24K7GROkbxBhT/yLSb0vKfy5ICBXfew==
+  dependencies:
+    "@pixi/core" "5.3.6"
+
+"@pixi/graphics@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/graphics/-/graphics-5.3.6.tgz#1d38359926d174cccd3219936285140b715344e7"
+  integrity sha512-FDZlAkxrbCZTjzNMWW6q6N/GAfyfftwHOGb67oLJ+NCG2wagOGUPQYRRGBK5f45dgDdM+1is7UwbhdQ8Rvg9ig==
+  dependencies:
+    "@pixi/constants" "5.3.6"
+    "@pixi/core" "5.3.6"
+    "@pixi/display" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/sprite" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/interaction@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/interaction/-/interaction-5.3.6.tgz#0f2657c0aabfac529cf4e6a7fa1fc012129590fd"
+  integrity sha512-tVFNtpB7uELplA4TyuDJdQNHpv7l1/TWqgrwdhFyyArV2HTjluBIZuChSj0W47MQZcsPCXPKvTIkxBYx7bPBBQ==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/display" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/ticker" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/loaders@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/loaders/-/loaders-5.3.6.tgz#6b2558c8634160e955ff71a10d5b4ab87786ad0c"
+  integrity sha512-IrGovVWRjeMPJOttYm5DUNCPEF3Z6FoDPMrvm/HaADqN+PgR5yd3SpkHY27mhDmKLhMqMV658ih4Fhu2jrAJWQ==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/utils" "5.3.6"
+    resource-loader "^3.0.1"
+
+"@pixi/math@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/math/-/math-5.3.6.tgz#3933bae1a0af912b4384389b63ceffdcf108723a"
+  integrity sha512-ccW/LrSsLaHunj1ztfp2UpxKGftiaK/nURZa51CFhbGYQBrYZBk27x1fgwGAs4ualTtqZOeyaLhv4nY0ljm5Qw==
+
+"@pixi/mesh-extras@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/mesh-extras/-/mesh-extras-5.3.6.tgz#91493e22b43bb609c1a49f5777ead311a6223eef"
+  integrity sha512-0Nh3ZqfBlDAuLkpimzERumQrv8NuE4L60nAhzp/uaHmGNm0ox4iKUWD8cSauO4I8CE48Vdw4cYa3GvbYgHK32w==
+  dependencies:
+    "@pixi/constants" "5.3.6"
+    "@pixi/core" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/mesh" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/mesh@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/mesh/-/mesh-5.3.6.tgz#ab66923d8754392dd461eb98e69d023aa1865744"
+  integrity sha512-jyIE/T7Rez2zDGzIsGEryjq83hoMssM/FT1+keV+3ZqVe3Gdqk2yiTNq9CZKCFoBkNXEDaGJE3qBnZGju3x/LQ==
+  dependencies:
+    "@pixi/constants" "5.3.6"
+    "@pixi/core" "5.3.6"
+    "@pixi/display" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/settings" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/mixin-cache-as-bitmap@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/mixin-cache-as-bitmap/-/mixin-cache-as-bitmap-5.3.6.tgz#4220ca62196b989da06bac084653843651285e13"
+  integrity sha512-LAF7C8m0UNdmM36cq/BB6AfjYP3MwGyQUsa5edmPq+3GfSxGdxyniFgEDK582pnPuQuNeV9z7H4+rLW+fkFl6A==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/display" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/settings" "5.3.6"
+    "@pixi/sprite" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/mixin-get-child-by-name@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/mixin-get-child-by-name/-/mixin-get-child-by-name-5.3.6.tgz#df8f424867fe5d0000c1c8865e0371146d896cc5"
+  integrity sha512-YgzPIk/35dt42IdxwDZK0GrzYXzjS9X4/XthPBSGylnnV00GE/66diaRpRyRJNiuDwQPX+oKYlot5EuXOi3umw==
+  dependencies:
+    "@pixi/display" "5.3.6"
+
+"@pixi/mixin-get-global-position@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/mixin-get-global-position/-/mixin-get-global-position-5.3.6.tgz#81c54861063453efd46b5e061d7ad6a5c32cc013"
+  integrity sha512-9ZQlu9Fr8Q4iLDTjd66hTmGvLzTkPdP/F+/8jCRCaqeGGHhcPn0MiPBXqgtoBEiTyqhqFuG3eyV2v+RrHV38iw==
+  dependencies:
+    "@pixi/display" "5.3.6"
+    "@pixi/math" "5.3.6"
+
+"@pixi/particles@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/particles/-/particles-5.3.6.tgz#b10cd3b4b63225f022041a872d83ae8e9dda8d95"
+  integrity sha512-gixToBL1IuHU4e9NlFinnm1J/xgwCNUmsmPXEri3P/QwrXpnAw2vOhnzgQ5/S+nFemZHm3M4+ZnuFMLeGtPQSQ==
+  dependencies:
+    "@pixi/constants" "5.3.6"
+    "@pixi/core" "5.3.6"
+    "@pixi/display" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/polyfill@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/polyfill/-/polyfill-5.3.6.tgz#0e70ffc17211fb19a9c31c918e5c466de3251177"
+  integrity sha512-fvYX6Jdn+kyGkG89OUvQiHJ4sDvhhbGZkMNxdA23/Xy3+IAWtHxloJsog0cyIdKxaVo8TWtT2UwpFtfWYb2UQQ==
+  dependencies:
+    es6-promise-polyfill "^1.2.0"
+    object-assign "^4.1.1"
+
+"@pixi/prepare@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/prepare/-/prepare-5.3.6.tgz#601892cab7513e4838c5701399f28e055ec15dcb"
+  integrity sha512-rPbLr1BLApPPKPlXz7dlj+pNqlAUKlawJ8Cs2l8FPgD3wHvlJ9e6FC+S+jYCjZAsBUJN5b8+lg9k02uOPBrDfw==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/display" "5.3.6"
+    "@pixi/graphics" "5.3.6"
+    "@pixi/settings" "5.3.6"
+    "@pixi/text" "5.3.6"
+    "@pixi/ticker" "5.3.6"
+
+"@pixi/runner@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/runner/-/runner-5.3.6.tgz#b123f1a674aa249e4067ff00f9a3027d01ac69a8"
+  integrity sha512-qiGoMVk0P0p3IfH5LTIH/dKyiNUzIHMxoykPODWni648hFa4CEFpG3bHJorcyYvmALCFgHjH2hhrqQexK3T6Kw==
+
+"@pixi/settings@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/settings/-/settings-5.3.6.tgz#d138ba2180557174c3f942fc9656de35f1a77026"
+  integrity sha512-hWMC1KwB2InFoJPdnI97ckHX0Z7912aaB2oQUJwKv0hhSrc8vxq9Dg6UofVY+wGMHDVCvqJPnvCsTYuKUmwRxw==
+  dependencies:
+    ismobilejs "^1.1.0"
+
+"@pixi/sprite-animated@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/sprite-animated/-/sprite-animated-5.3.6.tgz#5f51ce5629e9fbf206dbf5a1b4cd878e0513f886"
+  integrity sha512-2fB9yLjuSTpCMoeOnXkDo+MeqZHPxAHG9QCRs8zTX7kd3Nw1l25WPNqW3a3MkeC2Zs52xF5vdF+o7BkfoRIuhQ==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/sprite" "5.3.6"
+    "@pixi/ticker" "5.3.6"
+
+"@pixi/sprite-tiling@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/sprite-tiling/-/sprite-tiling-5.3.6.tgz#9961c0bf44ce1c3644a146ffd3a6cc6ddbafb7c9"
+  integrity sha512-45c+owY3EWKl/+J/aaS7HbLQP8wzsN1LCW7qrCpk76KFyZnaOYpRsJlOB7EJPhDcQ+xbhg0P2Df410dxR9S0nw==
+  dependencies:
+    "@pixi/constants" "5.3.6"
+    "@pixi/core" "5.3.6"
+    "@pixi/display" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/sprite" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/sprite@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/sprite/-/sprite-5.3.6.tgz#04c13b0ce1c7379a2f570d28db58d1f54ce44c55"
+  integrity sha512-Q5nRj7mhWuVHvn2rMtlf+6CdTjdovxX0R9ANffPcY7EODn5m7F4GpXEwBOjDICtVyHXrXhz2k4Gi2XWPFeeZ7A==
+  dependencies:
+    "@pixi/constants" "5.3.6"
+    "@pixi/core" "5.3.6"
+    "@pixi/display" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/settings" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/spritesheet@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/spritesheet/-/spritesheet-5.3.6.tgz#de9998029adb3905d2ff755b61f65c9a45b30d05"
+  integrity sha512-H+EbXi6G/IRwJpEOcxWQaqM10Qfvhe6jXME6Ed6qJRI5ye6RMnSRzpPacunKE+jRXRdiA0qJft88YpHGPHTwMw==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/loaders" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/text-bitmap@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/text-bitmap/-/text-bitmap-5.3.6.tgz#ddff3417c0626393eb259eceeaa37d44357cdff4"
+  integrity sha512-yNtB9Lg1HJpI9xIX6J1RSNoViFLgIgtUYIn/nVRw+kZp9M4WsglMhiqqfTE+ahyvGrAwnXCFmCH8CE2BNn5irw==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/display" "5.3.6"
+    "@pixi/loaders" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/mesh" "5.3.6"
+    "@pixi/settings" "5.3.6"
+    "@pixi/text" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/text@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/text/-/text-5.3.6.tgz#55b45c8968a28304f5b7aef289e6f062772a060a"
+  integrity sha512-maEZoIysPOuzzSH+TN2cGnqDDMdTVtFNY9dJdKgmMleY9oCPES/iiNkcdki40S9JfaM7GM3ywn2xbJruJ5aZCg==
+  dependencies:
+    "@pixi/core" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/settings" "5.3.6"
+    "@pixi/sprite" "5.3.6"
+    "@pixi/utils" "5.3.6"
+
+"@pixi/ticker@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/ticker/-/ticker-5.3.6.tgz#022416047199ae1ac875f750efddfb0a0ba20abd"
+  integrity sha512-3BHDrFyI5aHcAlo9fdQ5pd4U1pwt5QwGpbM9EshFL2NeNdumAeZQJ850DXFhVfFAXhhNljEQTFNZ44sTIsAy6Q==
+  dependencies:
+    "@pixi/settings" "5.3.6"
+
+"@pixi/utils@5.3.6":
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/@pixi/utils/-/utils-5.3.6.tgz#63ada7f024884390324b430ad19b6e031791c319"
+  integrity sha512-Ilix2qpF89SSyoUpPsjH2RB7Os6ceQ+gts55zpMbLyxMyuMH6GlZ9WgUEhAakkUEtQ6imi3ZZAxCNLAEWNB+cw==
+  dependencies:
+    "@pixi/constants" "5.3.6"
+    "@pixi/settings" "5.3.6"
+    earcut "^2.1.5"
+    eventemitter3 "^3.1.0"
+    url "^0.11.0"
+
 "@pmmmwh/react-refresh-webpack-plugin@0.4.2":
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.4.2.tgz#1f9741e0bde9790a0e13272082ed7272a083620d"
@@ -4344,6 +4656,11 @@ create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+create-require@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
+  integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
+
 cross-env@7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-7.0.2.tgz#bd5ed31339a93a3418ac4f3ca9ca3403082ae5f9"
@@ -5068,6 +5385,11 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
 
+earcut@^2.1.5:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/earcut/-/earcut-2.2.2.tgz#41b0bc35f63e0fe80da7cddff28511e7e2e80d11"
+  integrity sha512-eZoZPPJcUHnfRZ0PjLvx2qBordSiO8ofC3vt+qACLM95u+4DovnbYNpQtJh0DNsWj8RnxrQytD4WA8gj5cRIaQ==
+
 ecc-jsbn@~0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.2.tgz#3a83a904e54353287874c564b7549386849a98c9"
@@ -5277,6 +5599,11 @@ es6-iterator@2.0.3, es6-iterator@~2.0.3:
     d "1"
     es5-ext "^0.10.35"
     es6-symbol "^3.1.1"
+
+es6-promise-polyfill@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/es6-promise-polyfill/-/es6-promise-polyfill-1.2.0.tgz#f38925f23cb3e3e8ce6cda8ff774fcebbb090cde"
+  integrity sha1-84kl8jyz4+jObNqP93T867sJDN4=
 
 es6-symbol@^3.1.1, es6-symbol@~3.1.3:
   version "3.1.3"
@@ -5584,6 +5911,11 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
+
+eventemitter3@^3.1.0:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
+  integrity sha512-tvtQIeLVHjDkJYnzf2dgVMxfuSGJeM/7UCG17TT4EumTfNtF+0nebF/4zWOIkCreAbtNqhGEboB6BWrwqNaw4Q==
 
 eventemitter3@^4.0.0:
   version "4.0.7"
@@ -7520,6 +7852,11 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
+ismobilejs@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ismobilejs/-/ismobilejs-1.1.1.tgz#c56ca0ae8e52b24ca0f22ba5ef3215a2ddbbaa0e"
+  integrity sha512-VaFW53yt8QO61k2WJui0dHf4SlL8lxBofUuUmwBo0ljPk0Drz2TiuDW4jo3wDcv41qy/SxrJ+VAzJ/qYqsmzRw==
+
 isobject@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-2.1.0.tgz#f065561096a3f1da2ef46272f815c840d87e0c89"
@@ -8816,6 +9153,11 @@ mini-css-extract-plugin@0.11.3:
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
 
+mini-signals@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/mini-signals/-/mini-signals-1.2.0.tgz#45b08013c5fae51a24aa1a935cd317c9ed721d74"
+  integrity sha1-RbCAE8X65RokqhqTXNMXye1yHXQ=
+
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
@@ -9629,6 +9971,11 @@ parse-passwd@^1.0.0:
   resolved "https://registry.yarnpkg.com/parse-passwd/-/parse-passwd-1.0.0.tgz#6d5b934a456993b23d37f40a382d6f1666a8e5c6"
   integrity sha1-bVuTSkVpk7I9N/QKOC1vFmao5cY=
 
+parse-uri@^1.0.0:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/parse-uri/-/parse-uri-1.0.3.tgz#f3c24a74907a4e357c1741e96ca9faadecfd6db5"
+  integrity sha512-upMnGxNcm+45So85HoguwZTVZI9u11i36DdxJfGF2HYWS2eh3TIx7+/tTi7qrEq15qzGkVhsKjesau+kCk48pA==
+
 parse5@5.1.1, parse5@^5.0.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.1.tgz#f68e4e5ba1852ac2cadc00f4555fff6c2abb6178"
@@ -9802,6 +10149,46 @@ pirates@^4.0.1:
   integrity sha512-WuNqLTbMI3tmfef2TKxlQmAiLHKtFhlsCZnPIpuv2Ow0RDVO8lfy1Opf4NUzlMXLjPl+Men7AuVdX6TA+s+uGA==
   dependencies:
     node-modules-regexp "^1.0.0"
+
+pixi.js@5.3.6:
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/pixi.js/-/pixi.js-5.3.6.tgz#ff30272c6122e026a9ce1ca98c3d2be0bd747ec7"
+  integrity sha512-4SWAB2wPrH0vIuJ2pFUEz3IjQcWFMgn4qU2Srfigiiv9bVSW3E7Aa5hT8nSP9t6GM7Pqh5CWcWh4I4fsNLFwjA==
+  dependencies:
+    "@pixi/accessibility" "5.3.6"
+    "@pixi/app" "5.3.6"
+    "@pixi/constants" "5.3.6"
+    "@pixi/core" "5.3.6"
+    "@pixi/display" "5.3.6"
+    "@pixi/extract" "5.3.6"
+    "@pixi/filter-alpha" "5.3.6"
+    "@pixi/filter-blur" "5.3.6"
+    "@pixi/filter-color-matrix" "5.3.6"
+    "@pixi/filter-displacement" "5.3.6"
+    "@pixi/filter-fxaa" "5.3.6"
+    "@pixi/filter-noise" "5.3.6"
+    "@pixi/graphics" "5.3.6"
+    "@pixi/interaction" "5.3.6"
+    "@pixi/loaders" "5.3.6"
+    "@pixi/math" "5.3.6"
+    "@pixi/mesh" "5.3.6"
+    "@pixi/mesh-extras" "5.3.6"
+    "@pixi/mixin-cache-as-bitmap" "5.3.6"
+    "@pixi/mixin-get-child-by-name" "5.3.6"
+    "@pixi/mixin-get-global-position" "5.3.6"
+    "@pixi/particles" "5.3.6"
+    "@pixi/polyfill" "5.3.6"
+    "@pixi/prepare" "5.3.6"
+    "@pixi/runner" "5.3.6"
+    "@pixi/settings" "5.3.6"
+    "@pixi/sprite" "5.3.6"
+    "@pixi/sprite-animated" "5.3.6"
+    "@pixi/sprite-tiling" "5.3.6"
+    "@pixi/spritesheet" "5.3.6"
+    "@pixi/text" "5.3.6"
+    "@pixi/text-bitmap" "5.3.6"
+    "@pixi/ticker" "5.3.6"
+    "@pixi/utils" "5.3.6"
 
 pkg-dir@^2.0.0:
   version "2.0.0"
@@ -11556,6 +11943,14 @@ resolve@^1.1.6, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.12.0, resolve@^1.13.
     is-core-module "^2.1.0"
     path-parse "^1.0.6"
 
+resource-loader@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/resource-loader/-/resource-loader-3.0.1.tgz#33355bb5421e2994f59454bbc7f6dbff8df06d47"
+  integrity sha512-fBuCRbEHdLCI1eglzQhUv9Rrdcmqkydr1r6uHE2cYHvRBrcLXeSmbE/qI/urFt8rPr/IGxir3BUwM5kUK8XoyA==
+  dependencies:
+    mini-signals "^1.2.0"
+    parse-uri "^1.0.0"
+
 restore-cursor@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/restore-cursor/-/restore-cursor-2.0.0.tgz#9f7ee287f82fd326d4fd162923d62129eee0dfaf"
@@ -13068,12 +13463,13 @@ tryer@^1.0.1:
   resolved "https://registry.yarnpkg.com/tryer/-/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"
   integrity sha512-c3zayb8/kWWpycWYg87P71E1S1ZL6b6IJxfb5fvsUgsf0S2MVGaDhDXXjDMpdCpfWXqptc+4mXwmiy1ypXqRAA==
 
-ts-node@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-9.0.0.tgz#e7699d2a110cc8c0d3b831715e417688683460b3"
-  integrity sha512-/TqB4SnererCDR/vb4S/QvSZvzQMJN8daAslg7MeaiHvD8rDZsSfXmNeNumyZZzMned72Xoq/isQljYSt8Ynfg==
+ts-node@9.1.1:
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-9.1.1.tgz#51a9a450a3e959401bda5f004a72d54b936d376d"
+  integrity sha512-hPlt7ZACERQGf03M253ytLY3dHbGNGrAq9qIHWUY9XHYl1z7wYngSr3OQ5xmui8o2AaxsONxIzjafLUiWBo1Fg==
   dependencies:
     arg "^4.1.0"
+    create-require "^1.1.0"
     diff "^4.0.1"
     make-error "^1.1.1"
     source-map-support "^0.5.17"
@@ -13216,10 +13612,10 @@ typescript-tuple@^2.2.1:
   dependencies:
     typescript-compare "^0.0.2"
 
-typescript@4.0.5:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.5.tgz#ae9dddfd1069f1cb5beb3ef3b2170dd7c1332389"
-  integrity sha512-ywmr/VrTVCmNTJ6iV2LwIrfG1P+lv6luD8sUJs+2eI9NLGigaN+nUQc13iHqisq7bra9lnmUSYqbJvegraBOPQ==
+typescript@4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.3.tgz#519d582bd94cba0cf8934c7d8e8467e473f53bb7"
+  integrity sha512-B3ZIOf1IKeH2ixgHhj6la6xdwR9QrLC5d1VKeCSY4tvkqhF2eqd9O7txNlS0PO3GrBAFIdr3L1ndNwteUbZLYg==
 
 uglify-js@^3.1.4:
   version "3.12.3"
