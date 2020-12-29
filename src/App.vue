@@ -1,6 +1,7 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/hair1.png"> -->
-  <Creator msg="Welcome to Your Vue.js App"/>
+  <header class="hello">avatar creator</header>
+  <Creator/>
 </template>
 
 <script>
@@ -28,10 +29,34 @@ body {
   background-attachment: fixed;
   background-size: cover;
   background-blend-mode: soft-light;
-  background-color: rgba(255, 211, 185, 0.288);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: rgba(255, 211, 185, 0.188);
   text-align: center;
-  color: #2c3e50;
+}
+.hello {
+  border: 2px dashed white;
+  text-align: center;
+  display: inline-block;
+  margin: 50px auto;
+  font-size: 50px;
+  color: #77A2BC;
+  padding: 30px;
+  text-shadow: 5 5 30px white;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-text-fill-color: transparent;
+  background-image: linear-gradient(270deg, #646292, #AEE1E2, white, #AEE1E2, #646292);
+}
+.hello:hover {
+  border: 2px dashed white;
+  text-shadow: 0 0 30px #728CA7;
+  color: white; 
+  -webkit-background-clip: none;
+  -moz-background-clip: none;
+  background-clip: none;
+  -webkit-text-fill-color: white; 
+  -moz-text-fill-color: white;
+  background-image: white;
 }
 </style>
