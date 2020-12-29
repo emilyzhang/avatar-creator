@@ -38,8 +38,8 @@ const drawImage = (context, imgSrc) => {
       newWidth = canvasWidth;
       newHeight = imgHeight * (canvasWidth / imgWidth);
     } else if (canvasHeight < imgHeight) {
-      newWidth = imgWidth * (canvasHeight / imgHeight);;
-      newHeight = canvasHeight;;
+      newWidth = imgWidth * (canvasHeight / imgHeight);
+      newHeight = canvasHeight;
     }
     console.log(
       'image width and height:',
