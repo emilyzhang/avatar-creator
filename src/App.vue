@@ -31,6 +31,7 @@ body {
   background-blend-mode: soft-light;
   background-color: rgba(255, 211, 185, 0.188);
   text-align: center;
+  height: 100%;
 }
 .hello {
   border: 2px dashed white;
