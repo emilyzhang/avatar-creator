@@ -63,13 +63,13 @@ button:active {
 }
 
 .hello {
-  border: 2px dashed white;
+  border: 2px solid #aee1e2;
   text-align: center;
   display: inline-block;
   margin: 50px auto;
   font-size: 50px;
   color: #77a2bc;
-  padding: 30px;
+  padding: 20px;
   text-shadow: 5 5 30px white;
   -webkit-background-clip: text;
   -moz-background-clip: text;
@@ -86,7 +86,6 @@ button:active {
   );
 }
 .hello:hover {
-  border: 2px dashed white;
   text-shadow: 0 0 30px #728ca7;
   color: white;
   -webkit-background-clip: none;

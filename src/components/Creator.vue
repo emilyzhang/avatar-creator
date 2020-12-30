@@ -243,10 +243,10 @@ export default {
   align-content: center;
 }
 .creator {
-  border: 2px dashed white;
+  border: 2px solid #aee1e2;
   /* margin: auto 100px auto; */
   /* padding: 4px; */
-  width: 420px;
+  width: 424px;
   grid-area: avatar;
 }
 .select-color {
@@ -256,7 +256,7 @@ export default {
   grid-area: random;
 }
 .color-picker {
-  border: 2px dashed white;
+  border: 2px solid #aee1e2;
   grid-area: colorpicker;
 }
 #picker {
