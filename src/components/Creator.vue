@@ -14,7 +14,7 @@
           <option value="hair">hair</option>
           <option value="hairColor">hairColor</option>
           <option value="mouthColor">mouthColor</option>
-          <option value="nose">nose</option>
+          <!-- <option value="nose">nose</option> -->
           <option value="background">background</option>
         </select>
       </div>
@@ -163,32 +163,36 @@ export default {
       const nose = new PIXI.Sprite.from("../assets/nose6.png");
       const mouthLine = new PIXI.Sprite.from("../assets/mouth1line.png");
       const mouthColor = new PIXI.Sprite.from("../assets/mouth1color.png");
+      const eyeWhite = new PIXI.Sprite.from("../assets/eye2white.png");
       const eyeShape = new PIXI.Sprite.from("../assets/eye2shape.png");
       const eyeColor = new PIXI.Sprite.from("../assets/eye2color.png");
       const eyeLight = new PIXI.Sprite.from("../assets/eye2glare.png");
-      const eyebrows = new PIXI.Sprite.from("../assets/eyebrows3.png");
+      const eyebrows = new PIXI.Sprite.from("../assets/eyebrows0.png");
       const hairColor = new PIXI.Sprite.from("../assets/hair1color.png");
       const face = new PIXI.Sprite.from("../assets/face1.png");
       const background = new PIXI.Sprite(PIXI.Texture.WHITE);
       background.width = 420;
       background.height = 420;
       background.tint = 0xffffff;
-      face.filters = [new ColorOverlayFilter([1, 0.845, 0.7])];
+      face.filters = [new ColorOverlayFilter([0.9, 0.75, 0.6])];
       eyebrows.filters = [new ColorOverlayFilter([0, 0.6, 0.63])];
       hairColor.filters = [new ColorOverlayFilter([0, 0.8, 0.83])];
       hairBack.filters = [new ColorOverlayFilter([0, 0.8, 0.83])];
+      mouthColor.filters = [new ColorOverlayFilter([0.8, 0.4, 0.4])];
       // hairColor.filters = [new ColorOverlayFilter([0.55, 0.4, 0.3])];
       hair.alpha = 0.5;
       mouthColor.alpha = 0.5;
+      eyebrows.alpha = 0.8;
       hair.filters = [new ColorOverlayFilter([0.8, 1, 0.9])];
       eyeColor.filters = [new ColorOverlayFilter([0.2, 0.2, 0.25])];
-      stage.addChild(background);
+      // stage.addChild(background);
       // hairContainer.addChild(hairColor);
       // hairContainer.addChild(hair);
       // console.log(hair);
       // console.log(face);
       // stage.addChild(hairBack);
       stage.addChild(face);
+      stage.addChild(eyeWhite);
       stage.addChild(eyeColor);
       stage.addChild(eyeShape);
       stage.addChild(eyeLight);
