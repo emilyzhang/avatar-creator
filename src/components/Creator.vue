@@ -208,12 +208,12 @@ export default {
       // Set the initial color to pure red
       color: "#f00",
       display: "inline-block",
-      borderColor: "white",
+      borderColor: "#aee1e2",
       padding: 0,
       borderWidth: 2,
       // handleRadius: 10,
       handleSvg: "#handle",
-      handleProps: { x: -8, y: -8 },
+      handleProps: { x: -7.3, y: -8 },
       layout: [
         {
           component: iro.ui.Wheel,
