@@ -9,12 +9,11 @@
         <select>
           <option value="eyeColor">eyeColor</option>
           <option value="face">face</option>
-          <option value="eye">eye</option>
+          <option value="eyeShape">eyeShape</option>
           <option value="eyebrows">eyebrows</option>
           <option value="hair">hair</option>
           <option value="hairColor">hairColor</option>
-          <option value="eyeLight">eyeLight</option>
-          <option value="mouth">mouth</option>
+          <option value="mouthColor">mouthColor</option>
           <option value="nose">nose</option>
           <option value="background">background</option>
         </select>
@@ -65,6 +64,7 @@ const avatar = {};
 let stage;
 let colorPicker;
 let selectedFeature = "eyeColor";
+// PIXI.settings.FAIL_IF_MAJOR_PERFORMANCE_CAVEAT = false;
 
 // const featuresEnum = Object.freeze({
 //   "face": 0,
@@ -106,6 +106,15 @@ const changeColor = (selectedFeature) => {
         selectedColor[2] / 255,
       ]),
     ];
+    if (selectedFeature === "hairColor") {
+      avatar.hairBack.filters = [
+      new ColorOverlayFilter([
+        selectedColor[0] / 255,
+        selectedColor[1] / 255,
+        selectedColor[2] / 255,
+      ]),
+    ];
+    }
   }
 };
 
@@ -148,18 +157,16 @@ export default {
       stage = app.stage;
       // this.attachConsole(stage)
 
-      // const renderer = PIXI.autoDetectRenderer(420, 420);
-      // var screenRect = new PIXI.Rectangle(0,0, renderer.width/renderer.resolution, renderer.height/renderer.resolution);
-      // stage.filterArea = screenRect;
-
-      const hairContainer = new PIXI.Container();
-      const hair = new PIXI.Sprite.from("../assets/hair1.png");
-      const nose = new PIXI.Sprite.from("../assets/nose0.png");
-      const mouth = new PIXI.Sprite.from("../assets/mouth0.png");
-      const eye = new PIXI.Sprite.from("../assets/eye1top.png");
-      const eyeColor = new PIXI.Sprite.from("../assets/eye1color.png");
-      const eyeLight = new PIXI.Sprite.from("../assets/eye1light.png");
-      const eyebrows = new PIXI.Sprite.from("../assets/eyebrows0.png");
+      // const hairContainer = new PIXI.Container();
+      const hair = new PIXI.Sprite.from("../assets/hair1shape.png");
+      const hairBack = new PIXI.Sprite.from("../assets/hair1back.png");
+      const nose = new PIXI.Sprite.from("../assets/nose6.png");
+      const mouthLine = new PIXI.Sprite.from("../assets/mouth1line.png");
+      const mouthColor = new PIXI.Sprite.from("../assets/mouth1color.png");
+      const eyeShape = new PIXI.Sprite.from("../assets/eye2shape.png");
+      const eyeColor = new PIXI.Sprite.from("../assets/eye2color.png");
+      const eyeLight = new PIXI.Sprite.from("../assets/eye2glare.png");
+      const eyebrows = new PIXI.Sprite.from("../assets/eyebrows3.png");
       const hairColor = new PIXI.Sprite.from("../assets/hair1color.png");
       const face = new PIXI.Sprite.from("../assets/face1.png");
       const background = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -167,24 +174,30 @@ export default {
       background.height = 420;
       background.tint = 0xffffff;
       face.filters = [new ColorOverlayFilter([1, 0.845, 0.7])];
-      eyebrows.filters = [new ColorOverlayFilter([0, 0.8, 0.83])];
+      eyebrows.filters = [new ColorOverlayFilter([0, 0.6, 0.63])];
       hairColor.filters = [new ColorOverlayFilter([0, 0.8, 0.83])];
+      hairBack.filters = [new ColorOverlayFilter([0, 0.8, 0.83])];
       // hairColor.filters = [new ColorOverlayFilter([0.55, 0.4, 0.3])];
       hair.alpha = 0.5;
+      mouthColor.alpha = 0.5;
       hair.filters = [new ColorOverlayFilter([0.8, 1, 0.9])];
       eyeColor.filters = [new ColorOverlayFilter([0.2, 0.2, 0.25])];
       stage.addChild(background);
-      hairContainer.addChild(hairColor);
-      hairContainer.addChild(hair);
+      // hairContainer.addChild(hairColor);
+      // hairContainer.addChild(hair);
       // console.log(hair);
       // console.log(face);
+      // stage.addChild(hairBack);
       stage.addChild(face);
-      stage.addChild(eyebrows);
-      stage.addChild(hairContainer);
       stage.addChild(eyeColor);
-      stage.addChild(eye);
+      stage.addChild(eyeShape);
       stage.addChild(eyeLight);
-      stage.addChild(mouth);
+      stage.addChild(eyebrows);
+      // stage.addChild(hairContainer);
+      stage.addChild(hairColor);
+      stage.addChild(hair);
+      stage.addChild(mouthColor);
+      stage.addChild(mouthLine);
       stage.addChild(nose);
       avatar.face = face;
       avatar.eyebrows = eyebrows;
@@ -192,11 +205,12 @@ export default {
       avatar.hairColor = hairColor;
       avatar.eyebrows = eyebrows;
       avatar.eyeLight = eyeLight;
-      avatar.eye = eye;
-      avatar.mouth = mouth;
+      avatar.eyeShape = eyeShape;
+      avatar.mouthColor = mouthColor;
       avatar.nose = nose;
       avatar.eyeColor = eyeColor;
       avatar.background = background;
+      avatar.hairBack = hairBack;
     },
   },
 

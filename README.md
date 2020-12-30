@@ -36,3 +36,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - [ ] canvas padding bug (pointy corner on upper left side)
 - [ ] image rescaling bug - need to scale based on proportions, not image size
 - [ ] color picker component
+- [ ] use pixi.js-legacy to support browsers that don't support webGL

@@ -9,11 +9,14 @@
   },
   "dependencies": {
     "@jaames/iro": "^5.3.1",
+    "@pixi/core": "^5.3.7",
+    "@pixi/display": "^5.3.7",
     "@pixi/filter-color-overlay": "^3.1.1",
+    "@pixi/utils": "^5.3.7",
     "core-js": "^3.6.5",
     "pixi-console": "^3.2.1",
     "pixi-picture": "^2.0.3",
-    "pixi.js": "^5.3.6",
+    "pixi.js": "^5.3.7",
     "vue": "^3.0.0",
     "vue-native-color-picker": "^1.1.3"
   },
