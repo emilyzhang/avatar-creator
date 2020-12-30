@@ -224,7 +224,7 @@ export default {
       // Set the size of the color picker
       width: 200,
       // Set the initial color to pure red
-      color: "#f00",
+      color: "#beebee",
       display: "inline-block",
       borderColor: "#aee1e2",
       padding: 0,
