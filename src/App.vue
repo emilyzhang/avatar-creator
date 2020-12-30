@@ -18,6 +18,12 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600&display=swap");
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body {
   padding: 0;
@@ -35,7 +41,7 @@ body {
   height: 100%;
 }
 
-button {
+button, select {
   font-family: inherit;
   font-size: 1em;
   padding: 8px 8px;
@@ -45,7 +51,7 @@ button {
   outline: none;
   border: none;
   color: #77a2bc;
-  box-shadow: 7px 6px 28px 1px #646292;
+  box-shadow: 0px 0px 70px 0px #646292;
 }
 button:hover { 
   color: black;
