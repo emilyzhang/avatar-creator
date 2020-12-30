@@ -7,12 +7,12 @@
       <div id="picker"></div>
       <div class="feature-select" @change="featureSelect($event)">
         <select>
+          <option value="eyeColor">eyeColor</option>
           <option value="face">face</option>
           <option value="eye">eye</option>
           <option value="eyebrows">eyebrows</option>
           <option value="hair">hair</option>
           <option value="hairColor">hairColor</option>
-          <option value="eyeColor">eyeColor</option>
           <option value="eyeLight">eyeLight</option>
           <option value="mouth">mouth</option>
           <option value="nose">nose</option>
@@ -34,7 +34,7 @@
     <defs>
       <g
         id="handle"
-        transform="scale(0.8)"
+        transform="scale(0.6)"
         fill="#728ca7"
         stroke-width="2"
         stroke="white"
@@ -64,7 +64,7 @@ import iro from "@jaames/iro";
 const avatar = {};
 let stage;
 let colorPicker;
-let selectedFeature;
+let selectedFeature = "eyeColor";
 
 // const featuresEnum = Object.freeze({
 //   "face": 0,
@@ -170,9 +170,9 @@ export default {
       eyebrows.filters = [new ColorOverlayFilter([0, 0.8, 0.83])];
       hairColor.filters = [new ColorOverlayFilter([0, 0.8, 0.83])];
       // hairColor.filters = [new ColorOverlayFilter([0.55, 0.4, 0.3])];
-      hair.filters = [new ColorOverlayFilter([0.1, 0.5, 0.8])];
+      hair.alpha = 0.5;
+      hair.filters = [new ColorOverlayFilter([0.8, 1, 0.9])];
       eyeColor.filters = [new ColorOverlayFilter([0.2, 0.2, 0.25])];
-      hair.alpha = 0.3;
       stage.addChild(background);
       hairContainer.addChild(hairColor);
       hairContainer.addChild(hair);
@@ -210,10 +210,10 @@ export default {
       display: "inline-block",
       borderColor: "white",
       padding: 0,
-      borderWidth: 3,
+      borderWidth: 2,
       // handleRadius: 10,
       handleSvg: "#handle",
-      handleProps: { x: -10, y: -10 },
+      handleProps: { x: -8, y: -8 },
       layout: [
         {
           component: iro.ui.Wheel,
@@ -236,7 +236,7 @@ export default {
   display: grid;
   /* grid-template-areas: "lside avatar colorpicker random rside"; */
   grid-template-areas: "lside avatar colorpicker rside";
-  grid-template-rows: auto;
+  grid-template-rows: 424px;
   /* grid-template-columns: 20px 425px 300px auto 20px; */
   grid-template-columns: 1fr 425px 300px 1fr;
   grid-gap: 15px;
