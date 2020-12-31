@@ -177,23 +177,49 @@ export default {
         this.currentFeature + feature.id + "line" + ".png"
       );
     },
-    selectNewFeature(feature) {
+    selectNewFeature(newFeature) {
+      const pixiApp = this.pixiApp
+      const currentFeature = this.currentFeature
       const currentAvatarFeature = this.avatarState.features[
-        this.currentFeature
+        currentFeature
       ];
-      if (currentAvatarFeature?.choice?.isSingleLayer) {
-        this.avatarState.features[this.currentFeature].choice = feature;
-        this.avatar;
+      const newSprite = this.newSprite
+      // first remove old feature
+      if (currentAvatarFeature?.choice) {
+        console.log(currentAvatarFeature)
+        const oldFeature = currentAvatarFeature.choice;
+        // first remove oldfeature
+        if (oldFeature.isSingleLayer) {
+          pixiApp.stage.removeChild(currentAvatarFeature.sprite);
+        } else {
+          Object.keys(currentAvatarFeature.layers).map(function (layerName) {
+            const layer = currentAvatarFeature.layers[layerName];
+            pixiApp.stage.removeChild(layer.sprite);
+          });
+        }
       }
-      // if (feature.isSingleLayer) {
-      //   console.log(this.currentFeature)
-      //   if (currentChoice.isSingleLayer) {
-      //     if
-      //     console.log("straight up swap!")
-      //   }
-      // } else {
-      //   console.log(feature)
-      // }
+      // then add new feature
+      if (newFeature.isSingleLayer) {
+        // console.log(newFeature);
+        const sprite = newSprite(currentFeature, newFeature.id, "", currentAvatarFeature.color, newFeature.alpha, newFeature.position)
+        currentAvatarFeature.sprite = sprite
+        pixiApp.stage.addChild(sprite)
+      } else {
+        Object.keys(newFeature.positions).map(function (layerName) {
+          delete currentAvatarFeature.color
+          delete currentAvatarFeature.sprite
+          const oldLayer = currentAvatarFeature.layers[layerName];
+          console.log("old layer", oldLayer)
+          let alpha;
+          if (newFeature.alpha) alpha = newFeature.alpha[layerName]
+          const sprite = newSprite(currentFeature, newFeature.id, layerName, oldLayer?.color, alpha, newFeature.positions[layerName])
+          currentAvatarFeature.layers[layerName].sprite = sprite
+          pixiApp.stage.addChild(sprite)
+        });
+      }
+        currentAvatarFeature.isSingleLayer = newFeature.isSingleLayer;
+        currentAvatarFeature.choice = newFeature;
+      console.log(this.avatarState)
     },
     featureSelect(event) {
       console.log(event.target.value);
@@ -287,9 +313,19 @@ export default {
           alpha: {
             line: 0.5,
           },
-        },
+        }, 
       });
       this.choices.eye = Object.freeze({
+        happyFemale: {
+          name: "happyFemale",
+          id: 1,
+          isSingleLayer: false,
+          positions: {
+            line: 4,
+            color: 3,
+            glare: 5,
+          },
+        },
         neutralFemale: {
           name: "neutralFemale",
           id: 2,
