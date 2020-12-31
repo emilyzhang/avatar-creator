@@ -40,8 +40,6 @@
     </div>
     <div class="select-color">
       <div id="color-square"></div>
-      <!-- <button @click="select('hairColor')">hair color</button>
-      <button @click="select('eyeColor')">eye color</button> -->
     </div>
     <div class="feature-box">
       <div class="feature-select-buttons">
@@ -179,10 +177,6 @@ export default {
         }
       }
     },
-    select(selection) {
-      console.log(selection);
-      this.changeColor(selection);
-    },
     featureFilePath(featureType, id, layer) {
       return path.join(
         "..",
@@ -219,56 +213,57 @@ export default {
       const currentFeature = this.currentFeature;
       const currentAvatarFeature = this.avatarState.features[currentFeature];
       const newSprite = this.newSprite;
-      // first remove old feature
-      if (currentAvatarFeature?.choice) {
-        // console.log(currentAvatarFeature);
-        const oldFeature = currentAvatarFeature.choice;
-        // first remove oldfeature
-        if (oldFeature.isSingleLayer) {
-          pixiApp.stage.removeChild(currentAvatarFeature.sprite);
-        } else {
-          Object.keys(currentAvatarFeature.layers).map(function (layerName) {
-            const layer = currentAvatarFeature.layers[layerName];
-            pixiApp.stage.removeChild(layer.sprite);
-          });
+      if (currentAvatarFeature?.choice.id !== newFeature.id) {
+        // first remove old feature, if it exists
+        if (currentAvatarFeature?.choice) {
+          // console.log(currentAvatarFeature);
+          const oldFeature = currentAvatarFeature.choice;
+          // first remove oldfeature
+          if (oldFeature.isSingleLayer) {
+            pixiApp.stage.removeChild(currentAvatarFeature.sprite);
+          } else {
+            Object.keys(currentAvatarFeature.layers).map(function (layerName) {
+              const layer = currentAvatarFeature.layers[layerName];
+              pixiApp.stage.removeChild(layer.sprite);
+            });
+          }
         }
-      }
-      // then add new feature
-      if (newFeature.isSingleLayer) {
-        // console.log(newFeature);
-        const sprite = newSprite(
-          currentFeature,
-          newFeature.id,
-          "",
-          currentAvatarFeature.color,
-          newFeature.alpha,
-          newFeature.position
-        );
-        currentAvatarFeature.sprite = sprite;
-        pixiApp.stage.addChild(sprite);
-      } else {
-        Object.keys(newFeature.positions).map(function (layerName) {
-          delete currentAvatarFeature.color;
-          delete currentAvatarFeature.sprite;
-          const oldLayer = currentAvatarFeature.layers[layerName];
-          // console.log("old layer", oldLayer);
-          let alpha;
-          if (newFeature.alpha) alpha = newFeature.alpha[layerName];
+        // Add new feature
+        if (newFeature.isSingleLayer) {
           const sprite = newSprite(
             currentFeature,
             newFeature.id,
-            layerName,
-            oldLayer?.color,
-            alpha,
-            newFeature.positions[layerName]
+            "",
+            currentAvatarFeature.color,
+            newFeature.alpha,
+            newFeature.position
           );
-          currentAvatarFeature.layers[layerName].sprite = sprite;
+          currentAvatarFeature.sprite = sprite;
           pixiApp.stage.addChild(sprite);
-        });
+        } else {
+          Object.keys(newFeature.positions).map(function (layerName) {
+            delete currentAvatarFeature.color;
+            delete currentAvatarFeature.sprite;
+            const oldLayer = currentAvatarFeature.layers[layerName];
+            // console.log("old layer", oldLayer);
+            let alpha;
+            if (newFeature.alpha) alpha = newFeature.alpha[layerName];
+            const sprite = newSprite(
+              currentFeature,
+              newFeature.id,
+              layerName,
+              oldLayer?.color,
+              alpha,
+              newFeature.positions[layerName]
+            );
+            currentAvatarFeature.layers[layerName].sprite = sprite;
+            pixiApp.stage.addChild(sprite);
+          });
+        }
+        currentAvatarFeature.isSingleLayer = newFeature.isSingleLayer;
+        currentAvatarFeature.choice = newFeature;
+        console.log(this.avatarState);
       }
-      currentAvatarFeature.isSingleLayer = newFeature.isSingleLayer;
-      currentAvatarFeature.choice = newFeature;
-      console.log(this.avatarState);
     },
     featureSelect(event) {
       console.log(event.target.value);
@@ -294,6 +289,15 @@ export default {
       this.drawInitialAvatar();
     },
     newSprite(featureName, featureID, layerName, color, alpha, position) {
+      // console.log(
+      //   "newsprite: ",
+      //   featureName,
+      //   featureID,
+      //   layerName,
+      //   color,
+      //   alpha,
+      //   position
+      // );
       const sprite = new PIXI.Sprite.from(
         this.featureFilePath(featureName, featureID, layerName)
       );
@@ -360,7 +364,7 @@ export default {
             back: 0,
           },
           alpha: {
-            line: 0.5,
+            line: 0.35,
           },
         },
       });

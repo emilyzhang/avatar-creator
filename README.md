@@ -38,4 +38,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - [ ] suggested colors panel
 - [ ] remove ability to edit color of certain layers (back of hair, for example)?
 - [ ] layer bug - the layers of old features get left behind right now
-- [ ] alpha bug - transparency on certain layers not showing up
+- [x] alpha bug - transparency on certain layers not showing up
