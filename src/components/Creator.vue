@@ -25,7 +25,6 @@
       <button @click="select('eyeColor')">eye color</button> -->
     </div>
     <div class="feature-box">
-      
       <a v-bind:href="downloadURL" download="avatar.png">
         <button class="save-button hvr-push" @click="downloadAvatar">
           <svg
@@ -85,54 +84,127 @@
 import * as PIXI from "pixi.js-legacy";
 import { ColorOverlayFilter } from "@pixi/filter-color-overlay";
 import iro from "@jaames/iro";
+const path = require('path');
 
 const avatar = {};
-let stage;
 let colorPicker;
 let selectedFeature = "eyeColor";
-let renderer;
 // PIXI.settings.FAIL_IF_MAJOR_PERFORMANCE_CAVEAT = false;
 
-// const featuresEnum = Object.freeze({
-//   "face": 0,
-//   "eyebrows": 1,
-//   "hairColor": 2,
-//   "hair": 3,
-//   "eyeColor": 4,
-//   "eyeTop": 5,
-//   "eyeLight": 6,
-//   "mouth": 7,
-//   "nose": 8,
-// })
+const choices = {
+  assetFilePath : function(featureType, id, layer) {
+    return path.join("..", "assets", featureType + id + layer + ".png")
+  },
+};
+
+choices.hair = Object.freeze({
+  wavy: {
+    name: "wavy",
+    id: 1,
+    isSingleLayer: false,
+    positions: {
+      line: 10,
+      color: 9,
+      back: 0,
+    },
+  },
+});
+
+choices.eyes = Object.freeze({
+  neutralFemale: {
+    name: "neutralFemale",
+    id: 2,
+    isSingleLayer: false,
+    positions: {
+      line: 4,
+      color: 3,
+      white: 2,
+    },
+  },
+});
+
+choices.face = Object.freeze({
+  neutralFemale: {
+    name: "neutralFemale",
+    id: 1,
+    isSingleLayer: true,
+    positions: 1,
+  },
+});
+
+choices.nose = Object.freeze({
+  mediumY: {
+    name: "mediumY",
+    id: 6,
+    isSingleLayer: true,
+    positions: 5,
+  },
+});
+
+choices.eyebrows = Object.freeze({
+  neutral: {
+    name: "neutral",
+    id: 0,
+    isSingleLayer: true,
+    positions: 8,
+  },
+});
+
+choices.mouth = Object.freeze({
+  neutralFemale: {
+    name: "neutralFemale",
+    id: 1,
+    isSingleLayer: false,
+    positions: {
+      line: 7,
+      color: 6,
+    },
+  },
+});
 
 const avatarState = {
   features: {
+    background: {
+      isTransparent: false,
+      color: "#beebee",
+    },
     face: {
-      choice: 1,
-      isSingleLayer: true,
-      layers: { position: 1, color: "", sprite: null},
+      choice: choices.face.neutralFemale,
+      layers: { color: "#d4b485" },
+    },
+    hair: {
+      choice: choices.hair.wavy,
+      layers: {
+        color: {color: "#3dc6db"},
+        line: {color: "#fff3c4"},
+        back: {color: "#3dc6db"},
+        },
     },
     eyes: {
-      choice: 1,
+      choice: choices.eyes.neutralFemale,
       layers: {
-        shape: {
-          position: 10,
-          color: "",
+        line: {},
+        color: {color: "#a2adb0"},
+        white: {},
+      },
+    },
+    nose: {
+      choice: choices.nose.mediumY,
+      layers: {},
+    },
+    eyebrows: {
+      choice: choices.eyebrows.neutral,
+      layers: {
+        color: "#3dc6db",
+      },
+    },
+    mouth: {
+      choice: choices.mouth.neutralFemale,
+      layers: {
+        line: {
         },
         color: {
-          position: 9,
-          color: "",
-        },
-        back: {
-          position: 0,
-          color: ""
-        }
-      },
-      nose: {
-        choice: 6,
-        layers: {
-          position: 5,
-          color: "",
+          color: "#ba6665",
         },
       },
     },
@@ -150,7 +222,8 @@ const hexToRGB = (hex) =>
     .map((x) => parseInt(x, 16));
 
 const changeColor = (selectedFeature) => {
-  console.log(avatarState);
+  console.log(avatarState, choices);
+  console.log(choices.assetFilePath("mouth", 1, "line"))
   if (selectedFeature) {
     var hex = colorPicker.color.hexString;
     console.log("HEX", hex);
@@ -158,7 +231,7 @@ const changeColor = (selectedFeature) => {
     console.log(selectedColor);
     console.log("attempting to change color");
     console.log("avatar", avatar);
-    if (!stage) {
+    if (!this.pixiApp?.stage) {
       console.log("stage not ready yet");
     }
     avatar[selectedFeature].filters = [
@@ -186,6 +259,7 @@ export default {
   data() {
     return {
       downloadURL: "",
+      pixiApp: null,
     };
   },
   methods: {
@@ -199,9 +273,22 @@ export default {
       // changeColor(selectedFeature);
     },
     downloadAvatar() {
-      console.log("downloadingAvatar", this.downloadURL);
-      this.downloadURL = renderer.view.toDataURL("image/png", 1);
-      console.log("after downloadingAvatar", this.downloadURL);
+      this.downloadURL = this.pixiApp.renderer.view.toDataURL("image/png", 1);
+    },
+    setupCanvas() {
+      var canvas = document.getElementById("pixi");
+      this.pixiApp = new PIXI.Application({
+        width: 420,
+        height: 420,
+        antialias: true,
+        transparent: true,
+        // backgroundColor: "0xffffff",
+        view: canvas,
+        preserveDrawingBuffer: true,
+      });
+    },
+    drawAvatar() {
+
     },
     drawPixi() {
       var canvas = document.getElementById("pixi");
@@ -215,20 +302,18 @@ export default {
         view: canvas,
         preserveDrawingBuffer: true,
       });
-      stage = app.stage;
-      renderer = app.renderer;
-      console.log("renderer", renderer);
-      console.log("app", app);
+      const stage = app.stage;
+      const renderer = app.renderer;
       // this.attachConsole(stage)
 
       // const hairContainer = new PIXI.Container();
-      const hair = new PIXI.Sprite.from("../assets/hair1shape.png");
+      const hair = new PIXI.Sprite.from("../assets/hair1line.png");
       const hairBack = new PIXI.Sprite.from("../assets/hair1back.png");
       const nose = new PIXI.Sprite.from("../assets/nose6.png");
       const mouthLine = new PIXI.Sprite.from("../assets/mouth1line.png");
       const mouthColor = new PIXI.Sprite.from("../assets/mouth1color.png");
       const eyeWhite = new PIXI.Sprite.from("../assets/eye2white.png");
-      const eyeShape = new PIXI.Sprite.from("../assets/eye2shape.png");
+      const eyeShape = new PIXI.Sprite.from("../assets/eye2line.png");
       const eyeColor = new PIXI.Sprite.from("../assets/eye2color.png");
       const eyeLight = new PIXI.Sprite.from("../assets/eye2glare.png");
       const eyebrows = new PIXI.Sprite.from("../assets/eyebrows0.png");
@@ -286,7 +371,8 @@ export default {
   },
 
   mounted() {
-    this.drawPixi();
+    this.setupCanvas();
+    // this.drawPixi();
     colorPicker = new iro.ColorPicker("#picker", {
       // Set the size of the color picker
       width: 250,
