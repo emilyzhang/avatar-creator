@@ -12,16 +12,29 @@
       >
       <div id="picker"></div>
       <div class="feature-select" @change="featureSelect($event)">
-        <select>
-          <option value="eyeColor">eyeColor</option>
-          <option value="face">face</option>
-          <option value="eyeShape">eyeShape</option>
-          <option value="eyebrows">eyebrows</option>
-          <option value="hair">hair</option>
-          <option value="hairColor">hairColor</option>
-          <option value="mouthColor">mouthColor</option>
-          <!-- <option value="nose">nose</option> -->
-          <option value="background">background</option>
+      Change {{currentFeature}}
+        <select
+          v-if="
+            avatarState.features[currentFeature] &&
+            !avatarState.features[currentFeature].choice.isSingleLayer
+          "
+        >
+          <option
+            :key="layer"
+            v-for="layer in Object.keys(
+              avatarState.features[currentFeature].layers
+            )"
+          >
+            {{ layer }}
+          </option>
+        </select>
+        <select
+          v-if="
+            avatarState.features[currentFeature] &&
+            avatarState.features[currentFeature].choice.isSingleLayer
+          "
+        >
+          <option :key="currentFeature">color</option>
         </select>
       </div>
     </div>
@@ -82,9 +95,8 @@ import { ColorOverlayFilter } from "@pixi/filter-color-overlay";
 import iro from "@jaames/iro";
 const path = require("path");
 
-const avatar = {};
 let colorPicker;
-let selectedFeature = "eyeColor";
+let selectedFeature = "color";
 // PIXI.settings.FAIL_IF_MAJOR_PERFORMANCE_CAVEAT = false;
 
 const hexToRGB = (hex) =>
@@ -97,37 +109,6 @@ const hexToRGB = (hex) =>
     .match(/.{2}/g)
     .map((x) => parseInt(x, 16));
 
-const changeColor = (selectedFeature) => {
-  console.log(this.avatarState, this.choices);
-  if (selectedFeature) {
-    var hex = colorPicker.color.hexString;
-    console.log("HEX", hex);
-    const selectedColor = hexToRGB(hex);
-    console.log(selectedColor);
-    console.log("attempting to change color");
-    console.log("avatar", avatar);
-    if (!this.pixiApp?.stage) {
-      console.log("stage not ready yet");
-    }
-    avatar[selectedFeature].filters = [
-      new ColorOverlayFilter([
-        selectedColor[0] / 255,
-        selectedColor[1] / 255,
-        selectedColor[2] / 255,
-      ]),
-    ];
-    if (selectedFeature === "hairColor") {
-      avatar.hairBack.filters = [
-        new ColorOverlayFilter([
-          selectedColor[0] / 255,
-          selectedColor[1] / 255,
-          selectedColor[2] / 255,
-        ]),
-      ];
-    }
-  }
-};
-
 export default {
   name: "Creator",
   components: {},
@@ -138,13 +119,55 @@ export default {
       currentFeature: "hair",
       downloadURL: "",
       pixiApp: {},
-      avatarState: {},
+      avatarState: {
+        features: {},
+      },
     };
   },
   methods: {
+    changeColor(selectedFeature) {
+      // console.log(this.avatarState, this.choices);
+      // console.log(this.avatarState.features);
+      // console.log(Object.keys(this.avatarState.features[this.currentFeature]));
+      if (selectedFeature && this.avatarState.features[this.currentFeature]) {
+        var hex = colorPicker.color.hexString;
+        console.log("HEX", hex);
+        const selectedColor = hexToRGB(hex);
+        // console.log("avatar", avatar);
+        if (!this.pixiApp?.stage) {
+          console.log("stage not ready yet");
+        }
+        if (this.avatarState.features[this.currentFeature].choice.isSingleLayer) {
+        this.avatarState.features[this.currentFeature].sprite.filters = [
+          new ColorOverlayFilter([
+            selectedColor[0] / 255,
+            selectedColor[1] / 255,
+            selectedColor[2] / 255,
+          ]),
+        ];
+        } else {
+          // console.log("change color of features", this.avatarState.features[this.currentFeature].layers, selectedFeature)
+          this.avatarState.features[this.currentFeature].layers[selectedFeature].sprite.filters = [
+          new ColorOverlayFilter([
+            selectedColor[0] / 255,
+            selectedColor[1] / 255,
+            selectedColor[2] / 255,
+          ]),
+        ];
+        }
+        if (selectedFeature === "color" && this.currentFeature === "hair") {
+          this.avatarState.features[this.currentFeature].layers["back"].sprite.filters = [
+          new ColorOverlayFilter([
+            selectedColor[0] / 255,
+            selectedColor[1] / 255,
+            selectedColor[2] / 255,
+          ])]
+        }
+      }
+    },
     select(selection) {
       console.log(selection);
-      changeColor(selection);
+      this.changeColor(selection);
     },
     featureFilePath(featureType, id, layer) {
       return path.join(
@@ -178,15 +201,13 @@ export default {
       );
     },
     selectNewFeature(newFeature) {
-      const pixiApp = this.pixiApp
-      const currentFeature = this.currentFeature
-      const currentAvatarFeature = this.avatarState.features[
-        currentFeature
-      ];
-      const newSprite = this.newSprite
+      const pixiApp = this.pixiApp;
+      const currentFeature = this.currentFeature;
+      const currentAvatarFeature = this.avatarState.features[currentFeature];
+      const newSprite = this.newSprite;
       // first remove old feature
       if (currentAvatarFeature?.choice) {
-        console.log(currentAvatarFeature)
+        // console.log(currentAvatarFeature);
         const oldFeature = currentAvatarFeature.choice;
         // first remove oldfeature
         if (oldFeature.isSingleLayer) {
@@ -201,25 +222,39 @@ export default {
       // then add new feature
       if (newFeature.isSingleLayer) {
         // console.log(newFeature);
-        const sprite = newSprite(currentFeature, newFeature.id, "", currentAvatarFeature.color, newFeature.alpha, newFeature.position)
-        currentAvatarFeature.sprite = sprite
-        pixiApp.stage.addChild(sprite)
+        const sprite = newSprite(
+          currentFeature,
+          newFeature.id,
+          "",
+          currentAvatarFeature.color,
+          newFeature.alpha,
+          newFeature.position
+        );
+        currentAvatarFeature.sprite = sprite;
+        pixiApp.stage.addChild(sprite);
       } else {
         Object.keys(newFeature.positions).map(function (layerName) {
-          delete currentAvatarFeature.color
-          delete currentAvatarFeature.sprite
+          delete currentAvatarFeature.color;
+          delete currentAvatarFeature.sprite;
           const oldLayer = currentAvatarFeature.layers[layerName];
-          console.log("old layer", oldLayer)
+          // console.log("old layer", oldLayer);
           let alpha;
-          if (newFeature.alpha) alpha = newFeature.alpha[layerName]
-          const sprite = newSprite(currentFeature, newFeature.id, layerName, oldLayer?.color, alpha, newFeature.positions[layerName])
-          currentAvatarFeature.layers[layerName].sprite = sprite
-          pixiApp.stage.addChild(sprite)
+          if (newFeature.alpha) alpha = newFeature.alpha[layerName];
+          const sprite = newSprite(
+            currentFeature,
+            newFeature.id,
+            layerName,
+            oldLayer?.color,
+            alpha,
+            newFeature.positions[layerName]
+          );
+          currentAvatarFeature.layers[layerName].sprite = sprite;
+          pixiApp.stage.addChild(sprite);
         });
       }
-        currentAvatarFeature.isSingleLayer = newFeature.isSingleLayer;
-        currentAvatarFeature.choice = newFeature;
-      console.log(this.avatarState)
+      currentAvatarFeature.isSingleLayer = newFeature.isSingleLayer;
+      currentAvatarFeature.choice = newFeature;
+      console.log(this.avatarState);
     },
     featureSelect(event) {
       console.log(event.target.value);
@@ -313,7 +348,7 @@ export default {
           alpha: {
             line: 0.5,
           },
-        }, 
+        },
       });
       this.choices.eye = Object.freeze({
         happyFemale: {
@@ -503,92 +538,11 @@ export default {
         },
       };
     },
-    drawPixi() {
-      var canvas = document.getElementById("pixi");
-
-      const app = new PIXI.Application({
-        width: 420,
-        height: 420,
-        antialias: true,
-        transparent: true,
-        // backgroundColor: "0xffffff",
-        view: canvas,
-        preserveDrawingBuffer: true,
-      });
-      this.pixiApp = app;
-      const stage = app.stage;
-      const renderer = app.renderer;
-      // this.attachConsole(stage)
-
-      // const hairContainer = new PIXI.Container();
-      const hair = new PIXI.Sprite.from("../assets/hair1line.png");
-      const hairBack = new PIXI.Sprite.from("../assets/hair1back.png");
-      const nose = new PIXI.Sprite.from("../assets/nose6.png");
-      const mouthLine = new PIXI.Sprite.from("../assets/mouth1line.png");
-      const mouthColor = new PIXI.Sprite.from("../assets/mouth1color.png");
-      const eyeWhite = new PIXI.Sprite.from("../assets/eye2white.png");
-      const eyeShape = new PIXI.Sprite.from("../assets/eye2line.png");
-      const eyeColor = new PIXI.Sprite.from("../assets/eye2color.png");
-      const eyeLight = new PIXI.Sprite.from("../assets/eye2glare.png");
-      const eyebrows = new PIXI.Sprite.from("../assets/eyebrows0.png");
-      const hairColor = new PIXI.Sprite.from("../assets/hair1color.png");
-      const face = new PIXI.Sprite.from("../assets/face1.png");
-      const background = new PIXI.Sprite(PIXI.Texture.WHITE);
-      background.width = 420;
-      background.height = 420;
-      background.tint = 0xfaf6ed;
-      face.filters = [new ColorOverlayFilter([0.9, 0.75, 0.6])];
-      eyebrows.filters = [new ColorOverlayFilter([0, 0.6, 0.63])];
-      hairColor.filters = [new ColorOverlayFilter([0, 0.8, 0.83])];
-      hairBack.filters = [new ColorOverlayFilter([0, 0.8, 0.83])];
-      mouthColor.filters = [new ColorOverlayFilter([0.8, 0.4, 0.4])];
-      // hairColor.filters = [new ColorOverlayFilter([0.55, 0.4, 0.3])];
-      hair.alpha = 0.5;
-      mouthColor.alpha = 0.5;
-      eyebrows.alpha = 0.8;
-      hair.filters = [new ColorOverlayFilter([0.8, 1, 0.9])];
-      eyeColor.filters = [new ColorOverlayFilter([0.2, 0.2, 0.25])];
-      stage.addChild(background);
-      // hairContainer.addChild(hairColor);
-      // hairContainer.addChild(hair);
-      // console.log(hair);
-      // console.log(face);
-      // stage.addChild(hairBack);
-      stage.addChild(face);
-      stage.addChild(eyeWhite);
-      stage.addChild(eyeColor);
-      stage.addChild(eyeShape);
-      stage.addChild(eyeLight);
-      stage.addChild(eyebrows);
-      // stage.addChild(hairContainer);
-      stage.addChild(hairColor);
-      stage.addChild(hair);
-      stage.addChild(mouthColor);
-      stage.addChild(mouthLine);
-      stage.addChild(nose);
-      avatar.face = face;
-      avatar.eyebrows = eyebrows;
-      avatar.hair = hair;
-      avatar.hairColor = hairColor;
-      avatar.eyebrows = eyebrows;
-      avatar.eyeLight = eyeLight;
-      avatar.eyeShape = eyeShape;
-      avatar.mouthColor = mouthColor;
-      avatar.nose = nose;
-      avatar.eyeColor = eyeColor;
-      avatar.background = background;
-      avatar.hairBack = hairBack;
-
-      this.downloadURL = renderer.view.toDataURL("image/png", 1);
-      console.log(this.downloadURL);
-    },
   },
-
   mounted() {
     this.setupChoices();
     this.setupInitialAvatar();
     this.setupCanvas();
-    // this.drawPixi();
     colorPicker = new iro.ColorPicker("#picker", {
       // Set the size of the color picker
       width: 250,
@@ -610,6 +564,7 @@ export default {
         },
       ],
     });
+    const changeColor = this.changeColor;
     colorPicker.on("color:change", function (color) {
       console.log("New active color:", color.hexString);
       changeColor(selectedFeature);
@@ -703,6 +658,15 @@ export default {
   /* background-color: #FAF6ED; */
   /* padding: 3px 3px; */
 }
+.feature-select {
+  margin-top: 10px;
+  padding: 17px;
+  /* display:inline; */
+  border-top: 2px solid #aee1e2;
+  color: #728ca7;
+  background: rgba(240, 252, 255, 0.596);
+  font-size:13px;
+}
 .feature-select-buttons {
   display: inline;
   margin: 10px;
@@ -716,7 +680,7 @@ export default {
   font-size: 15px;
   padding: 7px;
   margin: 0px 4px 4px 0px;
-  background: rgba(27, 27, 36, 0.623);
+  background: rgba(0, 23, 124, 0.623);
   color: #cef6f7;
   /* border:none; */
   /* background: none; */
