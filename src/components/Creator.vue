@@ -4,7 +4,20 @@
       <canvas id="pixi"></canvas>
     </div>
     <div class="color-picker">
-      <div id="picker"></div>
+      <div id="picker"></div><a v-bind:href="downloadURL" download="avatar.png"
+          >
+      <button class="save-button" @click="downloadAvatar">
+        <svg
+            class="download-svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z"
+            ></path></svg
+        >
+      </button></a>
       <div class="feature-select" @change="featureSelect($event)">
         <select>
           <option value="eyeColor">eyeColor</option>
@@ -24,6 +37,7 @@
       <!-- <button @click="select('hairColor')">hair color</button>
       <button @click="select('eyeColor')">eye color</button> -->
     </div>
+    <div class="feature-box"></div>
   </div>
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -55,15 +69,15 @@
 </template>
 
 <script>
-import * as PIXI from "pixi.js";
+import * as PIXI from "pixi.js-legacy";
 import { ColorOverlayFilter } from "@pixi/filter-color-overlay";
-import { PixiConsole, PixiConsoleConfig } from "pixi-console";
 import iro from "@jaames/iro";
 
 const avatar = {};
 let stage;
 let colorPicker;
 let selectedFeature = "eyeColor";
+let renderer;
 // PIXI.settings.FAIL_IF_MAJOR_PERFORMANCE_CAVEAT = false;
 
 // const featuresEnum = Object.freeze({
@@ -108,12 +122,12 @@ const changeColor = (selectedFeature) => {
     ];
     if (selectedFeature === "hairColor") {
       avatar.hairBack.filters = [
-      new ColorOverlayFilter([
-        selectedColor[0] / 255,
-        selectedColor[1] / 255,
-        selectedColor[2] / 255,
-      ]),
-    ];
+        new ColorOverlayFilter([
+          selectedColor[0] / 255,
+          selectedColor[1] / 255,
+          selectedColor[2] / 255,
+        ]),
+      ];
     }
   }
 };
@@ -121,6 +135,11 @@ const changeColor = (selectedFeature) => {
 export default {
   name: "Creator",
   components: {},
+  data () {
+    return {
+      downloadURL: ""
+    }
+  },
   methods: {
     select(selection) {
       console.log(selection);
@@ -131,17 +150,10 @@ export default {
       selectedFeature = event.target.value;
       // changeColor(selectedFeature);
     },
-    attachConsole(stage) {
-      // customize default values of PixiConsole
-      const consoleConfig = new PixiConsoleConfig();
-      consoleConfig.consoleWidth = 420;
-      consoleConfig.consoleHeight = 420;
-
-      let pixiConsole = PixiConsole.getInstance();
-      if (!PixiConsole.getInstance()) {
-        pixiConsole = new PixiConsole(consoleConfig);
-      }
-      stage.addChild(pixiConsole);
+    downloadAvatar() {
+      console.log("downloadingAvatar", this.downloadURL)
+      this.downloadURL = renderer.view.toDataURL("image/png", 1);
+      console.log("after downloadingAvatar", this.downloadURL)
     },
     drawPixi() {
       var canvas = document.getElementById("pixi");
@@ -153,8 +165,12 @@ export default {
         transparent: true,
         // backgroundColor: "0xffffff",
         view: canvas,
+        preserveDrawingBuffer: true,
       });
       stage = app.stage;
+      renderer = app.renderer;
+      console.log("renderer", renderer);
+      console.log("app", app);
       // this.attachConsole(stage)
 
       // const hairContainer = new PIXI.Container();
@@ -185,7 +201,7 @@ export default {
       eyebrows.alpha = 0.8;
       hair.filters = [new ColorOverlayFilter([0.8, 1, 0.9])];
       eyeColor.filters = [new ColorOverlayFilter([0.2, 0.2, 0.25])];
-      // stage.addChild(background);
+      stage.addChild(background);
       // hairContainer.addChild(hairColor);
       // hairContainer.addChild(hair);
       // console.log(hair);
@@ -215,6 +231,9 @@ export default {
       avatar.eyeColor = eyeColor;
       avatar.background = background;
       avatar.hairBack = hairBack;
+
+      this.downloadURL = renderer.view.toDataURL("image/png", 1);
+      console.log(this.downloadURL);
     },
   },
 
@@ -222,7 +241,7 @@ export default {
     this.drawPixi();
     colorPicker = new iro.ColorPicker("#picker", {
       // Set the size of the color picker
-      width: 200,
+      width: 150,
       // Set the initial color to pure red
       color: "#beebee",
       display: "inline-block",
@@ -253,12 +272,18 @@ export default {
 .grid-container {
   display: grid;
   /* grid-template-areas: "lside avatar colorpicker random rside"; */
-  grid-template-areas: "lside avatar colorpicker rside";
-  grid-template-rows: 424px;
+  grid-template-areas:
+    "lside avatar colorpicker rside"
+    "lside featurebox featurebox rside";
+  grid-template-rows: 424px 400px;
   /* grid-template-columns: 20px 425px 300px auto 20px; */
   grid-template-columns: 1fr 425px 300px 1fr;
   grid-gap: 15px;
   align-content: center;
+}
+.feature-box {
+  grid-area: featurebox;
+  background-color: rgba(185, 255, 228, 0.281);
 }
 .creator {
   border: 2px solid #aee1e2;
@@ -266,6 +291,7 @@ export default {
   /* padding: 4px; */
   width: 424px;
   grid-area: avatar;
+  background-color: rgba(185, 255, 228, 0.281);
 }
 .select-color {
   /* border: 2px dashed white; */
@@ -275,9 +301,21 @@ export default {
 }
 .color-picker {
   border: 2px solid #aee1e2;
+  background-color: rgba(185, 255, 228, 0.281);
   grid-area: colorpicker;
+  display: inline-block;
 }
 #picker {
-  margin: 40px;
+  margin: 10px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 5px 5px;
+}
+.download-svg {
+  height: 30px;
+}
+.save-button {
+  margin: 10px;
+  padding: 5px;
 }
 </style>

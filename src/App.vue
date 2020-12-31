@@ -54,7 +54,7 @@ button, select {
   box-shadow: 0px 0px 70px 0px #646292;
 }
 button:hover { 
-  color: black;
+  color: #646292;
 }
 button:active {
   transform: scale(0.98); 
