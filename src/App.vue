@@ -1,6 +1,4 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/hair1.png"> -->
-  <header class="hello">avatar creator</header>
   <Creator />
 </template>
 
@@ -41,7 +39,8 @@ body {
   height: 100%;
 }
 
-button, select {
+button,
+select {
   font-family: inherit;
   font-size: 1em;
   padding: 8px 8px;
@@ -50,53 +49,15 @@ button, select {
   /* background: #aee1e2; */
   outline: none;
   border: 2px solid #77a2bc;
-  background: #FAF6ED;
+  background: #faf6ed;
   color: #77a2bc;
   /* box-shadow: 0px 0px 70px 0px #646292; */
 }
-button:hover { 
-  color: #77a2bc;
-  border-color: #77a2bc;
-  box-shadow: 0px 0px 20px 0px #646292;
+button:hover {
+  color: #4b669d;
+  box-shadow: 0px 0px 20px 0px #aee1e2;
 }
 button:active {
-  transform: scale(0.98); 
-  /* box-shadow: 3px 2px 22px 1px #646292; */
-  box-shadow: 0px 0px 20px 0px #aee1e2;
-  outline: none;
-}
-
-.hello {
-  border: 2px solid #aee1e2;
-  text-align: center;
-  display: inline-block;
-  margin: 25px auto;
-  font-size: 50px;
-  color: #77a2bc;
-  padding: 15px;
-  text-shadow: 5 5 30px white;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-  background-image: linear-gradient(
-    270deg,
-    #646292,
-    #aee1e2,
-    white,
-    #aee1e2,
-    #646292
-  );
-}
-.hello:hover {
-  color: #FAF6ED;
-  text-shadow: 0 0 30px #728ca7;
-  -webkit-background-clip: none;
-  -moz-background-clip: none;
-  background-clip: none;
-  -webkit-text-fill-color: #FAF6ED;
-  -moz-text-fill-color: #FAF6ED;
-  background-image: #FAF6ED;
+  transform: scale(0.98);
 }
 </style>

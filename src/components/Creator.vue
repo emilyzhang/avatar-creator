@@ -1,9 +1,15 @@
 <template>
   <div class="grid-container">
+    <header class="hello">avatar creator</header>
     <div class="creator">
       <canvas id="pixi"></canvas>
     </div>
     <div class="color-picker">
+      <a v-bind:href="downloadURL" download="avatar.png">
+        <button class="save-button hvr-push" @click="downloadAvatar">
+          ♡ save avatar
+        </button></a
+      >
       <div id="picker"></div>
       <div class="feature-select" @change="featureSelect($event)">
         <select>
@@ -25,11 +31,15 @@
       <button @click="select('eyeColor')">eye color</button> -->
     </div>
     <div class="feature-box">
-      <a v-bind:href="downloadURL" download="avatar.png">
-        <button class="save-button hvr-push" @click="downloadAvatar">
-          ♡ save avatar
-        </button></a
-      >
+      <div class="feature-select-buttons">
+        <button
+          class="feature-button"
+          :key="choice"
+          v-for="choice in Object.keys(choices)"
+        >
+          {{ choice }}
+        </button>
+      </div>
     </div>
   </div>
   <svg
@@ -64,209 +74,6 @@ let colorPicker;
 let selectedFeature = "eyeColor";
 // PIXI.settings.FAIL_IF_MAJOR_PERFORMANCE_CAVEAT = false;
 
-const choices = {
-  assetFilePath: function (featureType, id, layer) {
-    return path.join("..", "assets", featureType + id + layer + ".png");
-  },
-};
-
-choices.hair = Object.freeze({
-  wavy: {
-    name: "wavy",
-    id: 1,
-    isSingleLayer: false,
-    positions: {
-      line: 10,
-      color: 9,
-      back: 0,
-    },
-    alpha: {
-      line: 0.5,
-    },
-  },
-});
-
-choices.eye = Object.freeze({
-  neutralFemale: {
-    name: "neutralFemale",
-    id: 2,
-    isSingleLayer: false,
-    positions: {
-      line: 4,
-      color: 3,
-      white: 2,
-      glare: 5,
-    },
-  },
-});
-
-choices.face = Object.freeze({
-  neutralFemale: {
-    name: "neutralFemale",
-    id: 1,
-    isSingleLayer: true,
-    position: 1,
-  },
-});
-
-choices.nose = Object.freeze({
-  snub: {
-    name: "snub",
-    id: 0,
-    isSingleLayer: true,
-    position: 5,
-  },
-  simple: {
-    name: "simple",
-    id: 1,
-    isSingleLayer: true,
-    position: 5,
-  },
-  button: {
-    name: "button",
-    id: 2,
-    isSingleLayer: true,
-    position: 5,
-  },
-  wide: {
-    name: "wide",
-    id: 3,
-    isSingleLayer: true,
-    position: 5,
-  },
-  upturned: {
-    name: "upturned",
-    id: 4,
-    isSingleLayer: true,
-    position: 5,
-  },
-  downturned: {
-    name: "downturned",
-    id: 5,
-    isSingleLayer: true,
-    position: 5,
-  },
-  medium: {
-    name: "medium",
-    id: 6,
-    isSingleLayer: true,
-    position: 5,
-  },
-  elegant: {
-    name: "elegant",
-    id: 7,
-    isSingleLayer: true,
-    position: 5,
-  },
-  droopy: {
-    name: "droopy",
-    id: 8,
-    isSingleLayer: true,
-    position: 5,
-  },
-});
-
-choices.eyebrows = Object.freeze({
-  neutral: {
-    name: "neutral",
-    id: 0,
-    isSingleLayer: true,
-    position: 8,
-  },
-  worried: {
-    name: "worried",
-    id: 1,
-    isSingleLayer: true,
-    position: 8,
-  },
-  thick: {
-    name: "thick",
-    id: 2,
-    isSingleLayer: true,
-    position: 8,
-  },
-  surprised: {
-    name: "surprised",
-    id: 3,
-    isSingleLayer: true,
-    position: 8,
-  },
-  resting: {
-    name: "resting",
-    id: 4,
-    isSingleLayer: true,
-    position: 8,
-  },
-});
-
-choices.mouth = Object.freeze({
-  simpleSmile: {
-    name: "simpleSmile",
-    id: 0,
-    isSingleLayer: true,
-    alpha: 0.5,
-  },
-  neutralFemale: {
-    name: "neutralFemale",
-    id: 1,
-    isSingleLayer: false,
-    positions: {
-      line: 7,
-      color: 6,
-    },
-    alpha: {
-      line: 0.5,
-    },
-  },
-});
-
-const avatarState = {
-  background: {
-    isTransparent: false,
-    color: "#beebee",
-  },
-  features: {
-    face: {
-      choice: choices.face.neutralFemale,
-      color: "#d4b485",
-    },
-    hair: {
-      choice: choices.hair.wavy,
-      layers: {
-        color: { color: "#3dc6db" },
-        line: { color: "#fff3c4" },
-        back: { color: "#3dc6db" },
-      },
-    },
-    eye: {
-      choice: choices.eye.neutralFemale,
-      layers: {
-        line: {},
-        color: { color: "#a2adb0" },
-        white: {},
-        glare: {},
-      },
-    },
-    nose: {
-      choice: choices.nose.medium,
-      layers: {},
-    },
-    eyebrows: {
-      choice: choices.eyebrows.resting,
-      color: "#3dc6db",
-    },
-    mouth: {
-      choice: choices.mouth.neutralFemale,
-      layers: {
-        line: {},
-        color: {
-          color: "#ba6665",
-        },
-      },
-    },
-  },
-};
-
 const hexToRGB = (hex) =>
   hex
     .replace(
@@ -278,7 +85,7 @@ const hexToRGB = (hex) =>
     .map((x) => parseInt(x, 16));
 
 const changeColor = (selectedFeature) => {
-  console.log(avatarState, choices);
+  console.log(this.avatarState, this.choices);
   if (selectedFeature) {
     var hex = colorPicker.color.hexString;
     console.log("HEX", hex);
@@ -311,16 +118,28 @@ const changeColor = (selectedFeature) => {
 export default {
   name: "Creator",
   components: {},
+  computed: {},
   data() {
     return {
+      choices: {},
+      currentSelectedFeature: "hair",
       downloadURL: "",
       pixiApp: {},
+      avatarState: {},
     };
   },
   methods: {
     select(selection) {
       console.log(selection);
       changeColor(selection);
+    },
+    assetFilePath(featureType, id, layer) {
+      return path.join(
+        "..",
+        "assets",
+        "features",
+        featureType + id + layer + ".png"
+      );
     },
     featureSelect(event) {
       console.log(event.target.value);
@@ -346,9 +165,8 @@ export default {
     },
     drawInitialAvatar() {
       const app = this.pixiApp;
-      const featureList = avatarState.features;
+      const featureList = this.avatarState.features;
       const sprites = {};
-      console.log("SPRITEs", sprites)
       const newSprite = (
         featureName,
         featureID,
@@ -358,7 +176,7 @@ export default {
         position
       ) => {
         const sprite = new PIXI.Sprite.from(
-          choices.assetFilePath(featureName, featureID, layerName)
+          this.assetFilePath(featureName, featureID, layerName)
         );
         if (color) {
           const rgb = hexToRGB(color);
@@ -370,15 +188,14 @@ export default {
           sprite.alpha = alpha;
         }
         if (sprites[position]) {
-          console.log("pushed", sprite, "at position", position)
+          console.log("pushed", sprite, "at position", position);
           sprites[position].push(sprite);
         } else {
-          console.log("added", sprite, "at position", position)
+          console.log("added", sprite, "at position", position);
           sprites[position] = [sprite];
         }
         return sprite;
       };
-
       Object.keys(featureList).map(function (name) {
         const feature = featureList[name];
         console.log(feature);
@@ -411,13 +228,212 @@ export default {
           });
         }
       });
-      console.log("NOW", avatarState, sprites);
       for (let i = 0; i < Object.keys(sprites).length; i++) {
-        console.log(sprites[i].length, i)
+        console.log(sprites[i].length, i);
         sprites[i].forEach((s) => {
           app.stage.addChild(s);
-        })
+        });
       }
+    },
+    setupChoices() {
+      this.choices.hair = Object.freeze({
+        wavy: {
+          name: "wavy",
+          id: 1,
+          isSingleLayer: false,
+          thumb: "line",
+          positions: {
+            line: 10,
+            color: 9,
+            back: 0,
+          },
+          alpha: {
+            line: 0.5,
+          },
+        },
+      });
+
+      this.choices.eye = Object.freeze({
+        neutralFemale: {
+          name: "neutralFemale",
+          id: 2,
+          isSingleLayer: false,
+          positions: {
+            line: 4,
+            color: 3,
+            white: 2,
+            glare: 5,
+          },
+        },
+      });
+
+      this.choices.face = Object.freeze({
+        neutralFemale: {
+          name: "neutralFemale",
+          id: 1,
+          isSingleLayer: true,
+          position: 1,
+        },
+      });
+
+      this.choices.nose = Object.freeze({
+        snub: {
+          name: "snub",
+          id: 0,
+          isSingleLayer: true,
+          position: 5,
+        },
+        simple: {
+          name: "simple",
+          id: 1,
+          isSingleLayer: true,
+          position: 5,
+        },
+        button: {
+          name: "button",
+          id: 2,
+          isSingleLayer: true,
+          position: 5,
+        },
+        wide: {
+          name: "wide",
+          id: 3,
+          isSingleLayer: true,
+          position: 5,
+        },
+        upturned: {
+          name: "upturned",
+          id: 4,
+          isSingleLayer: true,
+          position: 5,
+        },
+        downturned: {
+          name: "downturned",
+          id: 5,
+          isSingleLayer: true,
+          position: 5,
+        },
+        medium: {
+          name: "medium",
+          id: 6,
+          isSingleLayer: true,
+          position: 5,
+        },
+        elegant: {
+          name: "elegant",
+          id: 7,
+          isSingleLayer: true,
+          position: 5,
+        },
+        droopy: {
+          name: "droopy",
+          id: 8,
+          isSingleLayer: true,
+          position: 5,
+        },
+      });
+
+      this.choices.eyebrows = Object.freeze({
+        neutral: {
+          name: "neutral",
+          id: 0,
+          isSingleLayer: true,
+          position: 8,
+        },
+        worried: {
+          name: "worried",
+          id: 1,
+          isSingleLayer: true,
+          position: 8,
+        },
+        thick: {
+          name: "thick",
+          id: 2,
+          isSingleLayer: true,
+          position: 8,
+        },
+        surprised: {
+          name: "surprised",
+          id: 3,
+          isSingleLayer: true,
+          position: 8,
+        },
+        resting: {
+          name: "resting",
+          id: 4,
+          isSingleLayer: true,
+          position: 8,
+        },
+      });
+
+      this.choices.mouth = Object.freeze({
+        simpleSmile: {
+          name: "simpleSmile",
+          id: 0,
+          isSingleLayer: true,
+          alpha: 0.5,
+        },
+        neutralFemale: {
+          name: "neutralFemale",
+          id: 1,
+          isSingleLayer: false,
+          positions: {
+            line: 7,
+            color: 6,
+          },
+          alpha: {
+            line: 0.5,
+          },
+        },
+      });
+    },
+    setupInitialAvatar() {
+      this.avatarState = {
+        background: {
+          isTransparent: false,
+          color: "#beebee",
+        },
+        features: {
+          face: {
+            choice: this.choices.face.neutralFemale,
+            color: "#d4b485",
+          },
+          hair: {
+            choice: this.choices.hair.wavy,
+            layers: {
+              color: { color: "#3dc6db" },
+              line: { color: "#cef6f7" },
+              back: { color: "#3dc6db" },
+            },
+          },
+          eye: {
+            choice: this.choices.eye.neutralFemale,
+            layers: {
+              line: {},
+              color: { color: "#646292" },
+              white: {},
+              glare: {},
+            },
+          },
+          nose: {
+            choice: this.choices.nose.medium,
+            layers: {},
+          },
+          eyebrows: {
+            choice: this.choices.eyebrows.resting,
+            color: "#beebee",
+          },
+          mouth: {
+            choice: this.choices.mouth.neutralFemale,
+            layers: {
+              line: {},
+              color: {
+                color: "#ba6665",
+              },
+            },
+          },
+        },
+      };
     },
     drawPixi() {
       var canvas = document.getElementById("pixi");
@@ -501,6 +517,8 @@ export default {
   },
 
   mounted() {
+    this.setupChoices();
+    this.setupInitialAvatar();
     this.setupCanvas();
     // this.drawPixi();
     colorPicker = new iro.ColorPicker("#picker", {
@@ -533,20 +551,62 @@ export default {
 </script>
 
 <style>
+.hello {
+  border: 2px solid #aee1e2;
+  text-align: center;
+  display: inline-block;
+  margin: 25px auto;
+  font-size: 30px;
+  color: #77a2bc;
+  padding: 15px;
+  text-shadow: 5 5 30px white;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  background-image: linear-gradient(
+    270deg,
+    #646292,
+    #aee1e2,
+    white,
+    #aee1e2,
+    #646292
+  );
+  grid-area: header;
+}
+.hello:hover {
+  color: #faf6ed;
+  text-shadow: 0 0 30px #728ca7;
+  -webkit-background-clip: none;
+  -moz-background-clip: none;
+  background-clip: none;
+  -webkit-text-fill-color: #faf6ed;
+  -moz-text-fill-color: #faf6ed;
+  background-image: #faf6ed;
+}
 .grid-container {
   display: grid;
   /* grid-template-areas: "lside avatar colorpicker random rside"; */
   grid-template-areas:
-    "lside avatar colorpicker rside"
-    "lside featurebox featurebox rside";
-  grid-template-rows: 424px 300px;
+    " header header header header header"
+    "lside avatar colorpicker featurebox rside"
+    "lside savebox savebox featurebox rside";
+  grid-template-rows: 117px min-content 150px;
   /* grid-template-columns: 20px 425px 300px auto 20px; */
-  grid-template-columns: 1fr 425px 300px 1fr;
-  grid-gap: 15px;
+  grid-template-columns: 0.1fr min-content min-content 1fr 0.1fr;
+  grid-gap: 11px;
   align-content: center;
 }
 .feature-box {
   grid-area: featurebox;
+  display: grid;
+  grid-template-areas:
+    "header"
+    "features";
+  grid-template-rows: 100px 1fr;
+  /* grid-template-columns: 20px 425px 300px auto 20px; */
+  grid-template-columns: 1;
   border: 2px solid #aee1e2;
   background-color: rgba(185, 255, 228, 0.281);
 }
@@ -571,18 +631,9 @@ export default {
   display: inline-block;
 }
 #picker {
-  margin: 10px;
+  margin: 0px 8px;
   /* background-color: #FAF6ED; */
-  padding: 5px 5px;
-}
-.download-svg {
-  /* height: 30px; */
-  width: 28px;
-  height: 20px;
-}
-.save-button {
-  /* margin: 10px; */
-  /* padding: 5px; */
+  /* padding: 3px 3px; */
 }
 
 /* Push Animation */
@@ -613,7 +664,6 @@ export default {
   transform: perspective(5px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
 }
-.hvr-push:focus,
 .hvr-push:active {
   -webkit-animation-name: hvr-push;
   animation-name: hvr-push;
@@ -623,5 +673,29 @@ export default {
   animation-timing-function: linear;
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
+}
+.feature-select-buttons {
+  display: inline;
+  margin: 7px;
+  text-align: left;
+  overflow-y: auto;
+  max-height: 50px;
+}
+.feature-button {
+  font-size: 15px;
+  padding: 5px;
+  margin: 2px 3px;
+  background: rgba(14, 15, 88, 0.58);
+  color: #cef6f7;
+  /* border:none; */
+  /* background: none; */
+}
+.feature-button:hover {
+  color: #faf6ed;
+}
+.feature-button:active {
+  transform: scale(0.9);
+  /* box-shadow: 3px 2px 22px 1px #646292; */
+  outline: none;
 }
 </style>
