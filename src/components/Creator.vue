@@ -12,7 +12,7 @@
       >
       <div id="picker"></div>
       <div class="feature-select" @change="featureSelect($event)">
-      Change {{currentFeature}}
+        Change {{ currentFeature }}
         <select
           v-if="
             avatarState.features[currentFeature] &&
@@ -131,37 +131,44 @@ export default {
       // console.log(Object.keys(this.avatarState.features[this.currentFeature]));
       if (selectedFeature && this.avatarState.features[this.currentFeature]) {
         var hex = colorPicker.color.hexString;
-        console.log("HEX", hex);
+        // console.log("HEX", hex);
         const selectedColor = hexToRGB(hex);
         // console.log("avatar", avatar);
         if (!this.pixiApp?.stage) {
           console.log("stage not ready yet");
         }
-        if (this.avatarState.features[this.currentFeature].choice.isSingleLayer) {
-        this.avatarState.features[this.currentFeature].sprite.filters = [
-          new ColorOverlayFilter([
-            selectedColor[0] / 255,
-            selectedColor[1] / 255,
-            selectedColor[2] / 255,
-          ]),
-        ];
+        if (
+          this.avatarState.features[this.currentFeature].choice.isSingleLayer
+        ) {
+          this.avatarState.features[this.currentFeature].sprite.filters = [
+            new ColorOverlayFilter([
+              selectedColor[0] / 255,
+              selectedColor[1] / 255,
+              selectedColor[2] / 255,
+            ]),
+          ];
         } else {
           // console.log("change color of features", this.avatarState.features[this.currentFeature].layers, selectedFeature)
-          this.avatarState.features[this.currentFeature].layers[selectedFeature].sprite.filters = [
-          new ColorOverlayFilter([
-            selectedColor[0] / 255,
-            selectedColor[1] / 255,
-            selectedColor[2] / 255,
-          ]),
-        ];
+          this.avatarState.features[this.currentFeature].layers[
+            selectedFeature
+          ].sprite.filters = [
+            new ColorOverlayFilter([
+              selectedColor[0] / 255,
+              selectedColor[1] / 255,
+              selectedColor[2] / 255,
+            ]),
+          ];
         }
         if (selectedFeature === "color" && this.currentFeature === "hair") {
-          this.avatarState.features[this.currentFeature].layers["back"].sprite.filters = [
-          new ColorOverlayFilter([
-            selectedColor[0] / 255,
-            selectedColor[1] / 255,
-            selectedColor[2] / 255,
-          ])]
+          this.avatarState.features[this.currentFeature].layers[
+            "back"
+          ].sprite.filters = [
+            new ColorOverlayFilter([
+              selectedColor[0] / 255,
+              selectedColor[1] / 255,
+              selectedColor[2] / 255,
+            ]),
+          ];
         }
       }
     },
@@ -565,8 +572,8 @@ export default {
       ],
     });
     const changeColor = this.changeColor;
-    colorPicker.on("color:change", function (color) {
-      console.log("New active color:", color.hexString);
+    colorPicker.on("color:change", function () {
+      // console.log("New active color:", color.hexString);
       changeColor(selectedFeature);
     });
   },
@@ -665,7 +672,7 @@ export default {
   border-top: 2px solid #aee1e2;
   color: #728ca7;
   background: rgba(240, 252, 255, 0.596);
-  font-size:13px;
+  font-size: 13px;
 }
 .feature-select-buttons {
   display: inline;

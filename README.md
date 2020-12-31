@@ -36,3 +36,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
   - [ ] support filters in canvas
   - [ ] support downloading picture in canvas 
 - [ ] suggested colors panel
+- [ ] remove ability to edit color of certain layers (back of hair, for example)?
