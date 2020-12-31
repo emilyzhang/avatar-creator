@@ -147,6 +147,7 @@ export default {
               selectedColor[2] / 255,
             ]),
           ];
+          this.avatarState.features[this.currentFeature].color = hex;
         } else {
           // console.log("change color of features", this.avatarState.features[this.currentFeature].layers, selectedFeature)
           this.avatarState.features[this.currentFeature].layers[
@@ -158,6 +159,9 @@ export default {
               selectedColor[2] / 255,
             ]),
           ];
+          this.avatarState.features[this.currentFeature].layers[
+            selectedFeature
+          ].color = hex;
         }
         if (selectedFeature === "color" && this.currentFeature === "hair") {
           this.avatarState.features[this.currentFeature].layers[
@@ -169,6 +173,9 @@ export default {
               selectedColor[2] / 255,
             ]),
           ];
+          this.avatarState.features[this.currentFeature].layers[
+            "back"
+          ].color = hex;
         }
       }
     },
