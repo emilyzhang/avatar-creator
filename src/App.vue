@@ -49,16 +49,20 @@ button, select {
   margin: 10px;
   /* background: #aee1e2; */
   outline: none;
-  border: none;
+  border: 2px solid #77a2bc;
+  background: #FAF6ED;
   color: #77a2bc;
-  box-shadow: 0px 0px 70px 0px #646292;
+  /* box-shadow: 0px 0px 70px 0px #646292; */
 }
 button:hover { 
-  color: #646292;
+  color: #77a2bc;
+  border-color: #77a2bc;
+  box-shadow: 0px 0px 20px 0px #646292;
 }
 button:active {
   transform: scale(0.98); 
-  box-shadow: 3px 2px 22px 1px #646292;
+  /* box-shadow: 3px 2px 22px 1px #646292; */
+  box-shadow: 0px 0px 20px 0px #aee1e2;
   outline: none;
 }
 
@@ -66,10 +70,10 @@ button:active {
   border: 2px solid #aee1e2;
   text-align: center;
   display: inline-block;
-  margin: 50px auto;
+  margin: 25px auto;
   font-size: 50px;
   color: #77a2bc;
-  padding: 20px;
+  padding: 15px;
   text-shadow: 5 5 30px white;
   -webkit-background-clip: text;
   -moz-background-clip: text;
@@ -86,13 +90,13 @@ button:active {
   );
 }
 .hello:hover {
+  color: #FAF6ED;
   text-shadow: 0 0 30px #728ca7;
-  color: white;
   -webkit-background-clip: none;
   -moz-background-clip: none;
   background-clip: none;
-  -webkit-text-fill-color: white;
-  -moz-text-fill-color: white;
-  background-image: white;
+  -webkit-text-fill-color: #FAF6ED;
+  -moz-text-fill-color: #FAF6ED;
+  background-image: #FAF6ED;
 }
 </style>

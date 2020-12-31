@@ -4,20 +4,14 @@
       <canvas id="pixi"></canvas>
     </div>
     <div class="color-picker">
-      <div id="picker"></div><a v-bind:href="downloadURL" download="avatar.png"
-          >
-      <button class="save-button" @click="downloadAvatar">
-        <svg
-            class="download-svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z"
-            ></path></svg
-        >
-      </button></a>
+      <div id="picker"></div>
+    </div>
+    <div class="select-color">
+      <div id="color-square"></div>
+      <!-- <button @click="select('hairColor')">hair color</button>
+      <button @click="select('eyeColor')">eye color</button> -->
+    </div>
+    <div class="feature-box">
       <div class="feature-select" @change="featureSelect($event)">
         <select>
           <option value="eyeColor">eyeColor</option>
@@ -31,13 +25,31 @@
           <option value="background">background</option>
         </select>
       </div>
+      <a v-bind:href="downloadURL" download="avatar.png">
+        <button class="save-button hvr-push" @click="downloadAvatar">
+          <svg
+            fill="currentColor"
+            class="download-svg"
+            xmlns:dc="http://purl.org/dc/elements/1.1/"
+            xmlns:cc="http://creativecommons.org/ns#"
+            xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+            xmlns:svg="http://www.w3.org/2000/svg"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+            xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+            version="1.1"
+            x="0px"
+            y="0px"
+            viewBox="0 0 10 9"
+          >
+            <g transform="scale(0.1)">
+              <path
+                d="M 50 13 C 48.408197 12.99982 46.967 14.40854 47 16 L 47 63 L 31.0625 47.8125 C 29.948595 46.62321 27.809619 46.63083 26.6875 47.8125 C 25.565381 48.9941 25.692208 51.10525 26.9375 52.15625 L 47.9375 72.15625 C 48.48939 72.67425 49.243149 73 50 73 C 50.756851 73.0024 51.51061 72.674175 52.0625 72.15625 L 73.0625 52.15625 C 74.307792 51.105233 74.434619 48.994126 73.3125 47.8125 C 72.190381 46.630875 70.051405 46.62313 68.9375 47.8125 L 53 63 L 53 16 C 53.033 14.408539 51.591803 12.999817 50 13 z M 8 81 C 6.414904 81 5 82.5858 5 84 C 5 85.4142 6.414904 87 8 87 L 92 87 C 93.585096 87 95 85.414214 95 84 C 95 82.585786 93.585096 81 92 81 L 8 81 z "
+              />
+            </g>
+          </svg></button
+      ></a>
     </div>
-    <div class="select-color">
-      <div id="color-square"></div>
-      <!-- <button @click="select('hairColor')">hair color</button>
-      <button @click="select('eyeColor')">eye color</button> -->
-    </div>
-    <div class="feature-box"></div>
   </div>
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -92,6 +104,40 @@ let renderer;
 //   "nose": 8,
 // })
 
+const avatarState = {
+  features: {
+    face: {
+      choice: 1,
+      isSingleLayer: true,
+      layers: { position: 1, color: "", sprite: null},
+    },
+    eyes: {
+      choice: 1,
+      layers: {
+        shape: {
+          position: 10,
+          color: "",
+        },
+        color: {
+          position: 9,
+          color: "",
+        },
+        back: {
+          position: 0,
+          color: ""
+        }
+      },
+      nose: {
+        choice: 6,
+        layers: {
+          position: 5,
+          color: "",
+        },
+      },
+    },
+  },
+};
+
 const hexToRGB = (hex) =>
   hex
     .replace(
@@ -103,6 +149,7 @@ const hexToRGB = (hex) =>
     .map((x) => parseInt(x, 16));
 
 const changeColor = (selectedFeature) => {
+  console.log(avatarState);
   if (selectedFeature) {
     var hex = colorPicker.color.hexString;
     console.log("HEX", hex);
@@ -135,10 +182,10 @@ const changeColor = (selectedFeature) => {
 export default {
   name: "Creator",
   components: {},
-  data () {
+  data() {
     return {
-      downloadURL: ""
-    }
+      downloadURL: "",
+    };
   },
   methods: {
     select(selection) {
@@ -151,9 +198,9 @@ export default {
       // changeColor(selectedFeature);
     },
     downloadAvatar() {
-      console.log("downloadingAvatar", this.downloadURL)
+      console.log("downloadingAvatar", this.downloadURL);
       this.downloadURL = renderer.view.toDataURL("image/png", 1);
-      console.log("after downloadingAvatar", this.downloadURL)
+      console.log("after downloadingAvatar", this.downloadURL);
     },
     drawPixi() {
       var canvas = document.getElementById("pixi");
@@ -189,7 +236,7 @@ export default {
       const background = new PIXI.Sprite(PIXI.Texture.WHITE);
       background.width = 420;
       background.height = 420;
-      background.tint = 0xffffff;
+      background.tint = 0xfaf6ed;
       face.filters = [new ColorOverlayFilter([0.9, 0.75, 0.6])];
       eyebrows.filters = [new ColorOverlayFilter([0, 0.6, 0.63])];
       hairColor.filters = [new ColorOverlayFilter([0, 0.8, 0.83])];
@@ -275,7 +322,7 @@ export default {
   grid-template-areas:
     "lside avatar colorpicker rside"
     "lside featurebox featurebox rside";
-  grid-template-rows: 424px 400px;
+  grid-template-rows: 424px 300px;
   /* grid-template-columns: 20px 425px 300px auto 20px; */
   grid-template-columns: 1fr 425px 300px 1fr;
   grid-gap: 15px;
@@ -307,15 +354,56 @@ export default {
 }
 #picker {
   margin: 10px;
-  background-color: white;
-  border-radius: 10px;
+  /* background-color: #FAF6ED; */
   padding: 5px 5px;
 }
 .download-svg {
-  height: 30px;
+  /* height: 30px; */
+  width: 28px;
+  height: 20px;
 }
 .save-button {
-  margin: 10px;
-  padding: 5px;
+  /* margin: 10px; */
+  /* padding: 5px; */
+}
+
+/* Push Animation */
+@-webkit-keyframes hvr-push {
+  50% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes hvr-push {
+  50% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+.hvr-push {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(5px) translateZ(0);
+  transform: perspective(5px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+.hvr-push:focus,
+.hvr-push:active {
+  -webkit-animation-name: hvr-push;
+  animation-name: hvr-push;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
 }
 </style>

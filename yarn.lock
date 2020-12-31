@@ -1031,7 +1031,7 @@
   resolved "https://registry.yarnpkg.com/@pixi/constants/-/constants-5.3.7.tgz#a2e1789a98deb3713cfcb3eba3db84588bc9161e"
   integrity sha512-MBcgIM/mSqonFezkCI9080IqNlc0wb8S9QJ5otBdseOWUQa/ua2jF7Jd1sCBGmi0IzS9/NOHFXzZVTdS7AC7Ow==
 
-"@pixi/core@5.3.7":
+"@pixi/core@5.3.7", "@pixi/core@^5.3.7":
   version "5.3.7"
   resolved "https://registry.yarnpkg.com/@pixi/core/-/core-5.3.7.tgz#a8d65ca17f0c4ef8c0c5a22d31b9e02a4ab73b93"
   integrity sha512-WBhU2f5aJSVVaFP55FFBFKjKlRf5fYGxgA/U3kD4yD4Y3d3d6V3MIZv+o0VX+kBs1Eq7ePZqEv2smDrlzzMEjQ==
@@ -1315,7 +1315,7 @@
   dependencies:
     "@pixi/settings" "5.3.7"
 
-"@pixi/utils@5.3.7":
+"@pixi/utils@5.3.7", "@pixi/utils@^5.3.7":
   version "5.3.7"
   resolved "https://registry.yarnpkg.com/@pixi/utils/-/utils-5.3.7.tgz#55fe2a2fbf0fba842da5a602576ce68c498e7e16"
   integrity sha512-f8zAeHHURxfwBr8MZiXEIwY2h9wbS6vN0ypvapGvKFOexZ1EInTs35FhEiRWzLEPLHyn1RgCdKzR2zl++E4tIw==
@@ -4785,6 +4785,11 @@ hosted-git-info@^2.1.4:
   version "2.8.8"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.8.tgz#7539bd4bc1e0e0a895815a2e0262420b12858488"
   integrity sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==
+
+hover.css@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/hover.css/-/hover.css-2.3.2.tgz#f07193d9c7409d4e395134d3b2215b99eb55e0d3"
+  integrity sha1-8HGT2cdAnU45UTTTsiFbmetV4NM=
 
 hpack.js@^2.1.6:
   version "2.1.6"
@@ -8784,6 +8789,11 @@ vue-native-color-picker@^1.1.3:
   dependencies:
     core-js "^3.6.4"
     vue "^2.6.11"
+
+vue-router@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.0.2.tgz#5702bf8fa14535b80142fde226bf41a84917b1f4"
+  integrity sha512-LCsTSb5H25dZCxjsLasM9UED1BTg9vyTnp0Z9UhwC6QoqgLuHr/ySf7hjI/V0j2+xCKqJtecfmpghk6U8I2e4w==
 
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.2"

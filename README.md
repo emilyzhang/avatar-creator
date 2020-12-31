@@ -35,3 +35,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - [ ] use pixi.js-legacy to support browsers that don't support webGL
   - [ ] support filters in canvas
   - [ ] support downloading picture in canvas 
+- [ ] suggested colors panel
