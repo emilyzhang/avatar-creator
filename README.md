@@ -26,7 +26,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 ## Todos
-- [ ] avatar feature selection
+- [x] avatar feature selection
 - [ ] draw more options
 - [x] customizing the color of features
 - [x] being able to save the customized images
@@ -37,3 +37,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
   - [ ] support downloading picture in canvas 
 - [ ] suggested colors panel
 - [ ] remove ability to edit color of certain layers (back of hair, for example)?
+- [ ] layer bug - the layers of old features get left behind right now

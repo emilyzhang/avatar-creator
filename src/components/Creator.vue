@@ -482,6 +482,7 @@ export default {
           id: 0,
           isSingleLayer: true,
           alpha: 0.5,
+          position: 7,
         },
         neutralFemale: {
           name: "neutralFemale",
