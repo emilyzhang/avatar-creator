@@ -28,27 +28,6 @@
       <a v-bind:href="downloadURL" download="avatar.png">
         <button class="save-button hvr-push" @click="downloadAvatar">
           ♡ save avatar
-          <!-- <svg
-            fill="currentColor"
-            class="download-svg"
-            xmlns:dc="http://purl.org/dc/elements/1.1/"
-            xmlns:cc="http://creativecommons.org/ns#"
-            xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:svg="http://www.w3.org/2000/svg"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-            xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-            version="1.1"
-            x="0px"
-            y="0px"
-            viewBox="0 0 10 9"
-          >
-            <g transform="scale(0.1)">
-              <path
-                d="M 50 13 C 48.408197 12.99982 46.967 14.40854 47 16 L 47 63 L 31.0625 47.8125 C 29.948595 46.62321 27.809619 46.63083 26.6875 47.8125 C 25.565381 48.9941 25.692208 51.10525 26.9375 52.15625 L 47.9375 72.15625 C 48.48939 72.67425 49.243149 73 50 73 C 50.756851 73.0024 51.51061 72.674175 52.0625 72.15625 L 73.0625 52.15625 C 74.307792 51.105233 74.434619 48.994126 73.3125 47.8125 C 72.190381 46.630875 70.051405 46.62313 68.9375 47.8125 L 53 63 L 53 16 C 53.033 14.408539 51.591803 12.999817 50 13 z M 8 81 C 6.414904 81 5 82.5858 5 84 C 5 85.4142 6.414904 87 8 87 L 92 87 C 93.585096 87 95 85.414214 95 84 C 95 82.585786 93.585096 81 92 81 L 8 81 z "
-              />
-            </g>
-          </svg>-->
         </button></a
       >
     </div>
@@ -66,17 +45,9 @@
         stroke-width="2"
         stroke="white"
       >
-        <!-- this is where the handle svg content starts -->
-        <!-- <circle
-          r="10"
-          fill="#728ca7"
-          stroke-width="2"
-          stroke="white"
-        ></circle> -->
         <path
           d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402m5.726-20.583c-2.203 0-4.446 1.042-5.726 3.238-1.285-2.206-3.522-3.248-5.719-3.248-3.183 0-6.281 2.187-6.281 6.191 0 4.661 5.571 9.429 12 15.809 6.43-6.38 12-11.148 12-15.809 0-4.011-3.095-6.181-6.274-6.181"
         />
-        <!-- this is where the handle svg content ends -->
       </g>
     </defs>
   </svg>
