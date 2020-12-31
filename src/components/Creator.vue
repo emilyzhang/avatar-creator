@@ -34,11 +34,24 @@
       <div class="feature-select-buttons">
         <button
           class="feature-button"
-          :key="choice"
-          v-for="choice in Object.keys(choices)"
+          :class="{ 'active-button': feature === currentFeature }"
+          :key="feature"
+          v-for="feature in Object.keys(choices)"
+          @click="currentFeature = feature"
         >
-          {{ choice }}
+          {{ feature }}
         </button>
+      </div>
+      <div class="thumbnail-box">
+        <div v-if="choices[currentFeature]">
+          <img
+            class="thumbnail"
+            :key="f"
+            v-for="f in Object.keys(choices[currentFeature])"
+            @click="selectNewFeature(choices[currentFeature][f])"
+            :src="thumbnailFilePath(choices[currentFeature][f])"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -122,7 +135,7 @@ export default {
   data() {
     return {
       choices: {},
-      currentSelectedFeature: "hair",
+      currentFeature: "hair",
       downloadURL: "",
       pixiApp: {},
       avatarState: {},
@@ -133,13 +146,54 @@ export default {
       console.log(selection);
       changeColor(selection);
     },
-    assetFilePath(featureType, id, layer) {
+    featureFilePath(featureType, id, layer) {
       return path.join(
         "..",
         "assets",
         "features",
         featureType + id + layer + ".png"
       );
+    },
+    thumbnailFilePath(feature) {
+      if (feature.thumb) {
+        return path.join(
+          "..",
+          "assets",
+          "features",
+          this.currentFeature + feature.id + feature.thumb + ".png"
+        );
+      } else if (feature.isSingleLayer) {
+        return path.join(
+          "..",
+          "assets",
+          "features",
+          this.currentFeature + feature.id + ".png"
+        );
+      }
+      return path.join(
+        "..",
+        "assets",
+        "features",
+        this.currentFeature + feature.id + "line" + ".png"
+      );
+    },
+    selectNewFeature(feature) {
+      const currentAvatarFeature = this.avatarState.features[
+        this.currentFeature
+      ];
+      if (currentAvatarFeature?.choice?.isSingleLayer) {
+        this.avatarState.features[this.currentFeature].choice = feature;
+        this.avatar;
+      }
+      // if (feature.isSingleLayer) {
+      //   console.log(this.currentFeature)
+      //   if (currentChoice.isSingleLayer) {
+      //     if
+      //     console.log("straight up swap!")
+      //   }
+      // } else {
+      //   console.log(feature)
+      // }
     },
     featureSelect(event) {
       console.log(event.target.value);
@@ -160,45 +214,32 @@ export default {
         view: canvas,
         preserveDrawingBuffer: true,
       });
+      this.pixiApp.stage.sortableChildren = true;
       console.log("setup", this.pixiApp, this.pixiApp.stage);
       this.drawInitialAvatar();
+    },
+    newSprite(featureName, featureID, layerName, color, alpha, position) {
+      const sprite = new PIXI.Sprite.from(
+        this.featureFilePath(featureName, featureID, layerName)
+      );
+      if (color) {
+        const rgb = hexToRGB(color);
+        sprite.filters = [
+          new ColorOverlayFilter([rgb[0] / 255, rgb[1] / 255, rgb[2] / 255]),
+        ];
+      }
+      if (alpha) {
+        sprite.alpha = alpha;
+      }
+      sprite.zIndex = position;
+      return sprite;
     },
     drawInitialAvatar() {
       const app = this.pixiApp;
       const featureList = this.avatarState.features;
-      const sprites = {};
-      const newSprite = (
-        featureName,
-        featureID,
-        layerName,
-        color,
-        alpha,
-        position
-      ) => {
-        const sprite = new PIXI.Sprite.from(
-          this.assetFilePath(featureName, featureID, layerName)
-        );
-        if (color) {
-          const rgb = hexToRGB(color);
-          sprite.filters = [
-            new ColorOverlayFilter([rgb[0] / 255, rgb[1] / 255, rgb[2] / 255]),
-          ];
-        }
-        if (alpha) {
-          sprite.alpha = alpha;
-        }
-        if (sprites[position]) {
-          console.log("pushed", sprite, "at position", position);
-          sprites[position].push(sprite);
-        } else {
-          console.log("added", sprite, "at position", position);
-          sprites[position] = [sprite];
-        }
-        return sprite;
-      };
+      const newSprite = this.newSprite;
       Object.keys(featureList).map(function (name) {
         const feature = featureList[name];
-        console.log(feature);
         if (feature.choice.isSingleLayer) {
           const sprite = newSprite(
             name,
@@ -209,6 +250,7 @@ export default {
             feature.choice.position
           );
           feature.sprite = sprite;
+          app.stage.addChild(sprite);
         } else {
           Object.keys(feature.layers).map(function (layerName) {
             const layer = feature.layers[layerName];
@@ -225,15 +267,10 @@ export default {
               feature.choice.positions[layerName]
             );
             layer.sprite = sprite;
+            app.stage.addChild(sprite);
           });
         }
       });
-      for (let i = 0; i < Object.keys(sprites).length; i++) {
-        console.log(sprites[i].length, i);
-        sprites[i].forEach((s) => {
-          app.stage.addChild(s);
-        });
-      }
     },
     setupChoices() {
       this.choices.hair = Object.freeze({
@@ -252,7 +289,6 @@ export default {
           },
         },
       });
-
       this.choices.eye = Object.freeze({
         neutralFemale: {
           name: "neutralFemale",
@@ -266,7 +302,6 @@ export default {
           },
         },
       });
-
       this.choices.face = Object.freeze({
         neutralFemale: {
           name: "neutralFemale",
@@ -275,7 +310,6 @@ export default {
           position: 1,
         },
       });
-
       this.choices.nose = Object.freeze({
         snub: {
           name: "snub",
@@ -332,7 +366,6 @@ export default {
           position: 5,
         },
       });
-
       this.choices.eyebrows = Object.freeze({
         neutral: {
           name: "neutral",
@@ -365,7 +398,6 @@ export default {
           position: 8,
         },
       });
-
       this.choices.mouth = Object.freeze({
         simpleSmile: {
           name: "simpleSmile",
@@ -635,57 +667,20 @@ export default {
   /* background-color: #FAF6ED; */
   /* padding: 3px 3px; */
 }
-
-/* Push Animation */
-@-webkit-keyframes hvr-push {
-  50% {
-    -webkit-transform: scale(0.8);
-    transform: scale(0.8);
-  }
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-}
-@keyframes hvr-push {
-  50% {
-    -webkit-transform: scale(0.8);
-    transform: scale(0.8);
-  }
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-}
-.hvr-push {
-  display: inline-block;
-  vertical-align: middle;
-  -webkit-transform: perspective(5px) translateZ(0);
-  transform: perspective(5px) translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-}
-.hvr-push:active {
-  -webkit-animation-name: hvr-push;
-  animation-name: hvr-push;
-  -webkit-animation-duration: 0.3s;
-  animation-duration: 0.3s;
-  -webkit-animation-timing-function: linear;
-  animation-timing-function: linear;
-  -webkit-animation-iteration-count: 1;
-  animation-iteration-count: 1;
-}
 .feature-select-buttons {
   display: inline;
-  margin: 7px;
+  margin: 10px;
+  padding: 5px;
   text-align: left;
   overflow-y: auto;
-  max-height: 50px;
+  max-height: 100px;
+  border: 2px solid #aee1e2;
 }
 .feature-button {
   font-size: 15px;
-  padding: 5px;
-  margin: 2px 3px;
-  background: rgba(14, 15, 88, 0.58);
+  padding: 7px;
+  margin: 0px 4px 4px 0px;
+  background: rgba(27, 27, 36, 0.623);
   color: #cef6f7;
   /* border:none; */
   /* background: none; */
@@ -695,7 +690,32 @@ export default {
 }
 .feature-button:active {
   transform: scale(0.9);
-  /* box-shadow: 3px 2px 22px 1px #646292; */
-  outline: none;
+}
+.thumbnail-box {
+  padding: 10px;
+  overflow-y: auto;
+  text-align: left;
+  border: 2px solid #aee1e2;
+  margin: 10px;
+  margin-top: 0px;
+  background: rgba(240, 252, 255, 0.596);
+}
+.thumbnail {
+  height: 70px;
+  width: 70px;
+  border: 2px solid #728ca7;
+  padding: 2px;
+  margin-left: 5px;
+  object-fit: cover;
+}
+.thumbnail:active {
+  transform: scale(0.9);
+}
+.active-button {
+  color: #646292;
+  background: rgba(240, 252, 255, 0.596);
+}
+.active-button:hover {
+  color: #646292;
 }
 </style>

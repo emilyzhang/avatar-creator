@@ -1043,7 +1043,7 @@
     "@pixi/ticker" "5.3.7"
     "@pixi/utils" "5.3.7"
 
-"@pixi/display@5.3.7":
+"@pixi/display@5.3.7", "@pixi/display@^5.3.7":
   version "5.3.7"
   resolved "https://registry.yarnpkg.com/@pixi/display/-/display-5.3.7.tgz#b661d2ecfd2a67f213665a0698acd29e17eee8fe"
   integrity sha512-ma1JyLe5vaEgmaOR+anvj5YOKqT9OEWnboIe7NVmwGF1CZ7JFnB12rsRulHUsSaFG9bP5xjvroAZjFg/WvyGLw==

@@ -10,6 +10,7 @@
   "dependencies": {
     "@jaames/iro": "^5.3.1",
     "@pixi/core": "^5.3.7",
+    "@pixi/display": "^5.3.7",
     "@pixi/filter-color-overlay": "^3.1.1",
     "@pixi/utils": "^5.3.7",
     "core-js": "^3.6.5",
