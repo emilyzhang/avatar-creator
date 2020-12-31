@@ -5,13 +5,6 @@
     </div>
     <div class="color-picker">
       <div id="picker"></div>
-    </div>
-    <div class="select-color">
-      <div id="color-square"></div>
-      <!-- <button @click="select('hairColor')">hair color</button>
-      <button @click="select('eyeColor')">eye color</button> -->
-    </div>
-    <div class="feature-box">
       <div class="feature-select" @change="featureSelect($event)">
         <select>
           <option value="eyeColor">eyeColor</option>
@@ -25,6 +18,14 @@
           <option value="background">background</option>
         </select>
       </div>
+    </div>
+    <div class="select-color">
+      <div id="color-square"></div>
+      <!-- <button @click="select('hairColor')">hair color</button>
+      <button @click="select('eyeColor')">eye color</button> -->
+    </div>
+    <div class="feature-box">
+      
       <a v-bind:href="downloadURL" download="avatar.png">
         <button class="save-button hvr-push" @click="downloadAvatar">
           <svg
@@ -288,7 +289,7 @@ export default {
     this.drawPixi();
     colorPicker = new iro.ColorPicker("#picker", {
       // Set the size of the color picker
-      width: 150,
+      width: 250,
       // Set the initial color to pure red
       color: "#beebee",
       display: "inline-block",
@@ -330,6 +331,7 @@ export default {
 }
 .feature-box {
   grid-area: featurebox;
+  border: 2px solid #aee1e2;
   background-color: rgba(185, 255, 228, 0.281);
 }
 .creator {
