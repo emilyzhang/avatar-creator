@@ -627,12 +627,11 @@ export default {
   display: grid;
   /* grid-template-areas: "lside avatar colorpicker random rside"; */
   grid-template-areas:
-    " header header header header header"
+    "lside header header header rside"
     "lside avatar colorpicker featurebox rside"
-    "lside savebox savebox featurebox rside";
-  grid-template-rows: 117px min-content 150px;
-  /* grid-template-columns: 20px 425px 300px auto 20px; */
-  grid-template-columns: 0.1fr min-content min-content 1fr 0.1fr;
+    "lside savebox savebox savebox rside";
+  grid-template-rows: 117px 430px 150px;
+  grid-template-columns: 1fr min-content min-content 450px 1fr;
   grid-gap: 11px;
   align-content: center;
 }
@@ -675,7 +674,7 @@ export default {
 }
 .feature-select {
   margin-top: 10px;
-  padding: 17px;
+  padding: 7px;
   /* display:inline; */
   border-top: 2px solid #aee1e2;
   color: #728ca7;
@@ -713,7 +712,8 @@ export default {
   border: 2px solid #aee1e2;
   margin: 10px;
   margin-top: 0px;
-  background: rgba(240, 252, 255, 0.596);
+  background: rgba(240, 252, 255, 0.788);
+  max-height: 500px;
 }
 .thumbnail {
   height: 70px;
@@ -722,13 +722,14 @@ export default {
   padding: 2px;
   margin-left: 5px;
   object-fit: cover;
+  background: #faf6ed;
 }
 .thumbnail:active {
   transform: scale(0.9);
 }
 .active-button {
   color: #646292;
-  background: rgba(240, 252, 255, 0.596);
+  background: rgba(240, 252, 255, 0.788);
 }
 .active-button:hover {
   color: #646292;
