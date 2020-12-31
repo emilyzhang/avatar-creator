@@ -27,7 +27,8 @@
     <div class="feature-box">
       <a v-bind:href="downloadURL" download="avatar.png">
         <button class="save-button hvr-push" @click="downloadAvatar">
-          <svg
+          ♡ save avatar
+          <!-- <svg
             fill="currentColor"
             class="download-svg"
             xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -47,8 +48,9 @@
                 d="M 50 13 C 48.408197 12.99982 46.967 14.40854 47 16 L 47 63 L 31.0625 47.8125 C 29.948595 46.62321 27.809619 46.63083 26.6875 47.8125 C 25.565381 48.9941 25.692208 51.10525 26.9375 52.15625 L 47.9375 72.15625 C 48.48939 72.67425 49.243149 73 50 73 C 50.756851 73.0024 51.51061 72.674175 52.0625 72.15625 L 73.0625 52.15625 C 74.307792 51.105233 74.434619 48.994126 73.3125 47.8125 C 72.190381 46.630875 70.051405 46.62313 68.9375 47.8125 L 53 63 L 53 16 C 53.033 14.408539 51.591803 12.999817 50 13 z M 8 81 C 6.414904 81 5 82.5858 5 84 C 5 85.4142 6.414904 87 8 87 L 92 87 C 93.585096 87 95 85.414214 95 84 C 95 82.585786 93.585096 81 92 81 L 8 81 z "
               />
             </g>
-          </svg></button
-      ></a>
+          </svg>-->
+        </button></a
+      >
     </div>
   </div>
   <svg
@@ -84,7 +86,7 @@
 import * as PIXI from "pixi.js-legacy";
 import { ColorOverlayFilter } from "@pixi/filter-color-overlay";
 import iro from "@jaames/iro";
-const path = require('path');
+const path = require("path");
 
 const avatar = {};
 let colorPicker;
@@ -92,8 +94,8 @@ let selectedFeature = "eyeColor";
 // PIXI.settings.FAIL_IF_MAJOR_PERFORMANCE_CAVEAT = false;
 
 const choices = {
-  assetFilePath : function(featureType, id, layer) {
-    return path.join("..", "assets", featureType + id + layer + ".png")
+  assetFilePath: function (featureType, id, layer) {
+    return path.join("..", "assets", featureType + id + layer + ".png");
   },
 };
 
@@ -107,10 +109,13 @@ choices.hair = Object.freeze({
       color: 9,
       back: 0,
     },
+    alpha: {
+      line: 0.5,
+    },
   },
 });
 
-choices.eyes = Object.freeze({
+choices.eye = Object.freeze({
   neutralFemale: {
     name: "neutralFemale",
     id: 2,
@@ -119,6 +124,7 @@ choices.eyes = Object.freeze({
       line: 4,
       color: 3,
       white: 2,
+      glare: 5,
     },
   },
 });
@@ -128,7 +134,7 @@ choices.face = Object.freeze({
     name: "neutralFemale",
     id: 1,
     isSingleLayer: true,
-    positions: 1,
+    position: 1,
   },
 });
 
@@ -137,7 +143,7 @@ choices.nose = Object.freeze({
     name: "mediumY",
     id: 6,
     isSingleLayer: true,
-    positions: 5,
+    position: 5,
   },
 });
 
@@ -146,7 +152,7 @@ choices.eyebrows = Object.freeze({
     name: "neutral",
     id: 0,
     isSingleLayer: true,
-    positions: 8,
+    position: 8,
   },
 });
 
@@ -159,33 +165,37 @@ choices.mouth = Object.freeze({
       line: 7,
       color: 6,
     },
+    alpha: {
+      line: 0.5,
+    },
   },
 });
 
 const avatarState = {
+  background: {
+    isTransparent: false,
+    color: "#beebee",
+  },
   features: {
-    background: {
-      isTransparent: false,
-      color: "#beebee",
-    },
     face: {
       choice: choices.face.neutralFemale,
-      layers: { color: "#d4b485" },
+      color: "#d4b485",
     },
     hair: {
       choice: choices.hair.wavy,
       layers: {
-        color: {color: "#3dc6db"},
-        line: {color: "#fff3c4"},
-        back: {color: "#3dc6db"},
-        },
+        color: { color: "#3dc6db" },
+        line: { color: "#fff3c4" },
+        back: { color: "#3dc6db" },
+      },
     },
-    eyes: {
-      choice: choices.eyes.neutralFemale,
+    eye: {
+      choice: choices.eye.neutralFemale,
       layers: {
         line: {},
-        color: {color: "#a2adb0"},
+        color: { color: "#a2adb0" },
         white: {},
+        glare: {},
       },
     },
     nose: {
@@ -194,15 +204,12 @@ const avatarState = {
     },
     eyebrows: {
       choice: choices.eyebrows.neutral,
-      layers: {
-        color: "#3dc6db",
-      },
+      color: "#3dc6db",
     },
     mouth: {
       choice: choices.mouth.neutralFemale,
       layers: {
-        line: {
-        },
+        line: {},
         color: {
           color: "#ba6665",
         },
@@ -223,7 +230,6 @@ const hexToRGB = (hex) =>
 
 const changeColor = (selectedFeature) => {
   console.log(avatarState, choices);
-  console.log(choices.assetFilePath("mouth", 1, "line"))
   if (selectedFeature) {
     var hex = colorPicker.color.hexString;
     console.log("HEX", hex);
@@ -259,7 +265,7 @@ export default {
   data() {
     return {
       downloadURL: "",
-      pixiApp: null,
+      pixiApp: {},
     };
   },
   methods: {
@@ -286,9 +292,83 @@ export default {
         view: canvas,
         preserveDrawingBuffer: true,
       });
+      console.log("setup", this.pixiApp, this.pixiApp.stage);
+      this.drawInitialAvatar();
     },
-    drawAvatar() {
+    drawInitialAvatar() {
+      const app = this.pixiApp;
+      const featureList = avatarState.features;
+      const sprites = {};
+      console.log("SPRITEs", sprites)
+      const newSprite = (
+        featureName,
+        featureID,
+        layerName,
+        color,
+        alpha,
+        position
+      ) => {
+        const sprite = new PIXI.Sprite.from(
+          choices.assetFilePath(featureName, featureID, layerName)
+        );
+        if (color) {
+          const rgb = hexToRGB(color);
+          sprite.filters = [
+            new ColorOverlayFilter([rgb[0] / 255, rgb[1] / 255, rgb[2] / 255]),
+          ];
+        }
+        if (alpha) {
+          sprite.alpha = alpha;
+        }
+        if (sprites[position]) {
+          console.log("pushed", sprite, "at position", position)
+          sprites[position].push(sprite);
+        } else {
+          console.log("added", sprite, "at position", position)
+          sprites[position] = [sprite];
+        }
+        return sprite;
+      };
 
+      Object.keys(featureList).map(function (name) {
+        const feature = featureList[name];
+        console.log(feature);
+        if (feature.choice.isSingleLayer) {
+          const sprite = newSprite(
+            name,
+            feature.choice.id,
+            "",
+            feature.color,
+            feature.alpha,
+            feature.choice.position
+          );
+          feature.sprite = sprite;
+        } else {
+          Object.keys(feature.layers).map(function (layerName) {
+            const layer = feature.layers[layerName];
+            let alpha;
+            if (feature.choice.alpha) {
+              alpha = feature.choice.alpha[layerName];
+            }
+            const sprite = newSprite(
+              name,
+              feature.choice.id,
+              layerName,
+              layer.color,
+              alpha,
+              feature.choice.positions[layerName]
+            );
+            layer.sprite = sprite;
+          });
+        }
+      });
+      console.log("NOW", avatarState, sprites);
+      for (let i = 0; i < Object.keys(sprites).length; i++) {
+        console.log(sprites[i].length, i)
+        sprites[i].forEach((s) => {
+          app.stage.addChild(s);
+        })
+      }
     },
     drawPixi() {
       var canvas = document.getElementById("pixi");
@@ -302,6 +382,7 @@ export default {
         view: canvas,
         preserveDrawingBuffer: true,
       });
+      this.pixiApp = app;
       const stage = app.stage;
       const renderer = app.renderer;
       // this.attachConsole(stage)
