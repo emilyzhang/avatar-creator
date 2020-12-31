@@ -110,9 +110,57 @@ choices.face = Object.freeze({
 });
 
 choices.nose = Object.freeze({
-  mediumY: {
-    name: "mediumY",
+  snub: {
+    name: "snub",
+    id: 0,
+    isSingleLayer: true,
+    position: 5,
+  },
+  simple: {
+    name: "simple",
+    id: 1,
+    isSingleLayer: true,
+    position: 5,
+  },
+  button: {
+    name: "button",
+    id: 2,
+    isSingleLayer: true,
+    position: 5,
+  },
+  wide: {
+    name: "wide",
+    id: 3,
+    isSingleLayer: true,
+    position: 5,
+  },
+  upturned: {
+    name: "upturned",
+    id: 4,
+    isSingleLayer: true,
+    position: 5,
+  },
+  downturned: {
+    name: "downturned",
+    id: 5,
+    isSingleLayer: true,
+    position: 5,
+  },
+  medium: {
+    name: "medium",
     id: 6,
+    isSingleLayer: true,
+    position: 5,
+  },
+  elegant: {
+    name: "elegant",
+    id: 7,
+    isSingleLayer: true,
+    position: 5,
+  },
+  droopy: {
+    name: "droopy",
+    id: 8,
     isSingleLayer: true,
     position: 5,
   },
@@ -125,9 +173,39 @@ choices.eyebrows = Object.freeze({
     isSingleLayer: true,
     position: 8,
   },
+  worried: {
+    name: "worried",
+    id: 1,
+    isSingleLayer: true,
+    position: 8,
+  },
+  thick: {
+    name: "thick",
+    id: 2,
+    isSingleLayer: true,
+    position: 8,
+  },
+  surprised: {
+    name: "surprised",
+    id: 3,
+    isSingleLayer: true,
+    position: 8,
+  },
+  resting: {
+    name: "resting",
+    id: 4,
+    isSingleLayer: true,
+    position: 8,
+  },
 });
 
 choices.mouth = Object.freeze({
+  simpleSmile: {
+    name: "simpleSmile",
+    id: 0,
+    isSingleLayer: true,
+    alpha: 0.5,
+  },
   neutralFemale: {
     name: "neutralFemale",
     id: 1,
@@ -170,11 +248,11 @@ const avatarState = {
       },
     },
     nose: {
-      choice: choices.nose.mediumY,
+      choice: choices.nose.medium,
       layers: {},
     },
     eyebrows: {
-      choice: choices.eyebrows.neutral,
+      choice: choices.eyebrows.resting,
       color: "#3dc6db",
     },
     mouth: {
