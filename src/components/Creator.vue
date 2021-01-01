@@ -170,7 +170,7 @@ export default {
           // set other layer colors, if applicable
           const otherLayer =
             avatarFeatures[this.currFeature].choice.layers[this.currLayer]
-              ?.setColorLayer;
+              ?.setOtherLayer;
           if (otherLayer) {
             currentFeature[otherLayer].sprite.filters = [
               new ColorOverlayFilter([
@@ -375,7 +375,7 @@ export default {
           thumb: "line",
           layers: {
             line: { zIndex: 10, alpha: 0.455 },
-            color: { zIndex: 9, setColorLayer: "back" },
+            color: { zIndex: 9, setOtherLayer: "back" },
             back: { zIndex: 0, isNonEditable: true },
           },
         },
