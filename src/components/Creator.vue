@@ -27,7 +27,7 @@
           <option
             :key="layer"
             v-for="layer in Object.keys(
-              avatarState.features[currentFeature].choice.positions
+              avatarState.features[currentFeature].choice.layers
             )"
             :selected="currentLayer === layer"
           >
@@ -234,7 +234,7 @@ export default {
       const newSprite = this.newSprite;
       if (
         !newFeature.isSingleLayer &&
-        newFeature.positions[this.currentLayer] === undefined
+        newFeature.layers[this.currentLayer]?.zIndex === undefined
       ) {
         this.currentLayer = Object.keys(
           this.avatarState.features[currentFeature].layers
@@ -263,25 +263,24 @@ export default {
             "",
             currentAvatarFeature.color,
             newFeature.alpha,
-            newFeature.position
+            newFeature.zIndex
           );
           currentAvatarFeature.sprite = sprite;
           pixiApp.stage.addChild(sprite);
         } else {
-          Object.keys(newFeature.positions).map(function (layerName) {
+          Object.keys(newFeature.layers).map(function (layerName) {
             delete currentAvatarFeature.color;
             delete currentAvatarFeature.sprite;
             const oldLayer = currentAvatarFeature.layers[layerName];
             // console.log("old layer", oldLayer);
-            let alpha;
-            if (newFeature.alpha) alpha = newFeature.alpha[layerName];
+            let newLayer = newFeature.layers[layerName]
             const sprite = newSprite(
               currentFeature,
               newFeature.id,
               layerName,
               oldLayer?.color,
-              alpha,
-              newFeature.positions[layerName]
+              newLayer.alpha,
+              newLayer.zIndex
             );
             currentAvatarFeature.layers[layerName].sprite = sprite;
             pixiApp.stage.addChild(sprite);
@@ -315,7 +314,7 @@ export default {
       console.log("setup", this.pixiApp, this.pixiApp.stage);
       this.drawInitialAvatar();
     },
-    newSprite(featureName, featureID, layerName, color, alpha, position) {
+    newSprite(featureName, featureID, layerName, color, alpha, zIndex) {
       // console.log(
       //   "newsprite: ",
       //   featureName,
@@ -323,7 +322,7 @@ export default {
       //   layerName,
       //   color,
       //   alpha,
-      //   position
+      //   zIndex
       // );
       const sprite = new PIXI.Sprite.from(
         this.featureFilePath(featureName, featureID, layerName)
@@ -337,7 +336,12 @@ export default {
       if (alpha) {
         sprite.alpha = alpha;
       }
-      sprite.zIndex = position;
+      sprite.zIndex = zIndex;
+      // sprite.anchor.set(-0.5,-0.5);
+      // if(featureName ==="hair") {
+      // sprite.scale.set(1, 0.8);
+      // }
+      // sprite.position.set(-4, 14);
       return sprite;
     },
     drawInitialAvatar() {
@@ -353,24 +357,20 @@ export default {
             "",
             feature.color,
             feature.alpha,
-            feature.choice.position
+            feature.choice.zIndex
           );
           feature.sprite = sprite;
           app.stage.addChild(sprite);
         } else {
-          Object.keys(feature.layers).map(function (layerName) {
+           Object.keys(feature.layers).map(function (layerName) {
             const layer = feature.layers[layerName];
-            let alpha;
-            if (feature.choice.alpha) {
-              alpha = feature.choice.alpha[layerName];
-            }
             const sprite = newSprite(
               name,
               feature.choice.id,
               layerName,
               layer.color,
-              alpha,
-              feature.choice.positions[layerName]
+              feature.choice.layers[layerName].alpha,
+              feature.choice.layers[layerName].zIndex
             );
             layer.sprite = sprite;
             app.stage.addChild(sprite);
@@ -385,13 +385,10 @@ export default {
           id: 1,
           isSingleLayer: false,
           thumb: "line",
-          positions: {
-            line: 10,
-            color: 9,
-            back: 0,
-          },
-          alpha: {
-            line: 0.455,
+          layers: {
+            line: {zIndex: 10, alpha: 0.455},
+            color: {zIndex: 9, setColor: "back"},
+            back: {zIndex: 0, isEditable: false},
           },
         },
       });
@@ -400,21 +397,21 @@ export default {
           name: "happyFemale",
           id: 1,
           isSingleLayer: false,
-          positions: {
-            line: 4,
-            color: 3,
-            glare: 5,
+          layers: {
+            line: {zIndex: 4},
+            color: {zIndex: 3},
+            glare: {zIndex: 5},
           },
         },
         neutralFemale: {
           name: "neutralFemale",
           id: 2,
           isSingleLayer: false,
-          positions: {
-            line: 4,
-            color: 3,
-            white: 2,
-            glare: 5,
+          layers: {
+            line: {zIndex: 4},
+            color: {zIndex: 3},
+            glare: {zIndex: 5},
+            white: {zIndex: 2},
           },
         },
       });
@@ -423,19 +420,19 @@ export default {
           name: "neutral",
           id: 0,
           isSingleLayer: true,
-          position: 1,
+          zIndex: 1,
         },
         neutralFemale: {
           name: "neutralFemale",
           id: 1,
           isSingleLayer: true,
-          position: 1,
+          zIndex: 1,
         },
         gentleV: {
           name: "gentleV",
           id: 4,
           isSingleLayer: true,
-          position: 1,
+          zIndex: 1,
         },
       });
       this.choices.nose = Object.freeze({
@@ -443,55 +440,55 @@ export default {
           name: "snub",
           id: 0,
           isSingleLayer: true,
-          position: 5,
+          zIndex: 5,
         },
         simple: {
           name: "simple",
           id: 1,
           isSingleLayer: true,
-          position: 5,
+          zIndex: 5,
         },
         button: {
           name: "button",
           id: 2,
           isSingleLayer: true,
-          position: 5,
+          zIndex: 5,
         },
         wide: {
           name: "wide",
           id: 3,
           isSingleLayer: true,
-          position: 5,
+          zIndex: 5,
         },
         upturned: {
           name: "upturned",
           id: 4,
           isSingleLayer: true,
-          position: 5,
+          zIndex: 5,
         },
         downturned: {
           name: "downturned",
           id: 5,
           isSingleLayer: true,
-          position: 5,
+          zIndex: 5,
         },
         medium: {
           name: "medium",
           id: 6,
           isSingleLayer: true,
-          position: 5,
+          zIndex: 5,
         },
         elegant: {
           name: "elegant",
           id: 7,
           isSingleLayer: true,
-          position: 5,
+          zIndex: 5,
         },
         droopy: {
           name: "droopy",
           id: 8,
           isSingleLayer: true,
-          position: 5,
+          zIndex: 5,
         },
       });
       this.choices.eyebrows = Object.freeze({
@@ -499,31 +496,31 @@ export default {
           name: "neutral",
           id: 0,
           isSingleLayer: true,
-          position: 8,
+          zIndex: 8,
         },
         worried: {
           name: "worried",
           id: 1,
           isSingleLayer: true,
-          position: 8,
+          zIndex: 8,
         },
         thick: {
           name: "thick",
           id: 2,
           isSingleLayer: true,
-          position: 8,
+          zIndex: 8,
         },
         surprised: {
           name: "surprised",
           id: 3,
           isSingleLayer: true,
-          position: 8,
+          zIndex: 8,
         },
         resting: {
           name: "resting",
           id: 4,
           isSingleLayer: true,
-          position: 8,
+          zIndex: 8,
         },
       });
       this.choices.mouth = Object.freeze({
@@ -532,18 +529,15 @@ export default {
           id: 0,
           isSingleLayer: true,
           alpha: 0.5,
-          position: 7,
+          zIndex: 7,
         },
         neutralFemale: {
           name: "neutralFemale",
           id: 1,
           isSingleLayer: false,
-          positions: {
-            line: 7,
-            color: 6,
-          },
-          alpha: {
-            line: 0.5,
+          layers: {
+            line: {zIndex: 7, alpha: 0.5},
+            color: {zIndex: 6},
           },
         },
       });
@@ -598,6 +592,7 @@ export default {
     },
   },
   mounted() {
+    PIXI.settings.ROUND_PIXELS = true;
     this.setupChoices();
     this.setupInitialAvatar();
     this.setupCanvas();
@@ -684,7 +679,7 @@ export default {
   grid-template-areas:
     "l header header header r"
     "l avatar colorpicker featurebox r"
-    "l positionbox positionbox positionbox r";
+    "l zIndexbox zIndexbox zIndexbox r";
   grid-template-rows: 100px 430px 150px;
   grid-template-columns: 1fr auto minmax(auto, 170px) minmax(auto, 450px) 1fr;
   grid-gap: 10px;
