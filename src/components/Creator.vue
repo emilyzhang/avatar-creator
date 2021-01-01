@@ -12,8 +12,7 @@
       >
       <div id="picker"></div>
       <div class="feature-select" @change="featureSelect($event)">
-        <!-- Change -->
-        {{ currentFeature }} <br/>
+        Changing: {{ currentFeature }}
         <select
           class="select-dropdown"
           v-if="
@@ -24,22 +23,22 @@
           <option
             :key="layer"
             v-for="layer in Object.keys(
-              avatarState.features[currentFeature].layers
+              avatarState.features[currentFeature].choice.positions
             )"
             :selected="currentLayer === layer"
           >
             {{ layer }}
           </option>
         </select>
-        <select
+        <!-- <select
           class="select-dropdown"
           v-if="
             avatarState.features[currentFeature] &&
             avatarState.features[currentFeature].choice.isSingleLayer
           "
         >
-          <option :key="currentFeature">color</option>
-        </select>
+          <option :key="currentFeature"></option>
+        </select> -->
       </div>
     </div>
     <div class="select-color">
@@ -223,6 +222,9 @@ export default {
       const currentFeature = this.currentFeature;
       const currentAvatarFeature = this.avatarState.features[currentFeature];
       const newSprite = this.newSprite;
+      if (!newFeature.isSingleLayer && newFeature.positions[this.currentLayer] === undefined) {
+        this.currentLayer = Object.keys(this.avatarState.features[currentFeature].layers)[0]
+      }
       if (currentAvatarFeature?.choice.id !== newFeature.id) {
         // first remove old feature, if it exists
         if (currentAvatarFeature?.choice) {
@@ -736,6 +738,7 @@ export default {
   background: rgba(240, 252, 255, 0.596);
   font-size: 13px;
   min-width: 142px;
+  line-height: 1.4;
 }
 .feature-select-buttons {
   display: inline;
