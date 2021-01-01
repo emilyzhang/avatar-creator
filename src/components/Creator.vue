@@ -5,7 +5,11 @@
       <canvas id="pixi"></canvas>
     </div>
     <div class="color-picker">
-      <a class="download-avatar" v-bind:href="downloadURL" download="avatar.png">
+      <a
+        class="download-avatar"
+        v-bind:href="downloadURL"
+        download="avatar.png"
+      >
         <button class="save-button hvr-push" @click="downloadAvatar">
           ♡ save avatar
         </button></a
@@ -41,9 +45,9 @@
         </select> -->
       </div>
     </div>
-    <div class="select-color">
+    <!-- <div class="select-color">
       <div id="color-square"></div>
-    </div>
+    </div> -->
     <div class="feature-box">
       <div class="feature-select-buttons">
         <button
@@ -68,26 +72,26 @@
         </div>
       </div>
     </div>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill-rule="evenodd"
-      clip-rule="evenodd"
-    >
-      <defs>
-        <g
-          id="handle"
-          transform="scale(0.6)"
-          fill="#728ca7"
-          stroke-width="2"
-          stroke="white"
-        >
-          <path
-            d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402m5.726-20.583c-2.203 0-4.446 1.042-5.726 3.238-1.285-2.206-3.522-3.248-5.719-3.248-3.183 0-6.281 2.187-6.281 6.191 0 4.661 5.571 9.429 12 15.809 6.43-6.38 12-11.148 12-15.809 0-4.011-3.095-6.181-6.274-6.181"
-          />
-        </g>
-      </defs>
-    </svg>
   </div>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+  >
+    <defs>
+      <g
+        id="handle"
+        transform="scale(0.6)"
+        fill="#728ca7"
+        stroke-width="2"
+        stroke="white"
+      >
+        <path
+          d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402m5.726-20.583c-2.203 0-4.446 1.042-5.726 3.238-1.285-2.206-3.522-3.248-5.719-3.248-3.183 0-6.281 2.187-6.281 6.191 0 4.661 5.571 9.429 12 15.809 6.43-6.38 12-11.148 12-15.809 0-4.011-3.095-6.181-6.274-6.181"
+        />
+      </g>
+    </defs>
+  </svg>
 </template>
 
 <script>
@@ -127,9 +131,15 @@ export default {
   },
   methods: {
     changeFeatureCategory(feature) {
-      this.currentFeature = feature
-      if (!this.avatarState.features[feature].choice.isSingleLayer && this.avatarState.features[feature].layers[this.currentLayer] === undefined) {
-        this.currentLayer = Object.keys(this.avatarState.features[feature].layers)[0]
+      this.currentFeature = feature;
+      if (
+        !this.avatarState.features[feature].choice.isSingleLayer &&
+        this.avatarState.features[feature].layers[this.currentLayer] ===
+          undefined
+      ) {
+        this.currentLayer = Object.keys(
+          this.avatarState.features[feature].layers
+        )[0];
       }
     },
     changeColor() {
@@ -222,8 +232,13 @@ export default {
       const currentFeature = this.currentFeature;
       const currentAvatarFeature = this.avatarState.features[currentFeature];
       const newSprite = this.newSprite;
-      if (!newFeature.isSingleLayer && newFeature.positions[this.currentLayer] === undefined) {
-        this.currentLayer = Object.keys(this.avatarState.features[currentFeature].layers)[0]
+      if (
+        !newFeature.isSingleLayer &&
+        newFeature.positions[this.currentLayer] === undefined
+      ) {
+        this.currentLayer = Object.keys(
+          this.avatarState.features[currentFeature].layers
+        )[0];
       }
       if (currentAvatarFeature?.choice.id !== newFeature.id) {
         // first remove old feature, if it exists
@@ -614,9 +629,9 @@ export default {
         // },
         // {
         //   component: iro.ui.Slider,
-          // options: {
-          //   sliderType: "hue",
-          // },
+        // options: {
+        //   sliderType: "hue",
+        // },
         // },
       ],
     });
@@ -666,16 +681,12 @@ export default {
 }
 .grid-container {
   display: grid;
-  /* grid-template-areas: "lside avatar colorpicker random rside"; */
   grid-template-areas:
-    "lside header header header rside"
-    "lside avatar colorpicker featurebox rside"
-    "lside avatar positionbox positionbox rside";
+    "l header header header r"
+    "l avatar colorpicker featurebox r"
+    "l avatar positionbox positionbox r";
   grid-template-rows: 100px 430px 150px;
-  grid-template-columns: 1fr min-content minmax(min-content, 170px) minmax(
-      min-content,
-      450px
-    ) 1fr;
+  grid-template-columns: 1fr auto minmax(auto, 170px) minmax(auto, 450px) 1fr;
   grid-gap: 10px;
   align-content: center;
 }

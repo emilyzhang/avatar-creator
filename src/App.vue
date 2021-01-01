@@ -205,6 +205,7 @@ body {
   background-image: url("/assets/background.png");
   background-color: rgba(252, 216, 196, 0.103);
   background-blend-mode: soft-light;
+  width: 100%;
 }
 
 #app {
