@@ -14,6 +14,7 @@
       <div class="feature-select" @change="featureSelect($event)">
         Change {{ currentFeature }}
         <select
+          class="select-dropdown"
           v-if="
             avatarState.features[currentFeature] &&
             !avatarState.features[currentFeature].choice.isSingleLayer
@@ -29,6 +30,7 @@
           </option>
         </select>
         <select
+          class="select-dropdown"
           v-if="
             avatarState.features[currentFeature] &&
             avatarState.features[currentFeature].choice.isSingleLayer
@@ -392,9 +394,21 @@ export default {
         },
       });
       this.choices.face = Object.freeze({
+        neutral: {
+          name: "neutral",
+          id: 0,
+          isSingleLayer: true,
+          position: 1,
+        },
         neutralFemale: {
           name: "neutralFemale",
           id: 1,
+          isSingleLayer: true,
+          position: 1,
+        },
+        gentleV: {
+          name: "gentleV",
+          id: 4,
           isSingleLayer: true,
           position: 1,
         },
@@ -568,7 +582,7 @@ export default {
       // Set the initial color to pure red
       color: "#beebee",
       display: "inline-block",
-      borderColor: "#aee1e2",
+      borderColor: "#beebee",
       padding: 0,
       borderWidth: 2,
       // handleRadius: 10,
@@ -594,7 +608,7 @@ export default {
 
 <style>
 .hello {
-  border: 2px solid #aee1e2;
+  border: 2px solid #beebee;
   text-align: center;
   display: inline-block;
   margin: 25px auto;
@@ -610,9 +624,9 @@ export default {
   background-image: linear-gradient(
     270deg,
     #646292,
-    #aee1e2,
+    #beebee,
     white,
-    #aee1e2,
+    #beebee,
     #646292
   );
   grid-area: header;
@@ -648,11 +662,11 @@ export default {
   grid-template-rows: 100px 1fr;
   /* grid-template-columns: 20px 425px 300px auto 20px; */
   grid-template-columns: 1;
-  border: 2px solid #aee1e2;
+  border: 2px solid #beebee;
   background-color: rgba(185, 255, 228, 0.281);
 }
 .creator {
-  border: 2px solid #aee1e2;
+  border: 2px solid #beebee;
   /* margin: auto 100px auto; */
   /* padding: 4px; */
   width: 424px;
@@ -666,23 +680,30 @@ export default {
   grid-area: random;
 }
 .color-picker {
-  border: 2px solid #aee1e2;
+  border: 2px solid #beebee;
   background-color: rgba(185, 255, 228, 0.281);
   grid-area: colorpicker;
   display: inline-block;
 }
 #picker {
-  margin: 0px 8px;
+  margin: 0px 7px;
   /* background-color: #FAF6ED; */
   /* padding: 3px 3px; */
 }
+.select-dropdown {
+  margin: 2px;
+  margin-left: 1px;
+  padding: 3px;
+  border: 2px solid #beebee;
+  /* border:none; */
+}
 .feature-select {
-  margin-top: 10px;
-  padding: 7px;
+  margin: 15px 0px;
+  padding: 15px 0px;
   /* display:inline; */
-  border-top: 2px solid #aee1e2;
+  border-top: 2px solid #beebee;
   color: #728ca7;
-  background: rgba(240, 252, 255, 0.596);
+  /* background: rgba(240, 252, 255, 0.596); */
   font-size: 13px;
 }
 .feature-select-buttons {
@@ -692,7 +713,7 @@ export default {
   text-align: left;
   overflow-y: auto;
   max-height: 100px;
-  border: 2px solid #aee1e2;
+  border: 2px solid #beebee;
 }
 .feature-button {
   font-size: 15px;
@@ -713,7 +734,7 @@ export default {
   padding: 10px;
   overflow-y: auto;
   text-align: left;
-  border: 2px solid #aee1e2;
+  border: 2px solid #beebee;
   margin: 10px;
   margin-top: 0px;
   background: rgba(240, 252, 255, 0.788);
