@@ -39,3 +39,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - [ ] remove ability to edit color of certain layers (back of hair, for example)?
 - [ ] layer bug - the layers of old features get left behind right now
 - [x] alpha bug - transparency on certain layers not showing up
+- [ ] add history feature (undo and redo)

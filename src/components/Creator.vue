@@ -658,8 +658,8 @@ export default {
   grid-template-areas:
     "lside header header header rside"
     "lside avatar colorpicker featurebox rside"
-    "lside positionbox positionbox positionbox rside";
-  grid-template-rows: 100px 430px min-content;
+    "lside avatar positionbox positionbox rside";
+  grid-template-rows: 100px 430px 150px;
   grid-template-columns: 1fr min-content minmax(min-content, 170px) minmax(
       min-content,
       450px
