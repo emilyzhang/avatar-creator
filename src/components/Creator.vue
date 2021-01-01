@@ -684,7 +684,7 @@ export default {
   grid-template-areas:
     "l header header header r"
     "l avatar colorpicker featurebox r"
-    "l avatar positionbox positionbox r";
+    "l positionbox positionbox positionbox r";
   grid-template-rows: 100px 430px 150px;
   grid-template-columns: 1fr auto minmax(auto, 170px) minmax(auto, 450px) 1fr;
   grid-gap: 10px;
