@@ -16,33 +16,28 @@
       >
       <div id="picker"></div>
       <div class="feature-select" @change="featureSelect($event)">
-        Changing: {{ currentFeature }}
+        Changing: {{ currFeature }}
         <select
           class="select-dropdown"
           v-if="
-            avatarState.features[currentFeature] &&
-            !avatarState.features[currentFeature].choice.isSingleLayer
+            avatarState.features[currFeature] &&
+            !avatarState.features[currFeature].choice.isSingleLayer
           "
         >
           <option
             :key="layer"
             v-for="layer in Object.keys(
-              avatarState.features[currentFeature].choice.layers
+              avatarState.features[currFeature].choice.layers
+            ).filter(
+              (layer) =>
+                !avatarState.features[currFeature].choice.layers[layer]
+                  .isNonEditable
             )"
-            :selected="currentLayer === layer"
+            :selected="currLayer === layer"
           >
             {{ layer }}
           </option>
         </select>
-        <!-- <select
-          class="select-dropdown"
-          v-if="
-            avatarState.features[currentFeature] &&
-            avatarState.features[currentFeature].choice.isSingleLayer
-          "
-        >
-          <option :key="currentFeature"></option>
-        </select> -->
       </div>
     </div>
     <!-- <div class="select-color">
@@ -52,7 +47,7 @@
       <div class="feature-select-buttons">
         <button
           class="feature-button"
-          :class="{ 'active-button': feature === currentFeature }"
+          :class="{ 'active-button': feature === currFeature }"
           :key="feature"
           v-for="feature in Object.keys(choices)"
           @click="changeFeatureCategory(feature)"
@@ -61,13 +56,13 @@
         </button>
       </div>
       <div class="thumbnail-box">
-        <div v-if="choices[currentFeature]">
+        <div v-if="choices[currFeature]">
           <img
             class="thumbnail"
             :key="f"
-            v-for="f in Object.keys(choices[currentFeature])"
-            @click="selectNewFeature(choices[currentFeature][f])"
-            :src="thumbnailFilePath(choices[currentFeature][f])"
+            v-for="f in Object.keys(choices[currFeature])"
+            @click="selectNewFeature(choices[currFeature][f])"
+            :src="thumbnailFilePath(choices[currFeature][f])"
           />
         </div>
       </div>
@@ -120,33 +115,32 @@ export default {
   data() {
     return {
       choices: {},
-      currentFeature: "hair",
+      currFeature: "hair",
       downloadURL: "",
       pixiApp: {},
       avatarState: {
         features: {},
       },
-      currentLayer: "color",
+      currLayer: "color",
     };
   },
   methods: {
+    console() {
+      return window.console;
+    },
     changeFeatureCategory(feature) {
-      this.currentFeature = feature;
+      const avatarFeatures = this.avatarState.features;
+      this.currFeature = feature;
       if (
-        !this.avatarState.features[feature].choice.isSingleLayer &&
-        this.avatarState.features[feature].layers[this.currentLayer] ===
-          undefined
+        !avatarFeatures[feature].choice.isSingleLayer &&
+        avatarFeatures[feature].layers[this.currLayer] === undefined
       ) {
-        this.currentLayer = Object.keys(
-          this.avatarState.features[feature].layers
-        )[0];
+        this.currLayer = Object.keys(avatarFeatures[feature].layers)[0];
       }
     },
-    changeColor() {
-      // console.log(this.avatarState, this.choices);
-      // console.log(this.avatarState.features);
-      // console.log(Object.keys(this.avatarState.features[this.currentFeature]));
-      if (this.currentLayer && this.avatarState.features[this.currentFeature]) {
+    changeLayerColor() {
+      const avatarFeatures = this.avatarState.features;
+      if (this.currLayer && avatarFeatures[this.currFeature]) {
         var hex = colorPicker.color.hexString;
         // console.log("HEX", hex);
         const selectedColor = hexToRGB(hex);
@@ -154,45 +148,39 @@ export default {
         if (!this.pixiApp?.stage) {
           console.log("stage not ready yet");
         }
-        if (
-          this.avatarState.features[this.currentFeature].choice.isSingleLayer
-        ) {
-          this.avatarState.features[this.currentFeature].sprite.filters = [
+        if (avatarFeatures[this.currFeature].choice.isSingleLayer) {
+          avatarFeatures[this.currFeature].sprite.filters = [
             new ColorOverlayFilter([
               selectedColor[0] / 255,
               selectedColor[1] / 255,
               selectedColor[2] / 255,
             ]),
           ];
-          this.avatarState.features[this.currentFeature].color = hex;
+          avatarFeatures[this.currFeature].color = hex;
         } else {
-          // console.log("change color of features", this.avatarState.features[this.currentFeature].layers, currentLayer)
-          this.avatarState.features[this.currentFeature].layers[
-            this.currentLayer
-          ].sprite.filters = [
+          const currentFeature = avatarFeatures[this.currFeature].layers;
+          currentFeature[this.currLayer].sprite.filters = [
             new ColorOverlayFilter([
               selectedColor[0] / 255,
               selectedColor[1] / 255,
               selectedColor[2] / 255,
             ]),
           ];
-          this.avatarState.features[this.currentFeature].layers[
-            this.currentLayer
-          ].color = hex;
-        }
-        if (this.currentLayer === "color" && this.currentFeature === "hair") {
-          this.avatarState.features[this.currentFeature].layers[
-            "back"
-          ].sprite.filters = [
-            new ColorOverlayFilter([
-              selectedColor[0] / 255,
-              selectedColor[1] / 255,
-              selectedColor[2] / 255,
-            ]),
-          ];
-          this.avatarState.features[this.currentFeature].layers[
-            "back"
-          ].color = hex;
+          currentFeature[this.currLayer].color = hex;
+          // set other layer colors, if applicable
+          const otherLayer =
+            avatarFeatures[this.currFeature].choice.layers[this.currLayer]
+              ?.setColorLayer;
+          if (otherLayer) {
+            currentFeature[otherLayer].sprite.filters = [
+              new ColorOverlayFilter([
+                selectedColor[0] / 255,
+                selectedColor[1] / 255,
+                selectedColor[2] / 255,
+              ]),
+            ];
+            currentFeature[otherLayer].color = hex;
+          }
         }
       }
     },
@@ -210,34 +198,34 @@ export default {
           "..",
           "assets",
           "features",
-          this.currentFeature + feature.id + feature.thumb + ".png"
+          this.currFeature + feature.id + feature.thumb + ".png"
         );
       } else if (feature.isSingleLayer) {
         return path.join(
           "..",
           "assets",
           "features",
-          this.currentFeature + feature.id + ".png"
+          this.currFeature + feature.id + ".png"
         );
       }
       return path.join(
         "..",
         "assets",
         "features",
-        this.currentFeature + feature.id + "line" + ".png"
+        this.currFeature + feature.id + "line" + ".png"
       );
     },
     selectNewFeature(newFeature) {
       const pixiApp = this.pixiApp;
-      const currentFeature = this.currentFeature;
-      const currentAvatarFeature = this.avatarState.features[currentFeature];
+      const currFeature = this.currFeature;
+      const currentAvatarFeature = this.avatarState.features[currFeature];
       const newSprite = this.newSprite;
       if (
         !newFeature.isSingleLayer &&
-        newFeature.layers[this.currentLayer]?.zIndex === undefined
+        newFeature.layers[this.currLayer]?.zIndex === undefined
       ) {
-        this.currentLayer = Object.keys(
-          this.avatarState.features[currentFeature].layers
+        this.currLayer = Object.keys(
+          this.avatarState.features[currFeature].layers
         )[0];
       }
       if (currentAvatarFeature?.choice.id !== newFeature.id) {
@@ -258,7 +246,7 @@ export default {
         // Add new feature
         if (newFeature.isSingleLayer) {
           const sprite = newSprite(
-            currentFeature,
+            currFeature,
             newFeature.id,
             "",
             currentAvatarFeature.color,
@@ -273,9 +261,9 @@ export default {
             delete currentAvatarFeature.sprite;
             const oldLayer = currentAvatarFeature.layers[layerName];
             // console.log("old layer", oldLayer);
-            let newLayer = newFeature.layers[layerName]
+            let newLayer = newFeature.layers[layerName];
             const sprite = newSprite(
-              currentFeature,
+              currFeature,
               newFeature.id,
               layerName,
               oldLayer?.color,
@@ -293,8 +281,8 @@ export default {
     },
     featureSelect(event) {
       console.log(event.target.value);
-      this.currentLayer = event.target.value;
-      // changeColor(currentLayer);
+      this.currLayer = event.target.value;
+      // changeLayerColor(currLayer);
     },
     downloadAvatar() {
       this.downloadURL = this.pixiApp.renderer.view.toDataURL("image/png", 1);
@@ -362,7 +350,7 @@ export default {
           feature.sprite = sprite;
           app.stage.addChild(sprite);
         } else {
-           Object.keys(feature.layers).map(function (layerName) {
+          Object.keys(feature.layers).map(function (layerName) {
             const layer = feature.layers[layerName];
             const sprite = newSprite(
               name,
@@ -386,9 +374,9 @@ export default {
           isSingleLayer: false,
           thumb: "line",
           layers: {
-            line: {zIndex: 10, alpha: 0.455},
-            color: {zIndex: 9, setColor: "back"},
-            back: {zIndex: 0, isEditable: false},
+            line: { zIndex: 10, alpha: 0.455 },
+            color: { zIndex: 9, setColorLayer: "back" },
+            back: { zIndex: 0, isNonEditable: true },
           },
         },
       });
@@ -398,9 +386,9 @@ export default {
           id: 1,
           isSingleLayer: false,
           layers: {
-            line: {zIndex: 4},
-            color: {zIndex: 3},
-            glare: {zIndex: 5},
+            line: { zIndex: 4 },
+            color: { zIndex: 3 },
+            glare: { zIndex: 5 },
           },
         },
         neutralFemale: {
@@ -408,10 +396,10 @@ export default {
           id: 2,
           isSingleLayer: false,
           layers: {
-            line: {zIndex: 4},
-            color: {zIndex: 3},
-            glare: {zIndex: 5},
-            white: {zIndex: 2},
+            line: { zIndex: 4 },
+            color: { zIndex: 3 },
+            glare: { zIndex: 5 },
+            white: { zIndex: 2 },
           },
         },
       });
@@ -536,8 +524,8 @@ export default {
           id: 1,
           isSingleLayer: false,
           layers: {
-            line: {zIndex: 7, alpha: 0.5},
-            color: {zIndex: 6},
+            line: { zIndex: 7, alpha: 0.5 },
+            color: { zIndex: 6 },
           },
         },
       });
@@ -556,16 +544,16 @@ export default {
           hair: {
             choice: this.choices.hair.wavy,
             layers: {
-              color: { color: "#3dc6db" },
+              color: { color: "#73bbbf" },
               line: { color: "#cef6f7" },
-              back: { color: "#3dc6db" },
+              back: { color: "#73bbbf" },
             },
           },
           eye: {
             choice: this.choices.eye.neutralFemale,
             layers: {
               line: {},
-              color: { color: "#646292" },
+              color: { color: "#7278a6" },
               white: {},
               glare: {},
             },
@@ -630,10 +618,10 @@ export default {
         // },
       ],
     });
-    const changeColor = this.changeColor;
+    const changeLayerColor = this.changeLayerColor;
     colorPicker.on("color:change", function () {
       // console.log("New active color:", color.hexString);
-      changeColor();
+      changeLayerColor();
     });
   },
 };
