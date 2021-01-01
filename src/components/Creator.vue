@@ -12,7 +12,7 @@
       >
       <div id="picker"></div>
       <div class="feature-select" @change="featureSelect($event)">
-        Change {{ currentFeature }}
+        Change {{ currentFeature }} <br/>
         <select
           class="select-dropdown"
           v-if="
@@ -578,7 +578,7 @@ export default {
     this.setupCanvas();
     colorPicker = new iro.ColorPicker("#picker", {
       // Set the size of the color picker
-      width: 150,
+      width: 200,
       // Set the initial color to pure red
       color: "#beebee",
       display: "inline-block",
@@ -590,22 +590,18 @@ export default {
       handleProps: { x: -7.3, y: -8 },
       layoutDirection: 'horizontal',
       layout: [
-        // {
-        //   component: iro.ui.Wheel,
-        // },
-        {
-          component: iro.ui.Slider,
-        },{
-          component: iro.ui.Slider,
-          options: {
-            sliderType: 'saturation',
-          }
-        },
         {
           component: iro.ui.Slider,
           options: {
             sliderType: 'hue',
           }
+        },{
+          component: iro.ui.Slider,
+          options: {
+            sliderType: 'saturation',
+          }
+        },{
+          component: iro.ui.Slider,
         },
       ],
     });
@@ -623,10 +619,10 @@ export default {
   border: 2px solid #beebee;
   text-align: center;
   display: inline-block;
-  margin: 25px auto;
+  margin: auto;
   font-size: 30px;
   color: #77a2bc;
-  padding: 15px;
+  padding: 10px;
   text-shadow: 5 5 30px white;
   -webkit-background-clip: text;
   -moz-background-clip: text;
@@ -658,11 +654,11 @@ export default {
   /* grid-template-areas: "lside avatar colorpicker random rside"; */
   grid-template-areas:
     "lside header header header rside"
-    "lside avatar featurebox featurebox rside"
-    "lside colorpicker positionbox positionbox rside";
-  grid-template-rows: 117px 430px min-content;
-  grid-template-columns: 1fr min-content min-content minmax(min-content, 450px) 1fr;
-  grid-gap: 11px;
+    "lside avatar colorpicker featurebox rside"
+    "lside positionbox positionbox positionbox rside";
+  grid-template-rows: 100px 430px min-content;
+  grid-template-columns: 1fr min-content minmax(min-content, 170px) minmax(min-content, 450px) 1fr;
+  grid-gap: 10px;
   align-content: center;
 }
 .feature-box {
@@ -691,31 +687,38 @@ export default {
   /* padding: 4px; */
   grid-area: random;
 }
+.save-button {
+  /* margin: 10px auto; */
+  border-color: #beebee;
+}
 .color-picker {
   border: 2px solid #beebee;
   background-color: rgba(185, 255, 228, 0.281);
   grid-area: colorpicker;
-  display: inline-block;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 #picker {
-  margin: 0px 7px;
+  margin: 0px 10px;
+  padding: 10px;
   /* background-color: #FAF6ED; */
   /* padding: 3px 3px; */
 }
 .select-dropdown {
-  margin: 2px;
-  margin-left: 1px;
+  margin: 8px 0px 3px;
   padding: 3px;
   border: 2px solid #beebee;
   /* border:none; */
 }
 .feature-select {
-  margin: 15px 0px;
-  padding: 15px 0px;
+  margin: 10px;
+  padding: 10px;
   /* display:inline; */
-  border-top: 2px solid #beebee;
+  border: 2px solid #beebee;
   color: #728ca7;
-  /* background: rgba(240, 252, 255, 0.596); */
+  background: rgba(240, 252, 255, 0.596);
   font-size: 13px;
 }
 .feature-select-buttons {
