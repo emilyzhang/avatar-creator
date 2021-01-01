@@ -5,7 +5,7 @@
       <canvas id="pixi"></canvas>
     </div>
     <div class="color-picker">
-      <a v-bind:href="downloadURL" download="avatar.png">
+      <a class="download-avatar" v-bind:href="downloadURL" download="avatar.png">
         <button class="save-button hvr-push" @click="downloadAvatar">
           ♡ save avatar
         </button></a
@@ -588,7 +588,7 @@ export default {
     this.setupCanvas();
     colorPicker = new iro.ColorPicker("#picker", {
       // Set the size of the color picker
-      width: 235,
+      width: 150,
       // Set the initial color to pure red
       color: "#beebee",
       display: "inline-block",
@@ -598,23 +598,26 @@ export default {
       // handleRadius: 10,
       handleSvg: "#handle",
       handleProps: { x: -7.3, y: -8 },
-      layoutDirection: "horizontal",
+      layoutDirection: "vertical",
       layout: [
         {
-          component: iro.ui.Slider,
-          options: {
-            sliderType: "hue",
-          },
-        },
-        {
-          component: iro.ui.Slider,
-          options: {
-            sliderType: "saturation",
-          },
+          component: iro.ui.Wheel,
         },
         {
           component: iro.ui.Slider,
         },
+        // {
+        //   component: iro.ui.Slider,
+        //   options: {
+        //     sliderType: "saturation",
+        //   },
+        // },
+        // {
+        //   component: iro.ui.Slider,
+          // options: {
+          //   sliderType: "hue",
+          // },
+        // },
       ],
     });
     const changeColor = this.changeColor;
@@ -676,6 +679,14 @@ export default {
   grid-gap: 10px;
   align-content: center;
 }
+.creator {
+  border: 2px solid #beebee;
+  /* margin: auto 100px auto; */
+  /* padding: 4px; */
+  width: 424px;
+  grid-area: avatar;
+  background-color: rgba(185, 255, 228, 0.281);
+}
 .feature-box {
   grid-area: featurebox;
   display: grid;
@@ -688,19 +699,14 @@ export default {
   border: 2px solid #beebee;
   background-color: rgba(185, 255, 228, 0.281);
 }
-.creator {
-  border: 2px solid #beebee;
-  /* margin: auto 100px auto; */
-  /* padding: 4px; */
-  width: 424px;
-  grid-area: avatar;
-  background-color: rgba(185, 255, 228, 0.281);
-}
 .select-color {
   /* border: 2px dashed white; */
   /* margin: auto auto 100px; */
   /* padding: 4px; */
   grid-area: random;
+}
+.download-avatar {
+  order: 0;
 }
 .save-button {
   /* margin: 10px auto; */
@@ -712,12 +718,13 @@ export default {
   grid-area: colorpicker;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  height: fit-content;
+  /* justify-content: space-between; */
 }
 #picker {
-  margin: 0px 10px;
-  padding: 10px;
+  /* margin: 0px 10px; */
+  padding: 7px;
+  order: 0;
   /* background-color: #FAF6ED; */
   /* padding: 3px 3px; */
 }
@@ -725,6 +732,7 @@ export default {
   margin: 3px;
   padding: 3px;
   border: 2px solid #beebee;
+  order: 7;
   /* border:none; */
   /* text-align-last: center; */
   /* text-align: center; */
