@@ -13,7 +13,7 @@
       <div id="picker"></div>
       <div class="feature-select" @change="featureSelect($event)">
         <!-- Change -->
-        {{ currentFeature }} <br />
+        {{ currentFeature }} <br/>
         <select
           class="select-dropdown"
           v-if="
@@ -579,7 +579,7 @@ export default {
     this.setupCanvas();
     colorPicker = new iro.ColorPicker("#picker", {
       // Set the size of the color picker
-      width: 200,
+      width: 235,
       // Set the initial color to pure red
       color: "#beebee",
       display: "inline-block",
@@ -704,7 +704,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 #picker {
   margin: 0px 10px;
@@ -713,12 +713,12 @@ export default {
   /* padding: 3px 3px; */
 }
 .select-dropdown {
-  margin: 8px 0px 3px;
+  margin: 3px;
   padding: 3px;
   border: 2px solid #beebee;
   /* border:none; */
-  text-align-last: center;
-  text-align: center;
+  /* text-align-last: center; */
+  /* text-align: center; */
 }
 .feature-select {
   margin: 10px;
@@ -728,6 +728,7 @@ export default {
   color: #728ca7;
   background: rgba(240, 252, 255, 0.596);
   font-size: 13px;
+  min-width: 142px;
 }
 .feature-select-buttons {
   display: inline;
