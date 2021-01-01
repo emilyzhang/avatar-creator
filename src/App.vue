@@ -199,15 +199,15 @@ body {
     Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
     sans-serif;
   text-align: center;
-  height: 100%;
+  min-height: 100vh;
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: url("/assets/background.png");
+  background-color: rgba(252, 216, 196, 0.103);
+  background-blend-mode: soft-light;
 }
 
 #app {
-  background-attachment: fixed;
-  background-size: cover;
-  background-image: url("/assets/background.png");
-  background-blend-mode: soft-light;
-  background-color: rgba(252, 216, 196, 0.103);
   height: 100%;
 }
 

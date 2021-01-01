@@ -67,8 +67,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <svg
+    <svg
     xmlns="http://www.w3.org/2000/svg"
     fill-rule="evenodd"
     clip-rule="evenodd"
@@ -87,6 +86,7 @@
       </g>
     </defs>
   </svg>
+  </div>
 </template>
 
 <script>
@@ -578,7 +578,7 @@ export default {
     this.setupCanvas();
     colorPicker = new iro.ColorPicker("#picker", {
       // Set the size of the color picker
-      width: 250,
+      width: 150,
       // Set the initial color to pure red
       color: "#beebee",
       display: "inline-block",
@@ -588,12 +588,24 @@ export default {
       // handleRadius: 10,
       handleSvg: "#handle",
       handleProps: { x: -7.3, y: -8 },
+      layoutDirection: 'horizontal',
       layout: [
+        // {
+        //   component: iro.ui.Wheel,
+        // },
         {
-          component: iro.ui.Wheel,
+          component: iro.ui.Slider,
+        },{
+          component: iro.ui.Slider,
+          options: {
+            sliderType: 'saturation',
+          }
         },
         {
           component: iro.ui.Slider,
+          options: {
+            sliderType: 'hue',
+          }
         },
       ],
     });
@@ -646,10 +658,10 @@ export default {
   /* grid-template-areas: "lside avatar colorpicker random rside"; */
   grid-template-areas:
     "lside header header header rside"
-    "lside avatar colorpicker featurebox rside"
-    "lside savebox savebox savebox rside";
-  grid-template-rows: 117px 430px 150px;
-  grid-template-columns: 1fr min-content min-content 450px 1fr;
+    "lside avatar featurebox featurebox rside"
+    "lside colorpicker positionbox positionbox rside";
+  grid-template-rows: 117px 430px min-content;
+  grid-template-columns: 1fr min-content min-content minmax(min-content, 450px) 1fr;
   grid-gap: 11px;
   align-content: center;
 }
