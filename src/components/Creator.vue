@@ -26,6 +26,7 @@
             v-for="layer in Object.keys(
               avatarState.features[currentFeature].layers
             )"
+            :selected="currentLayer === layer"
           >
             {{ layer }}
           </option>
@@ -51,7 +52,7 @@
           :class="{ 'active-button': feature === currentFeature }"
           :key="feature"
           v-for="feature in Object.keys(choices)"
-          @click="currentFeature = feature"
+          @click="changeFeatureCategory(feature)"
         >
           {{ feature }}
         </button>
@@ -97,7 +98,6 @@ import iro from "@jaames/iro";
 const path = require("path");
 
 let colorPicker;
-let selectedFeature = "color";
 // PIXI.settings.FAIL_IF_MAJOR_PERFORMANCE_CAVEAT = false;
 
 const hexToRGB = (hex) =>
@@ -123,14 +123,21 @@ export default {
       avatarState: {
         features: {},
       },
+      currentLayer: "color",
     };
   },
   methods: {
-    changeColor(selectedFeature) {
+    changeFeatureCategory(feature) {
+      this.currentFeature = feature
+      if (!this.avatarState.features[feature].choice.isSingleLayer && this.avatarState.features[feature].layers[this.currentLayer] === undefined) {
+        this.currentLayer = Object.keys(this.avatarState.features[feature].layers)[0]
+      }
+    },
+    changeColor() {
       // console.log(this.avatarState, this.choices);
       // console.log(this.avatarState.features);
       // console.log(Object.keys(this.avatarState.features[this.currentFeature]));
-      if (selectedFeature && this.avatarState.features[this.currentFeature]) {
+      if (this.currentLayer && this.avatarState.features[this.currentFeature]) {
         var hex = colorPicker.color.hexString;
         // console.log("HEX", hex);
         const selectedColor = hexToRGB(hex);
@@ -150,9 +157,9 @@ export default {
           ];
           this.avatarState.features[this.currentFeature].color = hex;
         } else {
-          // console.log("change color of features", this.avatarState.features[this.currentFeature].layers, selectedFeature)
+          // console.log("change color of features", this.avatarState.features[this.currentFeature].layers, currentLayer)
           this.avatarState.features[this.currentFeature].layers[
-            selectedFeature
+            this.currentLayer
           ].sprite.filters = [
             new ColorOverlayFilter([
               selectedColor[0] / 255,
@@ -161,10 +168,10 @@ export default {
             ]),
           ];
           this.avatarState.features[this.currentFeature].layers[
-            selectedFeature
+            this.currentLayer
           ].color = hex;
         }
-        if (selectedFeature === "color" && this.currentFeature === "hair") {
+        if (this.currentLayer === "color" && this.currentFeature === "hair") {
           this.avatarState.features[this.currentFeature].layers[
             "back"
           ].sprite.filters = [
@@ -270,8 +277,8 @@ export default {
     },
     featureSelect(event) {
       console.log(event.target.value);
-      selectedFeature = event.target.value;
-      // changeColor(selectedFeature);
+      this.currentLayer = event.target.value;
+      // changeColor(currentLayer);
     },
     downloadAvatar() {
       this.downloadURL = this.pixiApp.renderer.view.toDataURL("image/png", 1);
@@ -611,7 +618,7 @@ export default {
     const changeColor = this.changeColor;
     colorPicker.on("color:change", function () {
       // console.log("New active color:", color.hexString);
-      changeColor(selectedFeature);
+      changeColor();
     });
   },
 };
