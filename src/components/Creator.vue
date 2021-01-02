@@ -307,7 +307,7 @@ export default {
         preserveDrawingBuffer: true,
       });
       this.pixiApp.stage.sortableChildren = true;
-      console.log("setup", this.pixiApp, this.pixiApp.stage);
+      // console.log("setup", this.pixiApp, this.pixiApp.stage);
       this.drawInitialAvatar();
     },
     newSprite(featureName, featureID, layerName, color, alpha, zIndex) {
@@ -332,6 +332,7 @@ export default {
       if (alpha) {
         sprite.alpha = alpha;
       }
+      // console.log(featureName, alpha, layerName)
       sprite.zIndex = zIndex;
       // sprite.anchor.set(-0.5,-0.5);
       // if(featureName ==="hair") {
@@ -352,7 +353,7 @@ export default {
             feature.choice.id,
             "",
             feature.color,
-            feature.alpha,
+            feature.choice.alpha,
             feature.choice.zIndex
           );
           feature.sprite = sprite;
@@ -499,6 +500,69 @@ export default {
         vline: {
           name: "vline",
           id: 2,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 10, alpha: 0.2 },
+            color: { zIndex: 9 },
+          },
+        },
+        thinPoint: {
+          name: "thinPoint",
+          id: 3,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 10, alpha: 0.2 },
+            color: { zIndex: 9 },
+          },
+        },
+        square: {
+          name: "square",
+          id: 5,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 10, alpha: 0.2 },
+            color: { zIndex: 9 },
+          },
+        },
+        round: {
+          name: "round",
+          id: 6,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 10, alpha: 0.2 },
+            color: { zIndex: 9 },
+          },
+        },
+        angular: {
+          name: "angular",
+          id: 7,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 10, alpha: 0.2 },
+            color: { zIndex: 9 },
+          },
+        },
+        bumpy: {
+          name: "bumpy",
+          id: 8,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 10, alpha: 0.2 },
+            color: { zIndex: 9 },
+          },
+        },
+        melon: {
+          name: "melon",
+          id: 9,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 10, alpha: 0.2 },
+            color: { zIndex: 9 },
+          },
+        },
+        long: {
+          name: "long",
+          id: 10,
           isSingleLayer: false,
           layers: {
             line: { zIndex: 10, alpha: 0.2 },
@@ -797,7 +861,6 @@ export default {
           },
           nose: {
             choice: this.choices.nose.small,
-            layers: {},
           },
           eyebrows: {
             choice: this.choices.eyebrows.straight,
@@ -865,8 +928,8 @@ export default {
       ],
     });
     const changeLayerColor = this.changeLayerColor;
-    colorPicker.on("color:change", function (color) {
-      console.log("New active color:", color.hexString);
+    colorPicker.on("color:change", function () {
+      // console.log("New active color:", color.hexString);
       changeLayerColor();
     });
   },
