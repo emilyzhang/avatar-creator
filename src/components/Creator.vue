@@ -63,6 +63,11 @@
             v-for="f in Object.keys(choices[currFeature])"
             @click="selectNewFeature(choices[currFeature][f])"
             :src="thumbnailFilePath(choices[currFeature][f])"
+            :class="{
+              'selected-thumbnail':
+                choices[currFeature][f].id ==
+                avatarState.features[currFeature].choice.id,
+            }"
           />
         </div>
       </div>
@@ -270,6 +275,9 @@ export default {
               newLayer.alpha,
               newLayer.zIndex
             );
+            if (currentAvatarFeature.layers[layerName] === undefined) {
+              currentAvatarFeature.layers[layerName] = {};
+            }
             currentAvatarFeature.layers[layerName].sprite = sprite;
             pixiApp.stage.addChild(sprite);
           });
@@ -368,15 +376,40 @@ export default {
     },
     setupChoices() {
       this.choices.hair = Object.freeze({
+        short: {
+          name: "short",
+          id: 0,
+          isSingleLayer: false,
+          thumb: "line",
+          layers: {
+            line: { zIndex: 100, alpha: 0.455 },
+            color: { zIndex: 90, setOtherLayer: "back" },
+            // backline: { zIndex: 1, isNonEditable: true },
+            backcolor: { zIndex: 0, isNonEditable: true },
+          },
+        },
         wavy: {
           name: "wavy",
           id: 1,
           isSingleLayer: false,
           thumb: "line",
           layers: {
-            line: { zIndex: 10, alpha: 0.455 },
-            color: { zIndex: 9, setOtherLayer: "back" },
-            back: { zIndex: 0, isNonEditable: true },
+            line: { zIndex: 100, alpha: 0.455 },
+            color: { zIndex: 90, setOtherLayer: "backcolor" },
+            // backline: { zIndex: 1, isNonEditable: true },
+            backcolor: { zIndex: 0, isNonEditable: true },
+          },
+        },
+        shortBob: {
+          name: "shortBob",
+          id: 3,
+          isSingleLayer: false,
+          thumb: "line",
+          layers: {
+            line: { zIndex: 100, alpha: 0.455 },
+            color: { zIndex: 90, setOtherLayer: "backcolor" },
+            // backline: { zIndex: 1, isNonEditable: true },
+            backcolor: { zIndex: 0, isNonEditable: true },
           },
         },
       });
@@ -386,9 +419,9 @@ export default {
           id: 1,
           isSingleLayer: false,
           layers: {
-            line: { zIndex: 4 },
-            color: { zIndex: 3 },
-            glare: { zIndex: 5 },
+            line: { zIndex: 40 },
+            color: { zIndex: 30 },
+            glare: { zIndex: 50 },
           },
         },
         neutralFemale: {
@@ -396,31 +429,81 @@ export default {
           id: 2,
           isSingleLayer: false,
           layers: {
-            line: { zIndex: 4 },
-            color: { zIndex: 3 },
-            glare: { zIndex: 5 },
-            white: { zIndex: 2 },
+            line: { zIndex: 40 },
+            color: { zIndex: 30 },
+            glare: { zIndex: 50 },
+            white: { zIndex: 20 },
+            // pupil: {zIndex: 32, alpha: 0.5}
+          },
+        },
+        sideGlance: {
+          name: "sideGlance",
+          id: 4,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 40, alpha: 0.8 },
+            color: { zIndex: 30 },
+            glare: { zIndex: 50 },
+            pupil: { zIndex: 32, alpha: 0.7 },
+            white: { zIndex: 21 },
+            shade: { zIndex: 31, alpha: 0.7 },
+          },
+        },
+        intense: {
+          name: "intense",
+          id: 5,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 40, alpha: 0.8 },
+            color: { zIndex: 30 },
+            glare: { zIndex: 50 },
+            pupil: { zIndex: 33, alpha: 0.7 },
+            white: { zIndex: 21 },
+            shade: { zIndex: 31, alpha: 0.7 },
+            light: { zIndex: 32, alpha: 0.5 }
+          },
+        },
+        brightEyes: {
+          name: "brightEyes",
+          id: 6,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 40, alpha: 0.8 },
+            color: { zIndex: 30 },
+            glare: { zIndex: 50 },
+            pupil: { zIndex: 32, alpha: 0.7 },
+            white: { zIndex: 21 },
+            shade: { zIndex: 31, alpha: 0.5 },
           },
         },
       });
       this.choices.face = Object.freeze({
-        neutral: {
-          name: "neutral",
+        pointyChin: {
+          name: "pointyChin",
           id: 0,
-          isSingleLayer: true,
-          zIndex: 1,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 10, alpha: 0.2 },
+            color: { zIndex: 9 },
+          },
         },
-        neutralFemale: {
-          name: "neutralFemale",
+        uChin: {
+          name: "uChin",
           id: 1,
-          isSingleLayer: true,
-          zIndex: 1,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 10, alpha: 0.2 },
+            color: { zIndex: 9 },
+          },
         },
-        gentleV: {
-          name: "gentleV",
-          id: 4,
-          isSingleLayer: true,
-          zIndex: 1,
+        vline: {
+          name: "vline",
+          id: 2,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 10, alpha: 0.2 },
+            color: { zIndex: 9 },
+          },
         },
       });
       this.choices.nose = Object.freeze({
@@ -428,55 +511,92 @@ export default {
           name: "snub",
           id: 0,
           isSingleLayer: true,
-          zIndex: 5,
+          zIndex: 50,
+          alpha: 0.3,
         },
         simple: {
           name: "simple",
           id: 1,
           isSingleLayer: true,
-          zIndex: 5,
+          zIndex: 50,
+          alpha: 0.3,
         },
         button: {
           name: "button",
           id: 2,
           isSingleLayer: true,
-          zIndex: 5,
+          zIndex: 50,
+          alpha: 0.3,
         },
         wide: {
           name: "wide",
           id: 3,
           isSingleLayer: true,
-          zIndex: 5,
+          zIndex: 50,
+          alpha: 0.3,
         },
         upturned: {
           name: "upturned",
           id: 4,
           isSingleLayer: true,
-          zIndex: 5,
+          zIndex: 50,
+          alpha: 0.3,
         },
         downturned: {
           name: "downturned",
           id: 5,
           isSingleLayer: true,
-          zIndex: 5,
+          zIndex: 50,
+          alpha: 0.3,
         },
         medium: {
           name: "medium",
           id: 6,
           isSingleLayer: true,
-          zIndex: 5,
+          zIndex: 50,
+          alpha: 0.3,
         },
         elegant: {
           name: "elegant",
           id: 7,
           isSingleLayer: true,
-          zIndex: 5,
+          zIndex: 50,
+          alpha: 0.3,
         },
         droopy: {
           name: "droopy",
           id: 8,
           isSingleLayer: true,
-          zIndex: 5,
+          zIndex: 50,
+          alpha: 0.3,
+        },
+        subtle: {
+          name: "subtle",
+          id: 10,
+          isSingleLayer: true,
+          zIndex: 50,
+          alpha: 0.3,
+        },
+        casual: {
+          name: "casual",
+          id: 11,
+          isSingleLayer: true,
+          zIndex: 50,
+          alpha: 0.3,
+        },
+        regular: {
+          name: "regular",
+          id: 12,
+          isSingleLayer: true,
+          zIndex: 50,
+          alpha: 0.3,
+        },
+        small: {
+          name: "small",
+          id: 13,
+          isSingleLayer: true,
+          zIndex: 50,
+          alpha: 0.3,
         },
       });
       this.choices.eyebrows = Object.freeze({
@@ -484,31 +604,72 @@ export default {
           name: "neutral",
           id: 0,
           isSingleLayer: true,
-          zIndex: 8,
+          zIndex: 80,
         },
         worried: {
           name: "worried",
           id: 1,
           isSingleLayer: true,
-          zIndex: 8,
+          zIndex: 80,
         },
         thick: {
           name: "thick",
           id: 2,
           isSingleLayer: true,
-          zIndex: 8,
+          zIndex: 80,
         },
         surprised: {
           name: "surprised",
           id: 3,
           isSingleLayer: true,
-          zIndex: 8,
+          zIndex: 80,
         },
         resting: {
           name: "resting",
           id: 4,
           isSingleLayer: true,
-          zIndex: 8,
+          zIndex: 80,
+        },
+        angry: {
+          name: "angry",
+          id: 5,
+          isSingleLayer: true,
+          zIndex: 80,
+        },
+        eyebrowLift: {
+          name: "eyebrowLift",
+          id: 9,
+          isSingleLayer: true,
+          zIndex: 80,
+        },
+        worriedThin: {
+          name: "worriedThin",
+          id: 12,
+          isSingleLayer: true,
+          zIndex: 80,
+        },
+        neutralRelaxed: {
+          name: "neutralRelaxed",
+          id: 13,
+          isSingleLayer: true,
+          zIndex: 80,
+        },
+        concerned: {
+          name: "concerned",
+          id: 14,
+          isSingleLayer: true,
+          zIndex: 80,
+        },
+        square: {
+          name: "square",
+          id: 15,
+          isSingleLayer: true,
+          zIndex: 80,
+        }, straight: {
+          name: "straight",
+          id: 17,
+          isSingleLayer: true,
+          zIndex: 80,
         },
       });
       this.choices.mouth = Object.freeze({
@@ -517,15 +678,85 @@ export default {
           id: 0,
           isSingleLayer: true,
           alpha: 0.5,
-          zIndex: 7,
+          zIndex: 70,
         },
         neutralFemale: {
           name: "neutralFemale",
           id: 1,
           isSingleLayer: false,
           layers: {
-            line: { zIndex: 7, alpha: 0.5 },
-            color: { zIndex: 6 },
+            line: { zIndex: 70, alpha: 0.5 },
+            color: { zIndex: 60 },
+          },
+        },
+        unhappy: {
+          name: "unhappy",
+          id: 2,
+          isSingleLayer: true,
+          alpha: 0.5,
+          zIndex: 70,
+        },
+        openMouth: {
+          name: "openMouth",
+          id: 3,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 70, alpha: 0.5 },
+            teeth: { zIndex: 66 },
+            inside: { zIndex: 60 },
+          },
+        },
+        neutral: {
+          name: "neutral",
+          id: 4,
+          isSingleLayer: true,
+          alpha: 0.5,
+          zIndex: 70,
+        },
+        zonedOut: {
+          name: "zonedOut",
+          id: 5,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 70, alpha: 0.5 },
+            inside: { zIndex: 60, alpha: 0.7},
+          },
+        },
+        happySmile: {
+          name: "happySmile",
+          id: 6,
+          isSingleLayer: true,
+          alpha: 0.7,
+          zIndex: 70,
+        },
+        smallMouth: {
+          name: "smallMouth",
+          id: 7,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 70, alpha: 0.5 },
+            color: { zIndex: 60},
+          },
+        },
+        lipsSmile: {
+          name: "lipsSmile",
+          id: 8,
+          isSingleLayer: false,
+          layers: {
+            line: { zIndex: 70, alpha: 0.5 },
+            color: { zIndex: 60},
+          },
+        },
+      });
+      this.choices.shoulders = Object.freeze({
+        neutral: {
+          name: "neutral",
+          id: 0,
+          isSingleLayer: false,
+          thumb: "line",
+          layers: {
+            line: { zIndex: 8, alpha: 0.2 },
+            color: { zIndex: 7, setOtherLayer: "back" },
           },
         },
       });
@@ -538,40 +769,55 @@ export default {
         },
         features: {
           face: {
-            choice: this.choices.face.neutralFemale,
-            color: "#d4b485",
+            choice: this.choices.face.vline,
+            layers: {
+              line: {},
+              color: {
+                color: "#d4b485",
+              },
+            },
           },
           hair: {
-            choice: this.choices.hair.wavy,
+            choice: this.choices.hair.shortBob,
             layers: {
               color: { color: "#73bbbf" },
               line: { color: "#cef6f7" },
-              back: { color: "#73bbbf" },
+              backcolor: { color: "#73bbbf" },
+              // backline: { color: "#cef6f7" },
             },
           },
           eye: {
             choice: this.choices.eye.neutralFemale,
             layers: {
-              line: {},
+              line: { color: "#151261" },
               color: { color: "#7278a6" },
               white: {},
               glare: {},
             },
           },
           nose: {
-            choice: this.choices.nose.medium,
+            choice: this.choices.nose.small,
             layers: {},
           },
           eyebrows: {
-            choice: this.choices.eyebrows.resting,
-            color: "#beebee",
+            choice: this.choices.eyebrows.straight,
+            color: "#73bbbf",
           },
           mouth: {
-            choice: this.choices.mouth.neutralFemale,
+            choice: this.choices.mouth.lipsSmile,
             layers: {
               line: {},
               color: {
                 color: "#ba6665",
+              },
+            },
+          },
+          shoulders: {
+            choice: this.choices.shoulders.neutral,
+            layers: {
+              line: {},
+              color: {
+                color: "#d4b485",
               },
             },
           },
@@ -619,8 +865,8 @@ export default {
       ],
     });
     const changeLayerColor = this.changeLayerColor;
-    colorPicker.on("color:change", function () {
-      // console.log("New active color:", color.hexString);
+    colorPicker.on("color:change", function (color) {
+      console.log("New active color:", color.hexString);
       changeLayerColor();
     });
   },
@@ -779,11 +1025,14 @@ export default {
 .thumbnail {
   height: 70px;
   width: 70px;
-  border: 2px solid #728ca7;
+  border: 2px solid #8aaec2;
   padding: 2px;
   margin-left: 5px;
   object-fit: cover;
   background: #faf6ed;
+}
+.selected-thumbnail {
+  border-color: #646292;
 }
 .thumbnail:active {
   transform: scale(0.9);
