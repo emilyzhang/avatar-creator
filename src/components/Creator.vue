@@ -599,13 +599,6 @@ export default {
           zIndex: 50,
           alpha: 0.3,
         },
-        upturned: {
-          name: "upturned",
-          id: 4,
-          isSingleLayer: true,
-          zIndex: 50,
-          alpha: 0.3,
-        },
         downturned: {
           name: "downturned",
           id: 5,
@@ -664,12 +657,6 @@ export default {
         },
       });
       this.choices.eyebrows = Object.freeze({
-        neutral: {
-          name: "neutral",
-          id: 0,
-          isSingleLayer: true,
-          zIndex: 80,
-        },
         worried: {
           name: "worried",
           id: 1,
